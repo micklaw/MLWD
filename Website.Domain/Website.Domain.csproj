@@ -36,7 +36,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,10 +47,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Yomego.CMS">
-      <HintPath>..\packages\Yomego.CMS.1.4.17\lib\net45\Yomego.CMS.dll</HintPath>
+      <HintPath>..\packages\Yomego.CMS.1.4.19\lib\net45\Yomego.CMS.dll</HintPath>
     </Reference>
     <Reference Include="Yomego.CMS.Core">
-      <HintPath>..\packages\Yomego.CMS.1.4.17\lib\net45\Yomego.CMS.Core.dll</HintPath>
+      <HintPath>..\packages\Yomego.CMS.1.4.19\lib\net45\Yomego.CMS.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +72,19 @@
     <Compile Include="Shared\Enums\SiteTabs.cs" />
     <Compile Include="Shared\Extensions\HtmlExtensions.cs" />
     <Compile Include="Shared\Views\WebsiteWebViewPage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>app.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.Release.config">
+      <DependentUpon>app.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
