@@ -1,0 +1,46 @@
+﻿@using Humanizer
+@model Website.Domain.Blog.ViewModels.BlogDetailsViewModel
+@{
+    var publishDate = Model.Content.BlogPublishDate;
+    var image = Model.Content.BlogImage;
+}
+<div class="blog-post">
+    <div data-video-wrapper>
+        @if (image != null && image.HasUrl)
+        {
+            @Html.FluidImage(image, 800, 400)
+        }
+        else
+        {
+            @Html.Raw(Model.Content.BlogVideo)
+        }
+    </div>
+    <ul class="list-inline post-detail">
+        <li><i class="fa fa-calendar"></i>@Html.ToDate(publishDate)</li>
+        <li><i class="fa fa-tag"></i><a href="/blog?c=@Model.Content.BlogCategory">@Model.Content.BlogCategory</a></li>
+    </ul>
+    <h2>@Model.Content.BlogTitle</h2>
+    @Html.Raw(Model.Content.BlogDescription)
+</div>
+
+@if (!Model.Content.DisableComments)
+{
+    <!--about author-->
+    <div class="comment-post">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'michaellaw'; // required: replace example with your forum shortname
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+    <!--comments-->
+}

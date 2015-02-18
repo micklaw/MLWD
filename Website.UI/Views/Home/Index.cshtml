@@ -1,0 +1,330 @@
+﻿@model Website.Domain.Home.ViewModels.HomeViewModel
+
+<section id="home-parallax" class="parallax" data-stellar-background-ratio="0.5">
+    <div class="container text-center">
+        <h2 class="wow animated fadeInDown"><span class="colored-text">Hello!</span></h2>
+        <p class="lead animated fadeIn">
+            @ViewBag.MetaDescription
+        </p>
+    </div>
+</section>
+
+<!--things im good at-->
+<section class="services-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="center-heading">
+                    <h2>Things i do</h2>
+                    <span class="center-line"></span>
+                </div>
+            </div>
+        </div>
+        <!--center heading row-->
+        <div class="row">
+            <div class="col-md-4 col-sm-6 margin20">
+                <div class="services-box animated fadeInUp">
+                    <div class="services-box-icon">
+                        <img src="/content/img/services/dotnet.jpg" alt="MS .Net" class="img-responsive"/>
+                    </div>
+                    <!--services icon-->
+                    <div class="services-box-info">
+                        <h4>.Net</h4>
+                        <p>
+                            .Net, with C# in particular is my bread and butter. With an indepth understanding of how code is executed by the CLR,
+                            it allows me to write extremely efficient, performant, easy to read code which always meets the requirements and
+                            expectations of my clients.
+
+                        </p>
+                    </div>
+                </div>
+                <!--services box-->
+            </div>
+            <!--services col-->
+            <div class="col-md-4 col-sm-6 margin20">
+                <div class="services-box animated fadeInUp">
+                    <div class="services-box-icon">
+                        <img src="/content/img/services/web.jpg" alt="MS .Net" class="img-responsive"/>
+                    </div>
+                    <!--services icon-->
+                    <div class="services-box-info">
+                        <h4>Web Development</h4>
+                        <p>
+                            Web development is not only my job, but my hobby too. I enjoy learning about all aspects of it, not only regarding web development,
+                            but also in web standards and security. I feel before you can be a good web developer you have to understand how the web works.
+                        </p>
+
+                    </div>
+                </div>
+                <!--services box-->
+            </div>
+            <!--services col-->
+            <div class="col-md-4 col-sm-6 margin20">
+                <div class="services-box animated fadeInUp">
+                    <div class="services-box-icon">
+                        <img src="/content/img/services/umbraco.jpg" alt="MS .Net" class="img-responsive"/>
+                    </div>
+                    <!--services icon-->
+                    <div class="services-box-info">
+                        <h4>Umbraco CMS</h4>
+                        <p>
+                            Umbraco has been my default response when a project requires a CMS for a long time. Having tried many others, clients 
+                            feedback when given an umbraco based CMS makes this my go to option every time. I am yet to find a requirement where 
+                            Umbraco cannot be extended to fulfill.
+                        </p>
+                    </div>
+                </div>
+                <!--services box-->
+            </div>
+            <!--services col-->
+        </div>
+        <!--services row-->
+    </div>
+</section>
+
+<!--recent work-->
+<div class="divide40"></div>
+<section class="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="center-heading">
+                    <h2>Things i've done recently</h2>
+                    <span class="center-line"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="work-carousel" class="owl-carousel owl-spaced">
+                    <div>
+
+                        <div class="item-img-wrap ">
+                            <img src="/content/img/img-1.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <a href="/content/img/img-1.jpg" class="show-image">
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+                        <!--item img wrap-->
+                        <div class="work-desc">
+                            <h3><a href="portfolio-single.html">woo Commerce</a></h3>
+                            <span>Magento</span>
+                        </div>
+                        <!--work desc-->
+                    </div>
+                    <div>
+                        <div class="item-img-wrap ">
+                            <img src="/content/img/img-2.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <a href="/content/img/img-2.jpg" class="show-image">
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="work-desc">
+                            <h3><a href="portfolio-single.html">Web Develop</a></h3>
+                            <span>Php / Wordpress</span>
+                        </div>
+                        <!--work desc-->
+                    </div>
+                    <div>
+                        <div class="item-img-wrap ">
+                            <img src="/content/img/img-3.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <a href="/content/img/img-3.jpg" class="show-image">
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="work-desc">
+                            <h3><a href="portfolio-single.html">Web Design</a></h3>
+                            <span>HTML5 / CSS3</span>
+                        </div>
+                        <!--work desc-->
+                    </div>
+                    <div>
+                        <div class="item-img-wrap ">
+                            <img src="/content/img/img-4.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <a href="/content/img/img-4.jpg" class="show-image">
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="work-desc">
+                            <h3><a href="portfolio-single.html">Graphics Design</a></h3>
+                            <span>Corel Drow</span>
+                        </div>
+                        <!--work desc-->
+                    </div>
+                    <div>
+                        <div class="item-img-wrap ">
+                            <img src="/content/img/img-5.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <a href="/content/img/img-5.jpg" class="show-image">
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="work-desc">
+                            <h3><a href="portfolio-single.html">Psd Design</a></h3>
+                            <span>Photoshop</span>
+                        </div>
+                        <!--work desc-->
+                    </div>
+                    <div>
+                        <div class="item-img-wrap ">
+                            <img src="/content/img/img-6.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <a href="/content/img/img-6.jpg" class="show-image">
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="work-desc">
+                            <h3><a href="portfolio-single.html">Logo Design</a></h3>
+                            <span>Illustrate</span>
+                        </div>
+                        <!--work desc-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divide30"></div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="#" class="btn border-theme btn-lg wow animated fadeInUp"><i class="fa fa-bars"></i>More of my work</a>
+            </div>
+        </div>
+    </div>
+    <!--container-->
+</section>
+<!--recent work-->
+
+<!--testimonials-->
+<section class="testimonials">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="center-heading">
+                    <h2>Feedback</h2>
+                    <span class="center-line"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <div id="testi-carousel" class="owl-carousel owl-spaced">
+                    <div>
+                        <img src="/content/img/customer-1.jpg" class="img-responsive customer-img" alt="">
+                        <h4>
+                            <i class="fa fa-quote-left"></i>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+                        </h4>
+                        <p>-David</p>
+                    </div>
+                    <div>
+                        <img src="/content/img/customer-2.jpg" class="img-responsive customer-img" alt="">
+                        <h4>
+                            <i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia.
+                        </h4>
+                        <p>-James</p>
+                    </div>
+                    <div>
+                        <img src="/content/img/customer-3.jpg" class="img-responsive customer-img" alt="">
+                        <h4>
+                            <i class="fa fa-quote-left"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia.
+                        </h4>
+                        <p>-Jesica</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--testimonials-->
+
+<!--blog-->
+<div class="divide80"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 margin40">
+            <div class="center-heading">
+                    <h2>Things I've written</h2>
+                    <span class="center-line"></span>
+                </div>
+            <div id="news-carousel" class="owl-carousel owl-spaced">
+                <div>
+                    <a href="#">
+                        <div class="item-img-wrap">
+                            <img src="/content/img/img-8.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <span></span>
+                            </div>
+                        </div>
+                    </a>
+                    <!--news link-->
+                    <div class="news-desc">
+                        <span>Sports</span>
+                        <h4><a href="#">Lorem ipsum dollor Sit amet</a></h4>
+                        <span>By <a href="#">Author</a> on 24 july 2014</span> <span><a href="#">Read more...</a></span>
+                    </div>
+                    <!--news desc-->
+                </div>
+                <div>
+                    <a href="#">
+                        <div class="item-img-wrap">
+                            <img src="/content/img/img-7.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <span></span>
+                            </div>
+                        </div>
+                    </a>
+                    <!--news link-->
+                    <div class="news-desc">
+                        <span>Sports</span>
+                        <h4><a href="#">Lorem ipsum dollor Sit amet</a></h4>
+                        <span>By <a href="#">Author</a> on 24 july 2014</span> <span><a href="#">Read more...</a></span>
+                    </div>
+                    <!--news desc-->
+                </div>
+                <div>
+                    <a href="#">
+                        <div class="item-img-wrap">
+                            <img src="/content/img/img-6.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <span></span>
+                            </div>
+                        </div>
+                    </a>
+                    <!--news link-->
+                    <div class="news-desc">
+                        <span>Sports</span>
+                        <h4><a href="#">Lorem ipsum dollor Sit amet</a></h4>
+                        <span>By <a href="#">Author</a> on 24 july 2014</span> <span><a href="#">Read more...</a></span>
+                    </div>
+                    <!--news desc-->
+                </div>
+                <div>
+                    <a href="#">
+                        <div class="item-img-wrap">
+                            <img src="/content/img/img-5.jpg" class="img-responsive" alt="workimg">
+                            <div class="item-img-overlay">
+                                <span></span>
+                            </div>
+                        </div>
+                    </a>
+                    <!--news link-->
+                    <div class="news-desc">
+                        <span>Sports</span>
+                        <h4><a href="#">Lorem ipsum dollor Sit amet</a></h4>
+                        <span>By <a href="#">Author</a> on 24 july 2014</span> <span><a href="#">Read more...</a></span>
+                    </div>
+                    <!--news desc-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--blog-->

@@ -1,0 +1,75 @@
+﻿<script class="ng-scope">
+
+    function CustomSectionEditController($scope, $routeParams, $http) {
+        $scope.content = {
+            tabs: [{ id: 1, label: "Sync" }]
+        };
+        $scope.message = {
+            display: "none",
+            colour: "red",
+            text: "Not ran"
+        };
+
+        function doRequest(url) {
+            $scope.message.display = "none";
+
+            $http({
+                url: url,
+                method: "POST"
+            })
+            .then(function (response) {
+                $scope.message.display = "block";
+                $scope.message.colour = response.data.result ? "Green" : "Red";
+                $scope.message.text = response.data.message;
+            });
+        }
+        
+        $scope.sync = function (mode) {
+            switch (mode) {
+                case "dataTypesSave":
+                    doRequest('/admin/saveDataTypes');
+                    break;
+                case "dataTypes":
+                    doRequest('/admin/syncDataTypes');
+                    break;
+                case "docTypes":
+                    doRequest('/admin/syncnow');
+                break;
+            }
+        };
+    }
+
+</script>
+
+<div ng-controller="CustomSectionEditController">
+
+    <umb-panel>
+    <umb-header tabs="content.tabs">
+        <div class="umb-headline-editor-wrapper span12 ng-scope">
+            <h1 class="ng-binding">Document & Data Type Syncronisation</h1>
+               </div>
+    </umb-header>
+ 
+    <umb-tab-view>
+        <umb-tab id="tab1" rel="svensson">
+        
+            <div class="umb-pane">
+                <p>
+                    <a data-ng-click="sync('docTypes')" href="javascript:void(0);" title="Syncronise Doc Types now!">Syncronise Document Types</a>
+                </p>
+                <p>
+                    <a data-ng-click="sync('dataTypes')" href="javascript:void(0);" title="Syncronise Data Types now!">Syncronise Data Types</a>
+                </p>
+                <p>
+                    <a data-ng-click="sync('dataTypesSave')" href="javascript:void(0);" title="Save Data Types now!">Save Data Types</a>
+                </p>
+                <div style="display: {{message.display}}; color:{{message.colour}}">
+                    <p>{{message.text}}</p>
+                </div>
+            </div>
+        </umb-tab>
+ 
+    </umb-tab-view>
+</umb-panel>
+
+</div>
