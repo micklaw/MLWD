@@ -1,8 +1,0 @@
-C:\GIT\mlwd\mlwd\Website.Domain\bin\Debug\Website.Domain.dll
-C:\GIT\mlwd\mlwd\Website.Domain\bin\Debug\Website.Domain.pdb
-C:\GIT\mlwd\mlwd\Website.Domain\bin\Debug\Yomego.CMS.Core.dll
-C:\GIT\mlwd\mlwd\Website.Domain\bin\Debug\Yomego.CMS.dll
-C:\GIT\mlwd\mlwd\Website.Domain\obj\Debug\Website.Domain.csprojResolveAssemblyReference.cache
-C:\GIT\mlwd\mlwd\Website.Domain\obj\Debug\Website.Domain.dll
-C:\GIT\mlwd\mlwd\Website.Domain\obj\Debug\Website.Domain.pdb
-C:\GIT\mlwd\mlwd\Website.Domain\bin\Debug\BoboBrowse.Net.dll
