@@ -74,6 +74,7 @@
     <Compile Include="Shared\Constants\DataTypes.cs" />
     <Compile Include="Shared\Enums\SiteTabs.cs" />
     <Compile Include="Shared\Extensions\HtmlExtensions.cs" />
+    <Compile Include="Shared\Search\SearchCriteria.cs" />
     <Compile Include="Shared\Views\WebsiteWebViewPage.cs" />
   </ItemGroup>
   <ItemGroup>

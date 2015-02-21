@@ -20,6 +20,19 @@ namespace Website.Domain.Blog.Controllers
                 Tags = App.Services.Content.FacetSearch(Criteria.WithFacetField("SystemBlogTags").AndTypes(new[] {typeof (BlogDetails)}))
             };
 
+            if (!string.IsNullOrWhiteSpace(Request.QueryString["c"]))
+            {
+                model.Keywords.Add("Category", Request.QueryString["c"]);
+            }
+            if (!string.IsNullOrWhiteSpace(Request.QueryString["t"]))
+            {
+                model.Keywords.Add("Tags", Request.QueryString["t"]);
+            }
+            if (!string.IsNullOrWhiteSpace(Request.QueryString["k"]))
+            {
+                model.Keywords.Add("Keywords", Request.QueryString["k"]);
+            }
+
             if (model.Listing == null)
             {
                 model.Listing = App.Services.Content.Get<BlogListing>().FirstOrDefault() ?? new BlogListing();

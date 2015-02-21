@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Website.Domain.Blog.DocTypes;
 using Website.Domain.Blog.ViewModels;
+using Website.Domain.Shared.Search;
 using Yomego.CMS.Core.Umbraco.Search;
 using Yomego.CMS.Mvc.Controllers;
 
@@ -8,21 +9,21 @@ namespace Website.Domain.Blog.Controllers
 {
     public class BlogController : BaseBlogController
     {
-        public ActionResult Index(int? p)
+        public ActionResult Index(int? p, string c, string t, string k)
         {
-            p = FixPage(p);
-
             var content = Node as BlogListing;
 
-            var model = new BlogViewModel()
-            {
-                Content = content
-            };
+            var searchCrieria = SearchCriteria.WithBlogCategory(c)
+                                              .AndBlogTag(t)
+                                              .AndBlogKeyword(k)
+                                              .AndPaging(FixPage(p), content.BlogPageCount)
+                                              .OrderByDescending(SearchOrder.PublishDate);
 
-            if (content != null)
+            var model = new BlogViewModel
             {
-                model.Blogs = App.Services.Content.Get<BlogDetails>(Criteria.WithPaging(p.Value, content.BlogPageCount).OrderByDescending(SearchOrder.PublishDate));
-            }
+                Content = content,
+                Blogs = App.Services.Content.Get<BlogDetails>(searchCrieria)
+            };
 
             return View(model);
         }
