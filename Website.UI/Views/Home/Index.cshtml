@@ -25,7 +25,7 @@
             <div class="col-md-4 col-sm-6 margin20">
                 <div class="services-box animated fadeInUp">
                     <div class="services-box-icon">
-                        <img src="/content/img/services/dotnet.jpg" alt="MS .Net" class="img-responsive"/>
+                        <img src="/content/img/services/dotnet.jpg" alt="MS .Net" class="img-responsive" />
                     </div>
                     <!--services icon-->
                     <div class="services-box-info">
@@ -44,7 +44,7 @@
             <div class="col-md-4 col-sm-6 margin20">
                 <div class="services-box animated fadeInUp">
                     <div class="services-box-icon">
-                        <img src="/content/img/services/web.jpg" alt="MS .Net" class="img-responsive"/>
+                        <img src="/content/img/services/web.jpg" alt="MS .Net" class="img-responsive" />
                     </div>
                     <!--services icon-->
                     <div class="services-box-info">
@@ -62,7 +62,7 @@
             <div class="col-md-4 col-sm-6 margin20">
                 <div class="services-box animated fadeInUp">
                     <div class="services-box-icon">
-                        <img src="/content/img/services/umbraco.jpg" alt="MS .Net" class="img-responsive"/>
+                        <img src="/content/img/services/umbraco.jpg" alt="MS .Net" class="img-responsive" />
                     </div>
                     <!--services icon-->
                     <div class="services-box-info">
@@ -245,86 +245,41 @@
 </section>
 <!--testimonials-->
 
-<!--blog-->
-<div class="divide80"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 margin40">
-            <div class="center-heading">
+@if (Model.Blogs != null && (Model.Blogs.Any() ))
+{
+    <!--blog-->
+    <div class="divide80"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 margin40">
+                <div class="center-heading">
                     <h2>Things I've written</h2>
                     <span class="center-line"></span>
                 </div>
-            <div id="news-carousel" class="owl-carousel owl-spaced">
-                <div>
-                    <a href="#">
-                        <div class="item-img-wrap">
-                            <img src="/content/img/img-8.jpg" class="img-responsive" alt="workimg">
-                            <div class="item-img-overlay">
-                                <span></span>
+                <div id="news-carousel" class="owl-carousel owl-spaced">
+                    @foreach (var blog in Model.Blogs)
+                    {
+                        <div>
+                            <a href="@blog.Url">
+                                <div class="item-img-wrap">
+                                    @Html.FluidImage(blog.BlogImage, 500, 300)
+                                    <div class="item-img-overlay">
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </a>
+                            <!--news link-->
+                            <div class="news-desc">
+                                <span>@blog.BlogCategory</span>
+                                <h4><a href="@blog.Url">@blog.BlogTitle</a></h4>
+                                <span>@Html.ToDate(blog.BlogPublishDate)</span> <span><a href="@blog.Url">Read more...</a></span>
                             </div>
+                            <!--news desc-->
                         </div>
-                    </a>
-                    <!--news link-->
-                    <div class="news-desc">
-                        <span>Sports</span>
-                        <h4><a href="#">Lorem ipsum dollor Sit amet</a></h4>
-                        <span>By <a href="#">Author</a> on 24 july 2014</span> <span><a href="#">Read more...</a></span>
-                    </div>
-                    <!--news desc-->
-                </div>
-                <div>
-                    <a href="#">
-                        <div class="item-img-wrap">
-                            <img src="/content/img/img-7.jpg" class="img-responsive" alt="workimg">
-                            <div class="item-img-overlay">
-                                <span></span>
-                            </div>
-                        </div>
-                    </a>
-                    <!--news link-->
-                    <div class="news-desc">
-                        <span>Sports</span>
-                        <h4><a href="#">Lorem ipsum dollor Sit amet</a></h4>
-                        <span>By <a href="#">Author</a> on 24 july 2014</span> <span><a href="#">Read more...</a></span>
-                    </div>
-                    <!--news desc-->
-                </div>
-                <div>
-                    <a href="#">
-                        <div class="item-img-wrap">
-                            <img src="/content/img/img-6.jpg" class="img-responsive" alt="workimg">
-                            <div class="item-img-overlay">
-                                <span></span>
-                            </div>
-                        </div>
-                    </a>
-                    <!--news link-->
-                    <div class="news-desc">
-                        <span>Sports</span>
-                        <h4><a href="#">Lorem ipsum dollor Sit amet</a></h4>
-                        <span>By <a href="#">Author</a> on 24 july 2014</span> <span><a href="#">Read more...</a></span>
-                    </div>
-                    <!--news desc-->
-                </div>
-                <div>
-                    <a href="#">
-                        <div class="item-img-wrap">
-                            <img src="/content/img/img-5.jpg" class="img-responsive" alt="workimg">
-                            <div class="item-img-overlay">
-                                <span></span>
-                            </div>
-                        </div>
-                    </a>
-                    <!--news link-->
-                    <div class="news-desc">
-                        <span>Sports</span>
-                        <h4><a href="#">Lorem ipsum dollor Sit amet</a></h4>
-                        <span>By <a href="#">Author</a> on 24 july 2014</span> <span><a href="#">Read more...</a></span>
-                    </div>
-                    <!--news desc-->
+                    }
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!--blog-->
+    <!--blog-->
+}

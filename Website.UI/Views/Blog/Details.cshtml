@@ -6,13 +6,19 @@
 }
 <div class="blog-post">
     <div data-video-wrapper>
-        @if (image != null && image.HasUrl)
+        @if (!string.IsNullOrWhiteSpace(Model.Content.BlogVideo))
         {
-            @Html.FluidImage(image, 800, 400)
+            @Html.Raw(Model.Content.BlogVideo)
         }
         else
         {
-            @Html.Raw(Model.Content.BlogVideo)
+            if (image != null && image.HasUrl)
+            {
+            @Html.FluidImage(image, 800, 400)
+            <div class="item-img-overlay">
+                <span></span>
+            </div>
+            }
         }
     </div>
     <ul class="list-inline post-detail">
