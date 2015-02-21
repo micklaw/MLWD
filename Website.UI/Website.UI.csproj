@@ -238,10 +238,10 @@
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
     <Reference Include="Yomego.CMS">
-      <HintPath>..\packages\Yomego.CMS.1.4.19\lib\net45\Yomego.CMS.dll</HintPath>
+      <HintPath>..\packages\Yomego.CMS.1.4.20\lib\net45\Yomego.CMS.dll</HintPath>
     </Reference>
     <Reference Include="Yomego.CMS.Core">
-      <HintPath>..\packages\Yomego.CMS.1.4.19\lib\net45\Yomego.CMS.Core.dll</HintPath>
+      <HintPath>..\packages\Yomego.CMS.1.4.20\lib\net45\Yomego.CMS.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
