@@ -64,6 +64,11 @@
     <Compile Include="Blog\ViewModels\BlogListingViewModel.cs" />
     <Compile Include="Blog\ViewModels\BlogViewModel.cs" />
     <Compile Include="Blog\ViewModels\BlogDetailsViewModel.cs" />
+    <Compile Include="Work\Controllers\WorkController.cs" />
+    <Compile Include="Work\DocTypes\WorkDetails.cs" />
+    <Compile Include="Work\DocTypes\WorkListing.cs" />
+    <Compile Include="Work\ViewModels\WorkDetailsViewModel.cs" />
+    <Compile Include="Work\ViewModels\WorkViewModel.cs" />
     <Compile Include="Home\Controllers\HomeController.cs" />
     <Compile Include="Home\DocTypes\Homepage.cs" />
     <Compile Include="Home\ViewModels\HomeViewModel.cs" />

@@ -58,5 +58,35 @@ namespace Website.Domain.Shared.Search
 
             return this;
         }
+
+        public static SearchCriteria WithWorkCategory(string category)
+        {
+            return Init().AndWorkCategory(category);
+        }
+
+        public SearchCriteria AndWorkCategory(string category)
+        {
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                AddSearchItem("workCategory", category);
+            }
+
+            return this;
+        }
+
+        public static SearchCriteria WithWorkTag(string category)
+        {
+            return Init().AndWorkTag(category);
+        }
+
+        public SearchCriteria AndWorkTag(string tag)
+        {
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                AddSearchItem("workTags", tag);
+            }
+
+            return this;
+        }
     }
 }
