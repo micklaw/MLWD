@@ -15,39 +15,43 @@
     {
         var url = blog.Url;
 
-    <div class="blog-post">
-        <a href="@url">
-            <div class="item-img-wrap" data-video-wrapper>
-                @if (!string.IsNullOrWhiteSpace(blog.BlogVideo))
-                {
-                    @Html.Raw(blog.BlogVideo)
-                }
-                else
-                {
-                    if (blog.BlogImage != null && blog.BlogImage.HasUrl)
+        <div class="blog-post">
+            <a href="@url">
+                <div class="item-img-wrap" data-video-wrapper>
+                    @if (!string.IsNullOrWhiteSpace(blog.BlogVideo))
                     {
-                    @Html.FluidImage(blog.BlogImage, 800, 400)
-                    <div class="item-img-overlay">
-                        <span></span>
-                    </div>
+                        @Html.Raw(blog.BlogVideo)
                     }
-                }
-            </div>
-        </a>
-        <!--work link-->
-        <ul class="list-inline post-detail">
-            <li><i class="fa fa-calendar"></i>@Html.ToDate(blog.BlogPublishDate)</li>
-            <li><i class="fa fa-tag"></i><a href="/blog?c=@blog.BlogCategory">@blog.BlogCategory</a></li>
-        </ul>
-        <h2><a href="@url">@blog.BlogTitle</a></h2>
-        <p>
-            @blog.BlogSummary
-        </p>
-        <p><a href="@url" class="btn btn-theme-dark">Read More...</a></p>
-    </div>
+                    else
+                    {
+                        if (blog.BlogImage != null && blog.BlogImage.HasUrl)
+                        {
+                            @Html.FluidImage(blog.BlogImage, 800, 400)
+                            <div class="item-img-overlay">
+                                <span></span>
+                            </div>
+                        }
+                    }
+                </div>
+            </a>
+            <!--work link-->
+            <ul class="list-inline post-detail">
+                <li><i class="fa fa-calendar"></i>@Html.ToDate(blog.BlogPublishDate)</li>
+                <li><i class="fa fa-tag"></i><a href="/blog?c=@blog.BlogCategory">@blog.BlogCategory</a></li>
+            </ul>
+            <h2><a href="@url">@blog.BlogTitle</a></h2>
+            <p>
+                @blog.BlogSummary
+            </p>
+            <p><a href="@url" class="btn btn-theme-dark">Read More...</a></p>
+        </div>
     }
 
-    @Html.RenderPager(blogs, new { @class = "pager" })
+    @Html.RenderPager(blogs, new {@class = "pager"})
+}
+else
+{
+    <p>No blogs have been written, consider yourself lucky.</p>
 }
 
 @*<ul class="pager">
