@@ -23,14 +23,11 @@ namespace Yomego.CMS.Mvc.Routing
             IsReusable = true;
         }
 
-        void IHttpHandler.ProcessRequest(HttpContext context)
+        public virtual bool IsRoutable(HttpContext context, out ContentTypeAttribute contentType)
         {
-            ContentTypeAttribute contentType;
+            contentType = context.Items[Requests.ContentType] as ContentTypeAttribute;
 
-            if (IsRoutable(context, out contentType))
-            {
-                RouteRequest(contentType, context);
-            }
+            return contentType != null;
         }
 
         #region MVC route helpers
@@ -52,41 +49,6 @@ namespace Yomego.CMS.Mvc.Routing
         }
 
         #endregion MVC route helpers
-
-        public virtual bool IsRoutable(HttpContext context, out ContentTypeAttribute contentType)
-        {
-            contentType = null;
-
-            // [ML] - Try and get the content from the umbraco Api
-
-            var app = new CoreApp<CoreServiceContainer>();
-
-            var content = app.Services.Content.Get(HttpContext.Current.Request.RawUrl.Split('?')[0]);
-
-            if (content != null)
-            {
-                contentType = content.GetType().GetCustomAttributes(typeof(ContentTypeAttribute), true).FirstOrDefault() as ContentTypeAttribute;
-
-                /* [ML] - If the page is found in Umbraco then add the node to the request items
-                 *        and route the request to the action and controller set in umbraco */
-
-                if (contentType != null)
-                {
-                    if (string.IsNullOrWhiteSpace(contentType.Controller))
-                    {
-                        throw new ArgumentNullException(string.Format(
-                            "The controller must be defined for type ({0}) to route.", content.GetType().Name));
-                    }
-
-                    context.Items[Requests.Node] = content;
-                    context.Items[Requests.PageId] = content.Id; // [ML] - Required to hook up umbraco Jazz
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
 
         public virtual void RouteRequest(ContentTypeAttribute contentType, HttpContext httpContext)
         {
@@ -111,6 +73,16 @@ namespace Yomego.CMS.Mvc.Routing
                 var controller = _defaultControllerFactory.CreateController(requestContext, contentType.Controller);
 
                 controller.Execute(requestContext);
+            }
+        }
+
+        void IHttpHandler.ProcessRequest(HttpContext context)
+        {
+            ContentTypeAttribute contentType;
+
+            if (IsRoutable(context, out contentType))
+            {
+                RouteRequest(contentType, context);
             }
         }
     }

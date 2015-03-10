@@ -28,8 +28,11 @@
         <div class="container">
             <div class="top-bar">
                 <div class="pull-left">
-                        <a href="@email"><i class="fa fa-envelope"></i> michael@michaellaw.me</a>
-                    </div>
+                    <a href="@email"><i class="fa fa-envelope"></i>michael@michaellaw.me</a>
+                </div>
+                <div class="pull-left">
+                    <a href="@email"><i class="fa fa-skype"></i>michaelyomego</a>
+                </div>
                 <div class="pull-right">
                     <ul class="list-inline top-social">
                         <li><a target="_blank" href="https://www.facebook.com/mick.r.law"><i class="fa fa-facebook"></i></a></li>
@@ -64,9 +67,6 @@
                     <li @Html.Attr("class", url.StartsWith("/blog"), "active")>
                         <a href="/blog">Blog</a>
                     </li>
-                    <li @Html.Attr("class", url.StartsWith("/contact"), "active")>
-                        <a href="/contact">Contact</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -89,20 +89,6 @@
                 </div>
                 <!--footer col-->
                 <div class="col-md-push-6 col-md-3 col-sm-6 margin30">
-                    <div class="footer-col">
-                        <h3>Contact</h3>
-                        <ul class="list-unstyled contact">
-                            <li>
-                                <p><strong><i class="fa fa-map-marker"></i>Address:</strong>1 Haran Road, Alexandria, Dunbartonshire, G83 8HP</p>
-                            </li>
-                            <li>
-                                <p><strong><i class="fa fa-envelope"></i>Mail:</strong> <a href="@email">michael@michaellaw.me</a></p>
-                            </li>
-                            <li>
-                                <p><strong><i class="fa fa-skype"></i>Skype</strong> michaelyomego</p>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>

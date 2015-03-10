@@ -63,10 +63,9 @@
     <Compile Include="Blog\ViewModels\BlogViewModel.cs" />
     <Compile Include="Blog\ViewModels\BlogDetailsViewModel.cs" />
     <Compile Include="Contents\Controllers\ContentController.cs" />
-    <Compile Include="Contents\DocTypes\Contact.cs" />
-    <Compile Include="Contents\ViewModels\ContactViewModel.cs" />
     <Compile Include="Contents\ViewModels\ContentViewModel.cs" />
     <Compile Include="Contents\DocTypes\ContentPage.cs" />
+    <Compile Include="Errors\Controllers\ErrorController.cs" />
     <Compile Include="Home\Models\Archetypes\Testimonial.cs" />
     <Compile Include="Shared\Models\BaseArchetype.cs" />
     <Compile Include="Home\Controllers\HomeController.cs" />
@@ -101,7 +100,7 @@
       <Name>Yomego.CMS.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Yomego.CMS\Yomego.CMS.csproj">
-      <Project>{9a71ae58-6d46-4900-9643-13bfc60809b8}</Project>
+      <Project>{55e97ca3-d1ae-4544-bb55-0a0491de13b3}</Project>
       <Name>Yomego.CMS</Name>
     </ProjectReference>
   </ItemGroup>

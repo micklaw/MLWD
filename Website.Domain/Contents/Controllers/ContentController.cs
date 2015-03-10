@@ -17,15 +17,5 @@ namespace Website.Domain.Contents.Controllers
 
             return View(model);
         }
-
-        public ActionResult Contact()
-        {
-            var model = new ContactViewModel()
-            {
-                Content = Node as Contact
-            };
-
-            return View(model);
-        }
     }
 }

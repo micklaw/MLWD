@@ -11,7 +11,6 @@ using Yomego.CMS.Core.Attributes;
 using Yomego.CMS.Core.Collections;
 using Yomego.CMS.Core.Umbraco.Model;
 using Yomego.CMS.Core.Utils;
-using umbraco.cms.helpers;
 
 namespace Yomego.CMS.Mvc.Extensions
 {

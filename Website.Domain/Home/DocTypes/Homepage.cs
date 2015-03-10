@@ -15,7 +15,6 @@ namespace Website.Domain.Home.DocTypes
         {
             typeof(Services),
             typeof(ContentPage),
-            typeof(Contact),
             typeof(BlogListing)
         })]
     public class Homepage : Page

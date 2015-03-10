@@ -11,6 +11,18 @@ namespace Website.UI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             YomegoCMSRouteConfig.RegisterRoutes(routes);
+
+            routes.MapRoute(
+                name: "Error",
+                url: "error",
+                defaults: new { controller = "Error", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "404",
+                url: "error/not-found",
+                defaults: new { controller = "Error", action = "NotFound" }
+            );
         }
     }
 }

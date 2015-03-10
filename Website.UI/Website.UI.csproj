@@ -450,7 +450,7 @@
       <Name>Yomego.CMS.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Yomego.CMS\Yomego.CMS.csproj">
-      <Project>{9a71ae58-6d46-4900-9643-13bfc60809b8}</Project>
+      <Project>{55E97CA3-D1AE-4544-BB55-0A0491DE13B3}</Project>
       <Name>Yomego.CMS</Name>
     </ProjectReference>
   </ItemGroup>
@@ -503,8 +503,10 @@
     <None Include="Properties\PublishProfiles\MLWD Release.pubxml" />
     <Content Include="Views\Content\_ViewStart.cshtml" />
     <Content Include="Views\Content\Content.cshtml" />
-    <Content Include="Views\Content\Contact.cshtml" />
     <Content Include="Views\Shared\Og.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\_ViewStart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

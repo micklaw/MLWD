@@ -5,5 +5,7 @@
         public const string Node = "Node";
 
         public const string PageId = "pageID";
+
+        public const string ContentType = "ContentType";
     }
 }

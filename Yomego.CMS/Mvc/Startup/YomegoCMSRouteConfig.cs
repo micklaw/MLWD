@@ -43,15 +43,9 @@ namespace Yomego.CMS.Mvc.Startup
                 defaults: new { controller = "SEOCMS", action = "Robots" }
             );
 
-            routes.MapRoute(
-                name: "Og",
-                url: "og",
-                defaults: new { controller = "OgCMS", action = "Index" }
-            );
+            var umbraco = new Route("{*url}", new RouteValueDictionary() { }, new RouteValueDictionary() { { "url", new YomegoCMSRouteConstraint() } }, new YomegoCMSRouteHandler());
 
-            var catchAll = new Route("{*url}", new RouteValueDictionary(), new YomegoCMSRouteHandler());
-
-            routes.Add(catchAll);
+            routes.Add(umbraco);
         }
     }
 }
