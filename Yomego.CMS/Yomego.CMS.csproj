@@ -94,7 +94,6 @@
     <Compile Include="Caching\CookieProvider.cs" />
     <Compile Include="Caching\RequestProvider.cs" />
     <Compile Include="Caching\SessionProvider.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="config\Sections\Servers\ServerElementCollection.cs" />
     <Compile Include="config\Sections\Servers\ServerSection.cs" />
     <Compile Include="config\Sections\Servers\ServerSectionElement.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="Context\App.cs" />
     <Compile Include="Context\CoreApp.cs" />
     <Compile Include="Context\WebContext.cs" />
-    <Compile Include="Global.asax.cs" />
     <Compile Include="Mvc\Controllers\BaseApiController.cs" />
     <Compile Include="Mvc\Controllers\BaseCMSController.cs" />
     <Compile Include="Mvc\Controllers\DataTypeApiController.cs" />
