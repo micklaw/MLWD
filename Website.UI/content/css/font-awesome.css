@@ -588,6 +588,9 @@
 .fa-sign-out:before {
   content: "\f08b";
 }
+.fa-linkedin-square {
+    background-color: #3b5998;
+}
 .fa-linkedin-square:before {
   content: "\f08c";
 }
@@ -795,6 +798,9 @@
 .fa-sort-up:before,
 .fa-sort-asc:before {
   content: "\f0de";
+}
+.fa-envelope {
+    background-color: #ababab;
 }
 .fa-envelope:before {
   content: "\f0e0";

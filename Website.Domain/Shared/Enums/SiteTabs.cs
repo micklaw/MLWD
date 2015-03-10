@@ -9,6 +9,7 @@ namespace Website.Domain.Shared.Enums
     public enum SiteTabs
     {
         Media = 2,
-        Categorise = 3
+        Categorise = 3,
+        Work = 4
     }
 }

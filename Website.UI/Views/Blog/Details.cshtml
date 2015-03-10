@@ -24,8 +24,12 @@
     <ul class="list-inline post-detail">
         <li><i class="fa fa-calendar"></i>@Html.ToDate(publishDate)</li>
         <li><i class="fa fa-tag"></i><a href="/blog?c=@Model.Content.BlogCategory">@Model.Content.BlogCategory</a></li>
+        @if (!string.IsNullOrWhiteSpace(Model.Content.WorkClient))
+        {
+            <li><i class="fa fa-group"></i>@Model.Content.WorkClient</li>
+        }
     </ul>
-    <h2>@Model.Content.BlogTitle</h2>
+    <h2>@(!string.IsNullOrWhiteSpace(Model.Content.WorkTitle) ? Model.Content.WorkTitle : Model.Content.BlogTitle)</h2>
     @Html.Raw(Model.Content.BlogDescription)
 </div>
 

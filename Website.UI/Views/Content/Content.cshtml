@@ -1,0 +1,30 @@
+﻿@model Website.Domain.Contents.ViewModels.ContentViewModel
+
+<div class="divide80"></div>
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>@Model.Content.ContentTitle</h2>
+                    @Html.RawUmbraco(Model.Content.ContentDescription)
+                </div>
+            </div>
+            <div class="divide30"></div>
+        </div>
+        <!--sidebar col start-->
+        <div class="col-sm-3 ">
+            <!--ads-box-->
+            @*<div class="sidebar-box margin40">
+                <h4>Ads</h4>
+                <form role="form" class="search-widget">
+                    <input type="text" class="form-control">
+                    <i class="fa fa-search"></i>
+                </form>
+            </div>*@
+        </div>
+        <!--sidebar col end-->
+    </div>
+
+</div>

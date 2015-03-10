@@ -29,7 +29,7 @@ rcf/
 **/App_Data/TEMP/
 Cached/
 
-Website.UI/media/
+Velux.Umbraco/media/
 
 # Ignore Umbraco content cache file
 **/App_Data/umbraco.config

@@ -121,7 +121,8 @@
     <Reference Include="MiniProfiler">
       <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data">
+    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MySql.Data.6.6.5\lib\net40\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -237,12 +238,6 @@
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
-    <Reference Include="Yomego.CMS">
-      <HintPath>..\packages\Yomego.CMS.1.4.20\lib\net45\Yomego.CMS.dll</HintPath>
-    </Reference>
-    <Reference Include="Yomego.CMS.Core">
-      <HintPath>..\packages\Yomego.CMS.1.4.20\lib\net45\Yomego.CMS.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -349,12 +344,15 @@
     <Content Include="Global.asax" />
     <Content Include="umbraco\Config\Lang\en.xml" />
     <Content Include="Views\Partials\dummy.txt" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
@@ -447,6 +445,14 @@
       <Project>{A0AE2975-A401-4D7C-B625-2DC1C330DC93}</Project>
       <Name>Website.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yomego.CMS.Core\Yomego.CMS.Core.csproj">
+      <Project>{1c86bdcd-33fc-4e72-86e7-0df2404f2023}</Project>
+      <Name>Yomego.CMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yomego.CMS\Yomego.CMS.csproj">
+      <Project>{9a71ae58-6d46-4900-9643-13bfc60809b8}</Project>
+      <Name>Yomego.CMS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\_ViewStart.cshtml" />
@@ -495,6 +501,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\MLWD Release.pubxml" />
+    <Content Include="Views\Content\_ViewStart.cshtml" />
+    <Content Include="Views\Content\Content.cshtml" />
+    <Content Include="Views\Content\Contact.cshtml" />
+    <Content Include="Views\Shared\Og.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

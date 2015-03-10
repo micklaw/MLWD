@@ -1,6 +1,8 @@
-﻿@{
+﻿@using Yomego.CMS.Core.Umbraco.Model
+@{
     Layout = null;
 
+    const string email = "mailto:michael@michaellaw.me?subject=Hello!";
     var url = Request.RawUrl.ToLower();
 }
 <!DOCTYPE html>
@@ -11,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Pagetitle</title>
     <meta name="description" content="@ViewBag.MetaDescription" />
+    @Html.Partial("Og")
     @RenderSection("Meta", false)
     @Styles.Render("~/bundles/css")
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,500,700,800' rel='stylesheet' type='text/css'>
@@ -25,7 +28,7 @@
         <div class="container">
             <div class="top-bar">
                 <div class="pull-left">
-                        <a href="mailto:michael@michaellaw.me"><i class="fa fa-envelope"></i> michael@michaellaw.me</a>
+                        <a href="@email"><i class="fa fa-envelope"></i> michael@michaellaw.me</a>
                     </div>
                 <div class="pull-right">
                     <ul class="list-inline top-social">
@@ -61,6 +64,9 @@
                     <li @Html.Attr("class", url.StartsWith("/blog"), "active")>
                         <a href="/blog">Blog</a>
                     </li>
+                    <li @Html.Attr("class", url.StartsWith("/contact"), "active")>
+                        <a href="/contact">Contact</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -77,12 +83,12 @@
                             <li><a target="_blank" href="https://www.facebook.com/mick.r.law"><i class="fa fa-facebook"></i></a></li>
                             <li><a target="_blank" href="https://twitter.com/milaw"><i class="fa fa-twitter"></i></a></li>
                             <li><a target="_blank" href="https://uk.linkedin.com/in/milaw"><i class="fa fa-linkedin-square"></i></a></li>
-                            <li><a href="mailto:michael@michaellaw.me"><i class="fa fa-envelope"></i></a></li>
+                            <li><a href="@email"><i class="fa fa-envelope"></i></a></li>
                         </ul>
                     </div>
                 </div>
                 <!--footer col-->
-                <div class="col-md-3 col-sm-6 margin30">
+                <div class="col-md-push-6 col-md-3 col-sm-6 margin30">
                     <div class="footer-col">
                         <h3>Contact</h3>
                         <ul class="list-unstyled contact">
@@ -90,7 +96,7 @@
                                 <p><strong><i class="fa fa-map-marker"></i>Address:</strong>1 Haran Road, Alexandria, Dunbartonshire, G83 8HP</p>
                             </li>
                             <li>
-                                <p><strong><i class="fa fa-envelope"></i>Mail Us:</strong> <a href="mailto:michael@michaellaw.me">michael@michaellaw.me</a></p>
+                                <p><strong><i class="fa fa-envelope"></i>Mail:</strong> <a href="@email">michael@michaellaw.me</a></p>
                             </li>
                             <li>
                                 <p><strong><i class="fa fa-skype"></i>Skype</strong> michaelyomego</p>

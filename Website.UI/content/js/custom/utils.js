@@ -314,7 +314,8 @@
 
                 var src = getUrl($noScript);
 
-                var $img = $("<img data-lazy-image class='img-responsive' />");
+                var $img = $("<img data-lazy-image />");
+                $img.attr("class", $noScript.attr("class"));
                 $img.attr("alt", $noScript.attr("data-alt"));
                 $img.attr("data-actual", $noScript.attr("data-actual"));
                 $img.attr("data-actual-height", $noScript.attr("data-actual-height"));

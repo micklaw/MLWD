@@ -18,12 +18,14 @@ namespace Website.Domain.Home.Controllers
     {
         public ActionResult Index()
         {
-            var searchCrieria = SearchCriteria.WithPaging(0, 4).OrderByDescending(SearchOrder.PublishDate);
+            var searchCriteriaBlog = SearchCriteria.WithExcludeBlogCategory("work").AndPaging(0, 4).OrderByDescending(SearchOrder.PublishDate);
+            var searchCriteriaWork = SearchCriteria.WithBlogCategory("work").AndPaging(0, 6).OrderByDescending(SearchOrder.PublishDate);
 
-            var model = new HomeViewModel()
+            var model = new HomeViewModel
             {
                 Content = Node as Homepage,
-                Blogs = App.Services.Content.Get<BlogDetails>(searchCrieria) ?? new PagedList<BlogDetails>()
+                Blogs = App.Services.Content.Get<BlogDetails>(searchCriteriaBlog) ?? new PagedList<BlogDetails>(),
+                Work = App.Services.Content.Get<BlogDetails>(searchCriteriaWork) ?? new PagedList<BlogDetails>(),
             };
 
             return View(model);

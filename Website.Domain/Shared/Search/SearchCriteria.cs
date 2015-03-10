@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Yomego.CMS.Core.Enums;
 using Yomego.CMS.Core.Umbraco.Search;
 
 namespace Website.Domain.Shared.Search
@@ -59,31 +60,16 @@ namespace Website.Domain.Shared.Search
             return this;
         }
 
-        public static SearchCriteria WithWorkCategory(string category)
+        public static SearchCriteria WithExcludeBlogCategory(string category)
         {
-            return Init().AndWorkCategory(category);
+            return Init().AndExcludeBlogCategory(category);
         }
 
-        public SearchCriteria AndWorkCategory(string category)
+        public SearchCriteria AndExcludeBlogCategory(string category)
         {
             if (!string.IsNullOrWhiteSpace(category))
             {
-                AddSearchItem("workCategory", category);
-            }
-
-            return this;
-        }
-
-        public static SearchCriteria WithWorkTag(string category)
-        {
-            return Init().AndWorkTag(category);
-        }
-
-        public SearchCriteria AndWorkTag(string tag)
-        {
-            if (!string.IsNullOrWhiteSpace(tag))
-            {
-                AddSearchItem("workTags", tag);
+                AddSearchItem("blogCategory", category, OperatorEnum.NOT);
             }
 
             return this;

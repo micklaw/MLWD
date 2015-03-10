@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using Website.Domain.Service.DocTypes;
+using Website.Domain.Shared.Constants;
 using Website.Domain.Shared.Enums;
 using Yomego.CMS.Core.Attributes;
 using Yomego.CMS.Core.Enums;
@@ -25,6 +27,28 @@ namespace Website.Domain.Blog.DocTypes
 
         [ContentTypeProperty(ContentTypePropertyUI.TrueFalse, Name = "Disable Comments", Tab = Tabs.Content)]
         public bool DisableComments { get; set; }
+
+
+        [ContentTypeProperty(ContentTypePropertyUI.Textstring, Name = "Work Title", Tab = SiteTabs.Work)]
+        public string WorkTitle { get; set; }
+
+        [ContentTypeProperty(ContentTypePropertyUI.Textstring, Name = "Client Name", Tab = SiteTabs.Work)]
+        public string WorkClient { get; set; }
+
+        [ContentTypeProperty(ContentTypePropertyUI.MediaPicker, Name = "Client Image", Tab = SiteTabs.Work)]
+        public Image WorkClientImage { get; set; }
+
+        [ContentTypeProperty(ContentTypePropertyUI.Textstring, Name = "Client Quote", Tab = SiteTabs.Work)]
+        public string WorkClientQuote { get; set; }
+
+        [ContentTypeProperty(ContentTypePropertyUI.Textstring, Name = "Client Quote Person", Tab = SiteTabs.Work)]
+        public string WorkClientQuotePersonName { get; set; }
+
+        [ContentTypeProperty(ContentTypePropertyUI.Textstring, Name = "Client Quote Person Job", Tab = SiteTabs.Work)]
+        public string WorkClientQuotePersonJob { get; set; }
+
+        [ContentTypeProperty(ContentTypePropertyUI.Other, OtherTypeName = DataTypes.MultiMedia, Name = "Client Slideshow", Tab = SiteTabs.Work)]
+        public IList<Image> WorkSlideshow { get; set; }
 
 
         [ContentTypeProperty(ContentTypePropertyUI.Other, OtherTypeName = "Custom - Blog Categories", Name = "Category *", Mandatory = true, Tab = SiteTabs.Categorise)]

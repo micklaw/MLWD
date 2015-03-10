@@ -1,0 +1,15 @@
+﻿@using Yomego.CMS.Core.Umbraco.Model
+@{
+    var ogModel = ViewBag.OgNode as OgModel;
+}
+
+@if (ogModel != null)
+{
+    <!-- for Facebook -->
+    <meta property="og:title" content="@ogModel.Title" />
+    <meta property="og:description" content="@ogModel.Description.Truncate(100)" />
+    <meta property="og:type" content="@ogModel.PageType" />
+    <meta property="og:image" content="@ogModel.ImageUrl" />
+    <meta property="og:url" content="@ogModel.RedirectUrl" />
+}
+
