@@ -1,9 +1,8 @@
 ﻿using System.Web.Mvc;
+using MLWD.Umbraco.Umbraco.Services.Search.Enums;
 using Website.Domain.Blog.DocTypes;
 using Website.Domain.Blog.ViewModels;
 using Website.Domain.Shared.Search;
-using Yomego.CMS.Core.Umbraco.Search;
-using Yomego.CMS.Mvc.Controllers;
 
 namespace Website.Domain.Blog.Controllers
 {

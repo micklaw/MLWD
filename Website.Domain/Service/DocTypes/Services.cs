@@ -1,11 +1,14 @@
-﻿using Yomego.CMS.Core.Attributes;
-using Yomego.CMS.Core.Umbraco.Model;
+﻿using MLWD.Umbraco.Mvc.Attributes;
+using Umbraco.Core.Models;
+using Website.Domain.Shared.DocTypes;
 
 namespace Website.Domain.Service.DocTypes
 {
-    [ContentType(Description = "Services I can offer", Controller = "Services", IconUrl = "icon-settings-alt")]
+    [UmbracoRoute("Services")]
     public class Services : Page
     {
-        
+        public Services(IPublishedContent content) : base(content)
+        {
+        }
     }
 }

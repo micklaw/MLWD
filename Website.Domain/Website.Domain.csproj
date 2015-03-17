@@ -30,12 +30,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Archetype, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Archetype.1.6.0\lib\net40\Archetype.dll</HintPath>
+    </Reference>
     <Reference Include="BoboBrowse.Net">
       <HintPath>..\Dependencies\BoboBrowse.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="businesslogic">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\businesslogic.dll</HintPath>
+    </Reference>
+    <Reference Include="cms, Version=1.0.5462.37511, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\cms.dll</HintPath>
+    </Reference>
+    <Reference Include="interfaces, Version=1.0.5462.37501, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Website.UI\bin\interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Website.UI\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
@@ -53,6 +73,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\umbraco.dll</HintPath>
     </Reference>
+    <Reference Include="Umbraco.Core">
+      <HintPath>..\Website.UI\bin\Umbraco.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.MacroEngines, Version=1.0.5462.37525, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Website.UI\bin\umbraco.MacroEngines.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Blog\Controllers\BaseBlogController.cs" />
@@ -67,7 +94,11 @@
     <Compile Include="Contents\DocTypes\ContentPage.cs" />
     <Compile Include="Errors\Controllers\ErrorController.cs" />
     <Compile Include="Home\Models\Archetypes\Testimonial.cs" />
-    <Compile Include="Shared\Models\BaseArchetype.cs" />
+    <Compile Include="Shared\Controllers\AppController.cs" />
+    <Compile Include="Shared\Converters\Helpers\BinderHelper.cs" />
+    <Compile Include="Shared\Converters\ImageConverter.cs" />
+    <Compile Include="Shared\Converters\MultiImageConverter.cs" />
+    <Compile Include="Shared\DocTypes\Page.cs" />
     <Compile Include="Home\Controllers\HomeController.cs" />
     <Compile Include="Home\DocTypes\Homepage.cs" />
     <Compile Include="Home\ViewModels\HomeViewModel.cs" />
@@ -78,7 +109,12 @@
     <Compile Include="Shared\Constants\DataTypes.cs" />
     <Compile Include="Shared\Enums\SiteTabs.cs" />
     <Compile Include="Shared\Extensions\HtmlExtensions.cs" />
+    <Compile Include="Shared\Models\Focalpoint.cs" />
+    <Compile Include="Shared\Models\Image.cs" />
+    <Compile Include="Shared\Models\ImageCrops.cs" />
+    <Compile Include="Shared\Models\MediaItem.cs" />
     <Compile Include="Shared\Search\SearchCriteria.cs" />
+    <Compile Include="Shared\DocTypes\Settings.cs" />
     <Compile Include="Shared\Views\WebsiteWebViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,14 +131,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Yomego.CMS.Core\Yomego.CMS.Core.csproj">
-      <Project>{1c86bdcd-33fc-4e72-86e7-0df2404f2023}</Project>
-      <Name>Yomego.CMS.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Yomego.CMS\Yomego.CMS.csproj">
+    <ProjectReference Include="..\MLWD.Umbraco\MLWD.Umbraco.csproj">
       <Project>{55e97ca3-d1ae-4544-bb55-0a0491de13b3}</Project>
-      <Name>Yomego.CMS</Name>
+      <Name>MLWD.Umbraco</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,6 @@
-﻿@using Yomego.CMS.Core.Umbraco.Model
+﻿@using MLWD.Umbraco.Mvc.Model
 @{
-    var ogModel = ViewBag.OgNode as OgModel;
+    var ogModel = ViewBag.OgModel as OgModel;
 }
 
 @if (ogModel != null)
@@ -10,6 +10,6 @@
     <meta property="og:description" content="@ogModel.Description.Truncate(100)" />
     <meta property="og:type" content="@ogModel.PageType" />
     <meta property="og:image" content="@ogModel.ImageUrl" />
-    <meta property="og:url" content="@ogModel.RedirectUrl" />
+    <meta property="og:url" content="@ogModel.PageUrl" />
 }
 

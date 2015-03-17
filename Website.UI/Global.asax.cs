@@ -3,7 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Yomego.CMS.Umbraco.Startup;
+using MLWD.Umbraco.Umbraco.Startup;
 
 namespace Website.UI
 {
@@ -18,8 +18,7 @@ namespace Website.UI
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            YomegoCMSBuildersConfig.Register();
-            YomegoCMSDependencyConfig.Register();
+            MLWDDependencyConfig.Register();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             var config = GlobalConfiguration.Configuration;

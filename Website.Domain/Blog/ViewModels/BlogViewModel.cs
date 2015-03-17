@@ -1,5 +1,5 @@
-﻿using Website.Domain.Blog.DocTypes;
-using Yomego.CMS.Core.Collections;
+﻿using MLWD.Umbraco.Collections;
+using Website.Domain.Blog.DocTypes;
 
 namespace Website.Domain.Blog.ViewModels
 {

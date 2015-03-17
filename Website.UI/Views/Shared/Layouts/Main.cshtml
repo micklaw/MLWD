@@ -1,4 +1,4 @@
-﻿@using Yomego.CMS.Core.Umbraco.Model
+﻿@using MLWD.Umbraco.Mvc.Extensions
 @{
     Layout = null;
 
@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Pagetitle</title>
     <meta name="description" content="@ViewBag.MetaDescription" />
+    <link rel="canonical" href="@ViewBag.Canonical" />
     @Html.Partial("Og")
     @RenderSection("Meta", false)
     @Styles.Render("~/bundles/css")
@@ -22,79 +23,79 @@
     <!--@Scripts.Render("~/bundles/js/style")-->
     <!--[endif]-->
 </head>
-<body class="@ViewBag.BodyClass">
-    @RenderSection("Body", false)
-    <div id="header-top" class="hidden-xs">
-        <div class="container">
-            <div class="top-bar">
-                <div class="pull-left">
-                    <a href="@email"><i class="fa fa-envelope"></i>michael@michaellaw.me</a>
+    <body class="@ViewBag.BodyClass">
+        @RenderSection("Body", false)
+        <div id="header-top" class="hidden-xs">
+            <div class="container">
+                <div class="top-bar">
+                    <div class="pull-left">
+                        <a href="@email"><i class="fa fa-envelope"></i>michael@michaellaw.me</a>
+                    </div>
+                    <div class="pull-left">
+                        <a href="@email"><i class="fa fa-skype"></i>michaelyomego</a>
+                    </div>
+                    <div class="pull-right">
+                        <ul class="list-inline top-social">
+                            <li><a target="_blank" href="https://www.facebook.com/mick.r.law"><i class="fa fa-facebook"></i></a></li>
+                            <li><a target="_blank" href="https://twitter.com/milaw"><i class="fa fa-twitter"></i></a></li>
+                            <li><a target="_blank" href="https://uk.linkedin.com/in/milaw"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="pull-left">
-                    <a href="@email"><i class="fa fa-skype"></i>michaelyomego</a>
+            </div>
+        </div>
+        <div class="navbar navbar-default navbar-static-top yamm sticky" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h1>
+                        <a class="navbar-brand" href="/">Michael Law</a>
+                    </h1>
                 </div>
-                <div class="pull-right">
-                    <ul class="list-inline top-social">
-                        <li><a target="_blank" href="https://www.facebook.com/mick.r.law"><i class="fa fa-facebook"></i></a></li>
-                        <li><a target="_blank" href="https://twitter.com/milaw"><i class="fa fa-twitter"></i></a></li>
-                        <li><a target="_blank" href="https://uk.linkedin.com/in/milaw"><i class="fa fa-linkedin"></i></a></li>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li @Html.Attr("class", url.Equals("/") || url.StartsWith("/?"), "active")>
+                            <a href="/">Home</a>
+                        </li>
+                        <li @Html.Attr("class", url.StartsWith("/services"), "active")>
+                            <a href="/services">Services</a>
+                        </li>
+                        <li @Html.Attr("class", url.StartsWith("/blog"), "active")>
+                            <a href="/blog">Blog</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="navbar navbar-default navbar-static-top yamm sticky" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <h1>
-                    <a class="navbar-brand" href="/">Michael Law</a>
-                </h1>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li @Html.Attr("class", url.Equals("/") || url.StartsWith("/?"), "active")>
-                        <a href="/">Home</a>
-                    </li>
-                    <li @Html.Attr("class", url.StartsWith("/services"), "active")>
-                        <a href="/services">Services</a>
-                    </li>
-                    <li @Html.Attr("class", url.StartsWith("/blog"), "active")>
-                        <a href="/blog">Blog</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    @RenderBody()
-    <footer id="footer">
-        <div class="container">
+        @RenderBody()
+        <footer id="footer">
+            <div class="container">
 
-            <div class="row">
-                <div class="col-md-3 col-sm-6 margin30">
-                    <div class="footer-col">
-                        <h3>Social</h3>
-                        <ul class="list-inline social-1">
-                            <li><a target="_blank" href="https://www.facebook.com/mick.r.law"><i class="fa fa-facebook"></i></a></li>
-                            <li><a target="_blank" href="https://twitter.com/milaw"><i class="fa fa-twitter"></i></a></li>
-                            <li><a target="_blank" href="https://uk.linkedin.com/in/milaw"><i class="fa fa-linkedin-square"></i></a></li>
-                            <li><a href="@email"><i class="fa fa-envelope"></i></a></li>
-                        </ul>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 margin30">
+                        <div class="footer-col">
+                            <h3>Social</h3>
+                            <ul class="list-inline social-1">
+                                <li><a target="_blank" href="https://www.facebook.com/mick.r.law"><i class="fa fa-facebook"></i></a></li>
+                                <li><a target="_blank" href="https://twitter.com/milaw"><i class="fa fa-twitter"></i></a></li>
+                                <li><a target="_blank" href="https://uk.linkedin.com/in/milaw"><i class="fa fa-linkedin-square"></i></a></li>
+                                <li><a href="@email"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--footer col-->
+                    <div class="col-md-push-6 col-md-3 col-sm-6 margin30">
                     </div>
                 </div>
-                <!--footer col-->
-                <div class="col-md-push-6 col-md-3 col-sm-6 margin30">
-                </div>
             </div>
-        </div>
-    </footer>
-    @Scripts.Render("~/bundles/js")
-    @RenderSection("Scripts", false)
-    @RenderSection("Tags", false)
-</body>
+        </footer>
+        @Scripts.Render("~/bundles/js")
+        @RenderSection("Scripts", false)
+        @RenderSection("Tags", false)
+    </body>
 </html>

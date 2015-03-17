@@ -1,15 +1,14 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MLWD.Umbraco.Mvc.Controllers.App;
+using MLWD.Umbraco.Umbraco.Services.Search.Models;
 using Website.Domain.Blog.DocTypes;
 using Website.Domain.Blog.ViewModels;
-using Yomego.CMS.Core.Umbraco.Search;
-using Yomego.CMS.Mvc.Controllers;
+using Website.Domain.Shared.Controllers;
 
 namespace Website.Domain.Blog.Controllers
 {
-    public class BaseBlogController : BaseCMSController
+    public class BaseBlogController : AppController
     {
         private BlogListingViewModel GetBlogListingViewModel()
         {
@@ -35,7 +34,7 @@ namespace Website.Domain.Blog.Controllers
 
             if (model.Listing == null)
             {
-                model.Listing = App.Services.Content.Get<BlogListing>().FirstOrDefault() ?? new BlogListing();
+                model.Listing = App.Services.Content.Get<BlogListing>().FirstOrDefault() ?? new List<BlogListing>().FirstOrDefault();
             }
 
             return model;

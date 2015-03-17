@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
-using Yomego.CMS.Mvc.Startup;
+using MLWD.Umbraco.Mvc.Startup;
 
 namespace Website.UI
 {
@@ -10,7 +10,7 @@ namespace Website.UI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            YomegoCMSRouteConfig.RegisterRoutes(routes);
+            MLWDRouteConfig.RegisterRoutes(routes);
 
             routes.MapRoute(
                 name: "Error",

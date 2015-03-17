@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using Website.Domain.Blog.DocTypes;
-using Website.Domain.Contents.DocTypes;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using MLWD.Umbraco.Mvc.Attributes;
+using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
+using Umbraco.Core.Models;
 using Website.Domain.Home.Models.Archetypes;
-using Website.Domain.Service.DocTypes;
-using Website.Domain.Shared.Constants;
-using Yomego.CMS.Core.Attributes;
-using Yomego.CMS.Core.Enums;
-using Yomego.CMS.Core.Umbraco.Model;
+using Website.Domain.Shared.DocTypes;
 
 namespace Website.Domain.Home.DocTypes
 {
-    [ContentType(Description = "Homepage for the site", AllowAtRoot = true, Controller = "Home", IconUrl = "icon-home", AllowedChildNodeTypes = new []
-        {
-            typeof(Services),
-            typeof(ContentPage),
-            typeof(BlogListing)
-        })]
+    [UmbracoRoute("Home")]
     public class Homepage : Page
     {
-        [Archetype]
-        [ContentTypeProperty(ContentTypePropertyUI.Other, OtherTypeName = DataTypes.Testimonials, Tab = Tabs.Content)]
+        public Homepage(IPublishedContent content) : base(content) { }
+
+        [TypeConverter(typeof(ArchetypeConverter<IList<Testimonial>>))]
         public IList<Testimonial> Testimonials { get; set; }
     }
 }

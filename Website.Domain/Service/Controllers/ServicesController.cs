@@ -1,10 +1,11 @@
 ﻿using System.Web.Mvc;
+using MLWD.Umbraco.Mvc.Controllers.App;
 using Website.Domain.Service.ViewModels;
-using Yomego.CMS.Mvc.Controllers;
+using Website.Domain.Shared.Controllers;
 
 namespace Website.Domain.Service.Controllers
 {
-    public class ServicesController : BaseCMSController
+    public class ServicesController : AppController
     {
         public ActionResult Index()
         {

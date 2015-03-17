@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using MLWD.Umbraco.Collections;
+using MLWD.Umbraco.Mvc.Controllers.App;
+using MLWD.Umbraco.Umbraco.Services.Search.Enums;
 using Website.Domain.Blog.DocTypes;
 using Website.Domain.Home.DocTypes;
 using Website.Domain.Home.ViewModels;
+using Website.Domain.Shared.Controllers;
 using Website.Domain.Shared.Search;
-using Yomego.CMS.Core.Collections;
-using Yomego.CMS.Core.Umbraco.Search;
-using Yomego.CMS.Mvc.Controllers;
 
 namespace Website.Domain.Home.Controllers
 {
-    public class HomeController : BaseCMSController
+    public class HomeController : AppController
     {
         public ActionResult Index()
         {

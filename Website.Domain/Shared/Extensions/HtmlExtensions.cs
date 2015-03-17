@@ -1,46 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Yomego.CMS.Core.Umbraco.Model;
-using Yomego.CMS.Core.Utils;
+using MLWD.Umbraco.Utils;
+using Website.Domain.Shared.Models;
 
 namespace Website.Domain.Shared.Extensions
 {
     public static class HtmlExtensions
     {
-        public static IHtmlString Image(this HtmlHelper html, string url, int width, string alt = "")
+        public static IHtmlString FluidImage(this HtmlHelper html, Image image, int width, int? height = null, string alt = "", object htmlAttributes = null)
         {
             var noscript = new TagBuilder("noscript");
 
-            noscript.Attributes.Add("lazy", "");
-            noscript.Attributes.Add("data-actual", width.ToString());
-            noscript.Attributes.Add("data-src", url);
-            noscript.Attributes.Add("data-alt", alt);
+            if (image != null && image.HasUrl)
+            {
+                noscript.Attributes.Add("data-lazy-image", "");
+                noscript.Attributes.Add("data-actual", width.ToString());
+                noscript.Attributes.Add("data-actual-height", height.ToString());
+                noscript.Attributes.Add("data-src", image.GetCrop(width, height));
+                noscript.Attributes.Add("data-alt", alt);
 
-            var image = new TagBuilder("img");
+                var imageTag = new TagBuilder("img");
 
-            image.Attributes.Add("lazy", "");
-            image.AddCssClass("img-responsive");
-            image.Attributes.Add("src", url);
-            image.Attributes.Add("alt", alt);
+                imageTag.Attributes.Add("data-lazy-image", "");
+                imageTag.Attributes.Add("src", image.GetCrop(width, height));
+                imageTag.Attributes.Add("alt", alt);
 
-            noscript.InnerHtml = image.ToString(TagRenderMode.SelfClosing);
+                if (htmlAttributes != null)
+                {
+                    noscript.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+                    imageTag.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+                }
+                else
+                {
+                    noscript.AddCssClass("img-responsive");
+                    imageTag.AddCssClass("img-responsive");
+                }
+
+                noscript.InnerHtml = imageTag.ToString(TagRenderMode.SelfClosing);
+            }
 
             return new HtmlString(noscript.ToString());
         }
 
-        public static IHtmlString Image(this HtmlHelper html, Image image)
+        public static IHtmlString FluidImage(this HtmlHelper html, Image image, int? width = null, int? height = null, object htmlAttributes = null)
         {
             if (image == null || !image.HasUrl)
             {
                 return new HtmlString(string.Empty);
             }
 
-            return html.Image(image.Url, image.Width, image.Alt);
+            return html.FluidImage(image, width ?? image.Width, height ?? image.Height, image.Alt, htmlAttributes);
         }
 
         public static string ToDate(this HtmlHelper html, DateTime? date)

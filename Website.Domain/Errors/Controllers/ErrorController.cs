@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Yomego.CMS.Mvc.Controllers;
+﻿using System.Web.Mvc;
+using MLWD.Umbraco.Mvc.Controllers.App;
+using Website.Domain.Shared.Controllers;
 
 namespace Website.Domain.Errors.Controllers
 {
-    public class ErrorController : BaseCMSController
+    public class ErrorController : AppController
     {
         public ActionResult Index()
         {

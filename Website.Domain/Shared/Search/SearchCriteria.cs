@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Yomego.CMS.Core.Enums;
-using Yomego.CMS.Core.Umbraco.Search;
+﻿using MLWD.Umbraco.Umbraco.Services.Search.Enums;
+using MLWD.Umbraco.Umbraco.Services.Search.Models;
 
 namespace Website.Domain.Shared.Search
 {

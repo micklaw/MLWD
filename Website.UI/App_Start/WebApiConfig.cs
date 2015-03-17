@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using Yomego.CMS.Mvc.Startup;
+using MLWD.Umbraco.Mvc.Startup;
 
 namespace Website.UI
 {
@@ -7,7 +7,7 @@ namespace Website.UI
     {
         public static void Register(HttpConfiguration config)
         {
-            YomegoCMSApiConfig.Register(config);
+            MLWDApiConfig.Register(config);
         }
     }
 }

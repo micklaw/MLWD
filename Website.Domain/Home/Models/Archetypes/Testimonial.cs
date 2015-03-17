@@ -1,14 +1,15 @@
-﻿using Yomego.CMS.Core.Attributes;
-using Yomego.CMS.Core.Umbraco.Model;
-using BaseArchetype = Website.Domain.Shared.Models.BaseArchetype;
+﻿using System.ComponentModel;
+using Archetype.Models;
+using Website.Domain.Shared.Converters;
+using Website.Domain.Shared.Models;
 
 namespace Website.Domain.Home.Models.Archetypes
 {
-    [ArchetypeContent]
-    public class Testimonial : BaseArchetype
+    public class Testimonial : ArchetypeFieldsetModel
     {
         public string Person { get; set; }
-        
+
+        [TypeConverter(typeof(ImageConverter))]
         public Image Image { get; set; }
 
         public string Quote { get; set; }
