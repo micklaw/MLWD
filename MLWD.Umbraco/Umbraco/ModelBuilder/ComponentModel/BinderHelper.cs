@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MLWD.Umbraco.Mvc.Model.Media;
 using MLWD.Umbraco.Utils;
 using Newtonsoft.Json;
-using Website.Domain.Shared.Models;
 using umbraco.MacroEngines;
 
-namespace Website.Domain.Shared.Converters.Helpers
+namespace MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel
 {
     public static class BinderHelper
     {

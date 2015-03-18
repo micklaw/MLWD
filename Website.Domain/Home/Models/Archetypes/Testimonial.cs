@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Archetype.Models;
-using Website.Domain.Shared.Converters;
-using Website.Domain.Shared.Models;
+using MLWD.Umbraco.Mvc.Model.Media;
+using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
 
 namespace Website.Domain.Home.Models.Archetypes
 {

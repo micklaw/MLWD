@@ -94,13 +94,8 @@
     <Compile Include="Contents\Controllers\ContentController.cs" />
     <Compile Include="Contents\ViewModels\ContentViewModel.cs" />
     <Compile Include="Contents\DocTypes\ContentPage.cs" />
-    <Compile Include="Errors\Controllers\ErrorController.cs" />
     <Compile Include="Home\Models\Archetypes\Testimonial.cs" />
     <Compile Include="Shared\Controllers\AppController.cs" />
-    <Compile Include="Shared\Converters\Helpers\BinderHelper.cs" />
-    <Compile Include="Shared\Converters\ImageConverter.cs" />
-    <Compile Include="Shared\Converters\MultiImageConverter.cs" />
-    <Compile Include="Shared\DocTypes\Page.cs" />
     <Compile Include="Home\Controllers\HomeController.cs" />
     <Compile Include="Home\DocTypes\Homepage.cs" />
     <Compile Include="Home\ViewModels\HomeViewModel.cs" />
@@ -111,12 +106,7 @@
     <Compile Include="Shared\Constants\DataTypes.cs" />
     <Compile Include="Shared\Enums\SiteTabs.cs" />
     <Compile Include="Shared\Extensions\HtmlExtensions.cs" />
-    <Compile Include="Shared\Models\Focalpoint.cs" />
-    <Compile Include="Shared\Models\Image.cs" />
-    <Compile Include="Shared\Models\ImageCrops.cs" />
-    <Compile Include="Shared\Models\MediaItem.cs" />
     <Compile Include="Shared\Search\SearchCriteria.cs" />
-    <Compile Include="Shared\DocTypes\Settings.cs" />
     <Compile Include="Shared\Views\WebsiteWebViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +130,10 @@
       <Project>{55e97ca3-d1ae-4544-bb55-0a0491de13b3}</Project>
       <Name>MLWD.Umbraco</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\Converters\Helpers\" />
+    <Folder Include="Shared\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

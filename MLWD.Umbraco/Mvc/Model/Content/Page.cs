@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel;
+using MLWD.Umbraco.Mvc.Model.Media;
 using MLWD.Umbraco.Umbraco.ModelBuilder.Attributes;
 using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
-using Website.Domain.Shared.Converters;
-using Website.Domain.Shared.Models;
 
-namespace Website.Domain.Shared.DocTypes
+namespace MLWD.Umbraco.Mvc.Model.Content
 {
     public class Page : PublishedContentModel
     {

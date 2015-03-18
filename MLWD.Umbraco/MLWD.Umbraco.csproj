@@ -110,7 +110,16 @@
     <Compile Include="Context\CoreApp.cs" />
     <Compile Include="Context\WebContext.cs" />
     <Compile Include="Mvc\Attributes\UmbracoRouteAttribute.cs" />
+    <Compile Include="Mvc\Model\Content\Page.cs" />
+    <Compile Include="Mvc\Model\Content\Settings.cs" />
     <Compile Include="Mvc\Model\Enums\ChangeFrequency.cs" />
+    <Compile Include="Mvc\Model\Media\Focalpoint.cs" />
+    <Compile Include="Mvc\Model\Media\Image.cs" />
+    <Compile Include="Mvc\Model\Media\ImageCrops.cs" />
+    <Compile Include="Mvc\Model\Media\MediaItem.cs" />
+    <Compile Include="Umbraco\ModelBuilder\ComponentModel\BinderHelper.cs" />
+    <Compile Include="Umbraco\ModelBuilder\ComponentModel\TypeConverters\ImageConverter.cs" />
+    <Compile Include="Umbraco\ModelBuilder\ComponentModel\TypeConverters\MultiImageConverter.cs" />
     <Compile Include="Umbraco\Services\Search\Enums\OperatorEnum.cs" />
     <Compile Include="Mvc\Attributes\HtmlAttribute.cs" />
     <Compile Include="Mvc\ActionResults\JsonNetResult.cs" />

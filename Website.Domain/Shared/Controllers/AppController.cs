@@ -1,32 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Web;
 using MLWD.Umbraco.Mvc.Controllers.App;
 using MLWD.Umbraco.Mvc.Model;
-using Website.Domain.Shared.DocTypes;
+using MLWD.Umbraco.Mvc.Model.Content;
 
 namespace Website.Domain.Shared.Controllers
 {
     public class AppController : BaseCMSController
     {
-        private Settings _settings { get; set; }
-
-        public Settings Settings
-        {
-            get
-            {
-                if (_settings == null)
-                {
-                    _settings = App.Services.Content.First<Settings>();
-                }
-
-                return _settings;
-            }
-        }
-
         private void CheckForSEOContent()
         {
             var page = Node as Page;

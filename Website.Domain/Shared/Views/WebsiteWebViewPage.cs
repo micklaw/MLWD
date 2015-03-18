@@ -1,10 +1,21 @@
 ﻿using System;
 using System.Web.Mvc;
+using MLWD.Umbraco.Context;
 
 namespace Website.Domain.Shared.Views
 {
     public abstract class WebsiteWebViewPage<T> : WebViewPage<T>
     {
+        private readonly Lazy<App> _lazyApp = new Lazy<App>();
+
+        protected App DomainApp
+        {
+            get
+            {
+                return _lazyApp.Value;
+            }
+        }
+
         public TimeSpan Subtract(DateTime date)
         {
             return DateTime.Now.Subtract(date);

@@ -1,7 +1,6 @@
 ﻿using System.Web;
-using MLWD.Umbraco.Umbraco.ModelBuilder.Attributes;
 
-namespace Website.Domain.Shared.Models
+namespace MLWD.Umbraco.Mvc.Model.Media
 {
     public class Image : MediaItem
     {

@@ -2,15 +2,11 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel;
-using MLWD.Umbraco.Umbraco.ModelBuilder.Extensions;
+using MLWD.Umbraco.Mvc.Model.Media;
 using Umbraco.Core;
 using Umbraco.Core.Models;
-using Website.Domain.Shared.Converters.Helpers;
-using Website.Domain.Shared.Models;
-using umbraco.MacroEngines;
 
-namespace Website.Domain.Shared.Converters
+namespace MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters
 {
     /// <summary>
     /// Provides a unified way of converting multi media picker properties to strong typed collections.

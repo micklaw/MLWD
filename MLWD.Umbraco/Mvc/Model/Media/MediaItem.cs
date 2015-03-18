@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MLWD.Umbraco.Umbraco.ModelBuilder.Attributes;
-
-namespace Website.Domain.Shared.Models
+﻿namespace MLWD.Umbraco.Mvc.Model.Media
 {
     public class MediaItem
     {

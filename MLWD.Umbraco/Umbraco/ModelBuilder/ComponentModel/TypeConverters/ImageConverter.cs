@@ -2,9 +2,8 @@
 using System.ComponentModel;
 using System.Globalization;
 using Umbraco.Core.Models;
-using Website.Domain.Shared.Converters.Helpers;
 
-namespace Website.Domain.Shared.Converters
+namespace MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters
 {
     /// <summary>
     /// Provides a unified way of converting media picker properties to strong typed model.

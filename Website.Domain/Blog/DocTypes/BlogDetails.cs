@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web;
 using MLWD.Umbraco.Mvc.Attributes;
+using MLWD.Umbraco.Mvc.Model.Content;
+using MLWD.Umbraco.Mvc.Model.Media;
 using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
 using Umbraco.Core.Models;
-using Website.Domain.Shared.Converters;
-using Website.Domain.Shared.DocTypes;
-using Website.Domain.Shared.Models;
 
 namespace Website.Domain.Blog.DocTypes
 {

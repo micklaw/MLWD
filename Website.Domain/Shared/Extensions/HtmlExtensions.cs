@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using MLWD.Umbraco.Mvc.Model.Media;
 using MLWD.Umbraco.Utils;
-using Website.Domain.Shared.Models;
 
 namespace Website.Domain.Shared.Extensions
 {

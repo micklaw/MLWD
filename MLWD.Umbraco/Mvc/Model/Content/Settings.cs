@@ -1,7 +1,7 @@
 ﻿using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 
-namespace Website.Domain.Shared.DocTypes
+namespace MLWD.Umbraco.Mvc.Model.Content
 {
     public class Settings : PublishedContentModel
     {

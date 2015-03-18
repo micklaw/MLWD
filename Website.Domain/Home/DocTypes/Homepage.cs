@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using MLWD.Umbraco.Mvc.Attributes;
+using MLWD.Umbraco.Mvc.Model.Content;
 using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
 using Umbraco.Core.Models;
 using Website.Domain.Home.Models.Archetypes;
-using Website.Domain.Shared.DocTypes;
 
 namespace Website.Domain.Home.DocTypes
 {

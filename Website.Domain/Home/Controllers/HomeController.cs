@@ -32,7 +32,7 @@ namespace Website.Domain.Home.Controllers
 #endif
         public ActionResult SiteMap()
         {
-            var pages = App.Services.Content.GetSitemapPages(); // ML - Get all pages
+            var pages = App.Services.Content.GetSitemapPages();
 
             return Sitemap(pages);
         }
@@ -42,7 +42,7 @@ namespace Website.Domain.Home.Controllers
 #endif
         public ActionResult Robots()
         {
-            var robots = Settings.Robots; // ML - Get all pages
+            var robots = App.Settings.Robots; 
 
             return Content(robots, "text/plain");
         }

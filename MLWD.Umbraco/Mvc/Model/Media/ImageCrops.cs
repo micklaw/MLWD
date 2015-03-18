@@ -1,4 +1,4 @@
-﻿namespace Website.Domain.Shared.Models
+﻿namespace MLWD.Umbraco.Mvc.Model.Media
 {
     public class ImageCrops
     {
