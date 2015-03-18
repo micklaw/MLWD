@@ -113,8 +113,8 @@
     <Compile Include="Mvc\Model\Enums\ChangeFrequency.cs" />
     <Compile Include="Umbraco\Services\Search\Enums\OperatorEnum.cs" />
     <Compile Include="Mvc\Attributes\HtmlAttribute.cs" />
-    <Compile Include="Mvc\Controllers\ActionResults\JsonNetResult.cs" />
-    <Compile Include="Mvc\Controllers\ActionResults\XmlSitemapResult.cs" />
+    <Compile Include="Mvc\ActionResults\JsonNetResult.cs" />
+    <Compile Include="Mvc\ActionResults\XmlSitemapResult.cs" />
     <Compile Include="Mvc\Controllers\Base\BaseController.cs" />
     <Compile Include="Mvc\Controllers\CMS\Api\BaseApiController.cs" />
     <Compile Include="Mvc\Controllers\App\BaseCMSController.cs" />

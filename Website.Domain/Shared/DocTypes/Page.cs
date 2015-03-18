@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using MLWD.Umbraco.Umbraco.ModelBuilder.Attributes;
 using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
@@ -15,8 +16,6 @@ namespace Website.Domain.Shared.DocTypes
 
         public string MetaDescription { get; set; }
 
-        public string MetaKeywords { get; set; }
-
 
         public string OgTitle { get; set; }
 
@@ -28,10 +27,10 @@ namespace Website.Domain.Shared.DocTypes
         public bool OgUseThis { get; set; }
 
 
-        public string IsMandatory { get; set; }
+        [UmbracoProperty("UmbracoNaviHide")]
+        public bool HidePage { get; set; }
 
-        public bool UmbracoNaviHide { get; set; }
-
-        public string MvcViewName { get; set; }
+        [UmbracoProperty("MvcViewName")]
+        public string ViewPath { get; set; }
     }
 }

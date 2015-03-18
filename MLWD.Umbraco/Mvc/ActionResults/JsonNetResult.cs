@@ -3,7 +3,7 @@ using System.Text;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 
-namespace MLWD.Umbraco.Mvc.Controllers.ActionResults
+namespace MLWD.Umbraco.Mvc.ActionResults
 {
     public class JsonNetResult : JsonResult
     {

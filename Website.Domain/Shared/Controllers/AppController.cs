@@ -12,6 +12,21 @@ namespace Website.Domain.Shared.Controllers
 {
     public class AppController : BaseCMSController
     {
+        private Settings _settings { get; set; }
+
+        public Settings Settings
+        {
+            get
+            {
+                if (_settings == null)
+                {
+                    _settings = App.Services.Content.First<Settings>();
+                }
+
+                return _settings;
+            }
+        }
+
         private void CheckForSEOContent()
         {
             var page = Node as Page;
@@ -26,7 +41,6 @@ namespace Website.Domain.Shared.Controllers
                 }
 
                 ViewBag.MetaDescription = page.MetaDescription;
-                ViewBag.MetaKeywords = page.MetaKeywords;
             }
         }
 

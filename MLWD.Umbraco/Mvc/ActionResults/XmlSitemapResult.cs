@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using MLWD.Umbraco.Mvc.Model.Interfaces;
 
-namespace MLWD.Umbraco.Mvc.Controllers.ActionResults
+namespace MLWD.Umbraco.Mvc.ActionResults
 {
     public class XmlSitemapResult : ActionResult
     {
@@ -21,7 +21,7 @@ namespace MLWD.Umbraco.Mvc.Controllers.ActionResults
             var encoding = context.HttpContext.Response.ContentEncoding.WebName;
 
             var sitemap = new XDocument(new XDeclaration("1.0", encoding, "yes"),
-                                        new XElement("urlset", XNamespace.Get("http://www.sitemaps.org/schemas/sitemap/0.9"),
+                                        new XElement("urlset", new XAttribute(XNamespace.Xmlns + "xhtml", "http://www.sitemaps.org/schemas/sitemap/0.9"),
                                                      from item in _items
                                                      select CreateItemElement(item)
                                             )

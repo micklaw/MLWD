@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Web.Mvc;
 using MLWD.Umbraco.Constants;
-using MLWD.Umbraco.Mvc.Controllers.ActionResults;
+using MLWD.Umbraco.Mvc.ActionResults;
 using MLWD.Umbraco.Mvc.Model.Interfaces;
 using Umbraco.Core.Models.PublishedContent;
 

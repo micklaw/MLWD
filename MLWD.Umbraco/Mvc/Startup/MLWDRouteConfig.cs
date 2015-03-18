@@ -25,18 +25,6 @@ namespace MLWD.Umbraco.Mvc.Startup
                 defaults: new { controller = "MLWDAdminCMS", action = "SaveDataTypes" }
             );
 
-            routes.MapRoute(
-                name: "Sitemap",
-                url: "sitemap.xml",
-                defaults: new { controller = "SEOCMS", action = "Sitemap" }
-            );
-
-            routes.MapRoute(
-                name: "Robots",
-                url: "robots.txt",
-                defaults: new { controller = "SEOCMS", action = "Robots" }
-            );
-
             var umbraco = new Route("{*url}", new RouteValueDictionary() { }, new RouteValueDictionary() { { "url", new MLWDCMSRouteConstraint() } }, new MLWDCMSRouteHandler());
 
             routes.Add(umbraco);

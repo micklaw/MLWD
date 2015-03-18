@@ -25,7 +25,7 @@ namespace MLWD.Umbraco.Umbraco.Events
 
             if (node.Id > 0)
             {
-                var parentId = (node != null && node.Parent != null) ? node.Parent.Id : 0;
+                var parentId = (node.Parent != null) ? node.Parent.Id : 0;
 
                 e.Fields.Add("SystemParentId", parentId.ToString());
 

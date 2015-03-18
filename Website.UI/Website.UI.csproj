@@ -445,13 +445,13 @@
       <Project>{e583d541-4531-4213-a514-287ea1375358}</Project>
       <Name>jumps.umbraco.usync</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MLWD.Umbraco\MLWD.Umbraco.csproj">
+      <Project>{55e97ca3-d1ae-4544-bb55-0a0491de13b3}</Project>
+      <Name>MLWD.Umbraco</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Website.Domain\Website.Domain.csproj">
       <Project>{A0AE2975-A401-4D7C-B625-2DC1C330DC93}</Project>
       <Name>Website.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MLWD.Umbraco\MLWD.Umbraco.csproj">
-      <Project>{55E97CA3-D1AE-4544-BB55-0A0491DE13B3}</Project>
-      <Name>MLWD.Umbraco</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -507,6 +507,7 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\_ViewStart.cshtml" />
+    <Content Include="Views\Preview.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
