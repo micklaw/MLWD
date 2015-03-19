@@ -15,8 +15,7 @@ namespace Website.Domain.Blog.Controllers
             var model = new BlogListingViewModel
             {
                 Listing = Node as BlogListing,
-                Categories = App.Services.Content.FacetSearch(Criteria.WithFacetField("blogCategory").AndTypes(new[] {typeof (BlogDetails)})),
-                Tags = App.Services.Content.FacetSearch(Criteria.WithFacetField("SystemBlogTags").AndTypes(new[] {typeof (BlogDetails)}))
+                Categories = App.Services.Content.FacetSearch(Criteria.WithFacetField("blogCategory").AndTypes(new[] {typeof (BlogDetails)}))
             };
 
             if (!string.IsNullOrWhiteSpace(Request.QueryString["c"]))

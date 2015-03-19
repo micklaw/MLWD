@@ -30,8 +30,55 @@
         }
     </ul>
     <h2>@(!string.IsNullOrWhiteSpace(Model.Content.WorkTitle) ? Model.Content.WorkTitle : Model.Content.BlogTitle)</h2>
+    @if (!string.IsNullOrWhiteSpace(Model.Content.WorkClientSiteUrl))
+    {
+        <p><i class="fa fa-globe"></i>&nbsp;<a href="@Model.Content.WorkClientSiteUrl" target="_blank" title="Visit the website.">@Model.Content.WorkClientSiteUrl</a></p>
+    }
+    @if (Model.Content.Tags.Any())
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 no-left-pad">
+                    <div class="tag-list">
+                        @foreach (var tag in Model.Content.Tags)
+                        {
+                            <a href="javascript:void(0);">@tag</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divide20"></div>
+    }
     @Html.Raw(Model.Content.BlogDescription)
 </div>
+
+@if (Model.Content.WorkSlideshow != null && Model.Content.WorkSlideshow.Any())
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="grid" class="row">
+                    @foreach (var slide in Model.Content.WorkSlideshow)
+                    {
+                        <div class="mix col-sm-3 page1 page4 margin30">
+                            <div class="item-img-wrap ">
+                                @Html.FluidImage(slide, 300, 300)
+                                <div class="item-img-overlay">
+                                    <a href="@slide.Url" class="show-image">
+                                        <span></span>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+                <!--#grid-->
+            </div>
+        </div>
+    </div>
+}
 
 @if (!Model.Content.DisableComments)
 {

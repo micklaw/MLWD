@@ -17,8 +17,6 @@ namespace Website.Domain.Blog.ViewModels
 
         public IList<Facet> Categories { get; set; }
 
-        public IList<Facet> Tags { get; set; }
-
         public Dictionary<string, string> Keywords { get; set; } 
 
         public IHtmlString FormattedString(int resultCount)

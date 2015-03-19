@@ -7,6 +7,7 @@ using MLWD.Umbraco.Mvc.Model.Content;
 using MLWD.Umbraco.Mvc.Model.Media;
 using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
 using Umbraco.Core.Models;
+using System.Linq;
 
 namespace Website.Domain.Blog.DocTypes
 {
@@ -30,6 +31,8 @@ namespace Website.Domain.Blog.DocTypes
 
         public string WorkClient { get; set; }
 
+        public string WorkClientSiteUrl { get; set; }
+
         [TypeConverter(typeof(ImageConverter))]
         public Image WorkClientImage { get; set; }
 
@@ -40,13 +43,27 @@ namespace Website.Domain.Blog.DocTypes
         public string WorkClientQuotePersonJob { get; set; }
 
         [TypeConverter(typeof(MultiImageConverter))]
-        public IList<Image> WorkSlideshow { get; set; }
+        public IEnumerable<Image> WorkSlideshow { get; set; }
 
 
         public string BlogCategory { get; set; }
 
         public string BlogTags { get; set; }
 
+        public IList<string> Tags
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(BlogTags))
+                {
+                    return new List<string>();
+                }
+
+                return BlogTags.Split(',').Select(i => i.Trim()).Where( i => !string.IsNullOrWhiteSpace(i)).ToList();
+            }
+        }
+        
+    
         [TypeConverter(typeof(ImageConverter))]
         public Image BlogImage { get; set; }
 

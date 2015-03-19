@@ -1198,8 +1198,7 @@ ul.post-desc li + li{
 /**blog inner pages**/
 .blog-post{
     border-bottom: 1px dashed #e5e5e5;
-    padding-bottom: 30px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 .post-detail{
     margin-top:25px;
@@ -2814,4 +2813,7 @@ margin-right: 20px;
 .dropdown-login-box p a:hover{
     color:#3498db;
     text-decoration: underline;
+}
+.no-left-pad {
+    padding-left: 0 !important;
 }

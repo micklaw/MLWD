@@ -48,20 +48,6 @@
                     </ul>
                 </div>
             }
-
-            @if (viewModel.Tags != null && viewModel.Tags.Any())
-            {
-                <!--sidebar-box-->
-                <div class="sidebar-box margin40">
-                    <h4>Tag Cloud</h4>
-                    <div class="tag-list">
-                        @foreach (var tag in viewModel.Tags)
-                        {
-                            <a href="/blog?t=@tag.Name">@tag.Name.Humanize(LetterCasing.Title)</a>
-                        }
-                    </div>
-                </div>
-            }
         </div>
         <!--sidebar-col-->
     </div>
