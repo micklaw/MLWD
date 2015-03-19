@@ -28,14 +28,7 @@ namespace MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel
 
                 img.ImageCrops = JsonConvert.DeserializeObject<ImageCrops>(mediaPath);
 
-                if (img.ImageCrops.focalPoint != null && !string.IsNullOrWhiteSpace(img.ImageCrops.src))
-                {
-                    img.Url = img.ImageCrops.src;
-                }
-                else
-                {
-                    img.Url = mediaPath;
-                }
+                img.Url = !string.IsNullOrWhiteSpace(img.ImageCrops.src) ? img.ImageCrops.src : mediaPath;
 
                 int width;
                 int.TryParse(mediaItem.GetPropertyAsString("umbracoWidth"), out width);
