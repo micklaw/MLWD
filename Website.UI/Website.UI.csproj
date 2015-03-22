@@ -506,6 +506,7 @@
     <Content Include="Views\Content\Content.cshtml" />
     <Content Include="Views\Shared\Og.cshtml" />
     <Content Include="Views\Preview.cshtml" />
+    <Content Include="Views\Shared\Services.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

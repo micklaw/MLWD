@@ -1,10 +1,13 @@
-﻿@model Website.Domain.Service.ViewModels.ServicesViewModel
-
+﻿@using Website.Domain.Home.Models.Archetypes
+@model Website.Domain.Service.ViewModels.ServicesViewModel
+@{
+    var services = (Model.Content.ServicesList ?? new List<Service>()).Where(i => !i.Disabled).ToList();
+}
 <div class="divide20"></div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="heading">Things I do</h3>
+            <h3 class="heading">Services</h3>
         </div>
     </div>
 </div>
@@ -16,137 +19,23 @@
             </p>
         </div>
         <div class="col-md-6">
-            <img src="/content/img/showcase-1.jpg" class="img-responsive" alt="">
+            @if (Model.Content.ServiceImage != null && Model.Content.ServiceImage.HasUrl)
+            {
+                @Html.FluidImage(Model.Content.ServiceImage, 555, 260)
+            }
         </div>
     </div>
     <!--about intro-->
 </div>
 
-<div class="divide60"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-sm-6 margin20">
-            <div class="services-box wow animated fadeInUp" data-wow-duration="700ms" data-wow-delay="100ms">
-                <div class="services-box-icon">
-                    <img src="/content/img/services/dotnet.jpg" alt="MS .Net" class="img-responsive"/>
-                </div>
-                <!--services icon-->
-                <div class="services-box-info">
-                    <h4>.Net</h4>
-                    <p>
-                        .Net, with C# in particular is my bread and butter. Having used every iteration of the framework since v1.1,
-                            I have gained a low level understanding of not only C#, but a large part .Net framework in general. 
-                            Having an indepth understanding of how code is executed by the CLR allows me to write extremely efficient, 
-                            simple to read and understand code which always meets the requirements of my clients. I am extremely well versed in 
-                            MS based servers and tooling, having maintained many servers through out my career.
-                    </p>
-                </div>
-            </div>
-            <!--services box-->
-        </div>
-        <!--services col-->
-        <div class="col-md-4 col-sm-6 margin20">
-            <div class="services-box wow animated fadeInUp" data-wow-duration="700ms" data-wow-delay="600ms">
-                <div class="services-box-icon">
-                    <img src="/content/img/services/web.jpg" alt="MS .Net" class="img-responsive"/>
-                </div>
-                <!--services icon-->
-                <div class="services-box-info">
-                    <h4>Web Development</h4>
-                    <p>
-                        Web development is not only my job but my hobby too. I enjoy learning about all aspects of it, not only regarding web development,
-                            but also in web standards and security. I feel before you can be a good web developer you have to understand how the web works.
-                            While the .Net frameworks provides all of my server side needs, well structured javascript, HTML and CSS provides an efficient UI.
-                            I am a believer that Javascript is a first class development language and in the not too distant future we will be writing much more
-                            of it.
-                    </p>
-
-                </div>
-            </div>
-            <!--services box-->
-        </div>
-        <!--services col-->
-        <div class="col-md-4 col-sm-6 margin20">
-            <div class="services-box wow animated fadeInUp" data-wow-duration="700ms" data-wow-delay="300ms">
-                <div class="services-box-icon">
-                    <img src="/content/img/services/umbraco.jpg" alt="MS .Net" class="img-responsive"/>
-                </div>
-                <!--services icon-->
-                <div class="services-box-info">
-                    <h4>Umbraco CMS</h4>
-                    <p>
-                        Umbraco has been my default response when a project requires a CMS for a long time. Having tried many others, clients 
-                            feedback when given an umbraco based CMS makes this my go to option every time. I am yet to find a requirement where 
-                            Umbraco cannot be extended to fulfill. With this high level of extendability and ease of use, i cannot see this 
-                            changing for the foreseable future. With a base code-first framework created along side 
-                            <a href="http://www.secretorange.co.uk" title="Visit Secret Orange.">Lee Gunn</a> we have created web sites 
-                            ranging from single page applications through to large scale cloud based gamification platforms.
-                    </p>
-                </div>
-            </div>
-            <!--services box-->
-        </div>
-        <!--services col-->
-        <div class="col-md-4 col-sm-6 margin20">
-            <div class="services-box wow animated fadeInUp" data-wow-duration="700ms" data-wow-delay="200ms">
-                <div class="services-box-icon">
-                    <img src="/content/img/services/design-patterns.jpg" alt="MS .Net" class="img-responsive"/>
-                </div>
-                <!--services icon-->
-                <div class="services-box-info">
-                    <h4>Design Patterns & code standards</h4>
-                    <p>
-                        Writing code is easy. Writing maintainable code is hard, really hard. It is very easy for complex projects
-                            to rapidly become code mess. Having a strong understanding of software design patterns and intuitive coding standards 
-                            allows for me to easily adapt mysef to most teams and provide essential consultancy in starting projects on the correct foot.
-                    </p>
-                </div>
-            </div>
-            <!--services box-->
-        </div>
-        <!--services col-->
-        <div class="col-md-4 col-sm-6 margin20">
-            <div class="services-box wow animated fadeInUp" data-wow-duration="700ms" data-wow-delay="400ms">
-                <div class="services-box-icon">
-                    <img src="/content/img/services/tdd.jpg" alt="MS .Net" class="img-responsive"/>
-                </div>
-                <!--services icon-->
-                <div class="services-box-info">
-                    <h4>Quality Assurance & Testing</h4>
-                    <p>
-                        I pride myself on delivering code which works for the long haul. Covering code with Unit and Integration tests allows me test complex
-                            units of work in isolation. The practice of testing code in isolation forces my code to be structured with testability and 
-                            extendability as its first priority. If requirements change, it is easy to amend the code too, and, heaven forbid, should the
-                            code break I can catch it in development before it hits your server or clients. I have used various Load testing frameworks to
-                            ensure that when users hit your services they will not implode under the strain.
-                    </p>
-                </div>
-            </div>
-            <!--services box-->
-        </div>
-        <!--services col-->
-        <div class="col-md-4 col-sm-6 margin20">
-            <div class="services-box wow animated fadeInUp" data-wow-duration="700ms" data-wow-delay="500ms">
-                <div class="services-box-icon">
-                    <img src="/content/img/services/azure.jpg" alt="MS .Net" class="img-responsive"/>
-                </div>
-                <!--services icon-->
-                <div class="services-box-info">
-                    <h4>Cloud</h4>
-                    <p>
-                        I have been fortunate in my career to have been an extremely early adopter of cloud based frameworks.
-                            Over the past 3+ years I have made extensive use of Microsoft Azure Cloud instances, storage accounts and databases, 
-                            providing a level of scalability where my clients budget could never have taken them previously. This tooling has also allowed
-                            my to take a new approach when handing data via NoSQL Databases and Queue based messaging.
-                    </p>
-                </div>
-            </div>
-            <!--services box-->
-        </div>
-        <!--services col-->
+@if (services.Any())
+{
+    <div class="divide60"></div>
+    <div class="container">
+        @Html.Partial("Services", services)
     </div>
-</div>
-<!--services row-->
+    <!--services row-->
+}
 
 <!--skills-->
 <div class="divide60"></div>

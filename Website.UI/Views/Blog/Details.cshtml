@@ -15,15 +15,12 @@
             if (image != null && image.HasUrl)
             {
             @Html.FluidImage(image, 800, 400)
-            <div class="item-img-overlay">
-                <span></span>
-            </div>
             }
         }
     </div>
     <ul class="list-inline post-detail">
         <li><i class="fa fa-calendar"></i>@Html.ToDate(publishDate)</li>
-        <li><i class="fa fa-tag"></i><a href="/blog?c=@Model.Content.BlogCategory">@Model.Content.BlogCategory</a></li>
+        <li><i class="fa fa-tag"></i><a href="@Urls.Blog?c=@Model.Content.BlogCategory">@Model.Content.BlogCategory</a></li>
         @if (!string.IsNullOrWhiteSpace(Model.Content.WorkClient))
         {
             <li><i class="fa fa-group"></i>@Model.Content.WorkClient</li>

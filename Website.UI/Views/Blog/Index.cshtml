@@ -36,7 +36,7 @@
         <!--work link-->
         <ul class="list-inline post-detail">
             <li><i class="fa fa-calendar"></i>@Html.ToDate(blog.BlogPublishDate)</li>
-            <li><i class="fa fa-tag"></i><a href="/blog/?c=@blog.BlogCategory">@blog.BlogCategory</a></li>
+            <li><i class="fa fa-tag"></i><a href="@Urls.Blog?c=@blog.BlogCategory">@blog.BlogCategory</a></li>
             @if (!string.IsNullOrWhiteSpace(blog.WorkClient))
             {
                 <li><i class="fa fa-group"></i>@blog.WorkClient</li>

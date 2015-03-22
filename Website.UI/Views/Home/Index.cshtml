@@ -1,10 +1,21 @@
 ﻿@using Website.Domain.Home.Models.Archetypes
+@using System.Linq
 @model Website.Domain.Home.ViewModels.HomeViewModel
 @{
-    var testimonials = (Model.Content.Testimonials ?? new List<Testimonial>()).Where(i => !i.Disabled);
+    var testimonials = (Model.Content.Testimonials ?? new List<Testimonial>()).Where(i => !i.Disabled).ToList();
+    var services = (Model.Content.Services ?? new List<Service>()).Where(i => !i.Disabled).ToList();
+
+    var hasImage = false;
+    string imageUrl = null;
+    
+    if (Model.Content.HeaderBackground != null && Model.Content.HeaderBackground.HasUrl)
+    {
+        hasImage = true;
+        imageUrl = Model.Content.HeaderBackground.GetCrop(1920, 900);
+    }
 }
 
-<section id="home-parallax" class="parallax">
+<section id="home-parallax" class="parallax" @Html.Attr("style", hasImage, string.Format("background: url('{0}') no-repeat;", imageUrl))>
     <div class="container text-center">
         <h2 class="wow animated fadeInDown"><span class="colored-text">Hello!</span></h2>
         <p class="lead animated fadeIn">
@@ -13,78 +24,24 @@
     </div>
 </section>
 
-<!--things im good at-->
-<section class="services-wrap">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="center-heading">
-                    <h2>Things i do</h2>
-                    <span class="center-line"></span>
+@if (services.Any())
+{
+    <!--things im good at-->
+    <section class="services-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="center-heading">
+                        <h2>Services</h2>
+                        <span class="center-line"></span>
+                    </div>
                 </div>
             </div>
+            <!--center heading row-->
+            @Html.Partial("Services", services)
         </div>
-        <!--center heading row-->
-        <div class="row">
-            <div class="col-md-4 col-sm-6 margin20">
-                <div class="services-box animated fadeInUp">
-                    <div class="services-box-icon">
-                        <img src="/content/img/services/dotnet.jpg" alt="MS .Net" class="img-responsive" />
-                    </div>
-                    <!--services icon-->
-                    <div class="services-box-info">
-                        <h4>.Net</h4>
-                        <p>
-                            .Net, with C# in particular is my bread and butter. With an indepth understanding of how code is executed by the CLR,
-                            it allows me to write extremely efficient, performant, easy to read code which always meets the requirements and
-                            expectations of my clients.
-
-                        </p>
-                    </div>
-                </div>
-                <!--services box-->
-            </div>
-            <!--services col-->
-            <div class="col-md-4 col-sm-6 margin20">
-                <div class="services-box animated fadeInUp">
-                    <div class="services-box-icon">
-                        <img src="/content/img/services/web.jpg" alt="MS .Net" class="img-responsive" />
-                    </div>
-                    <!--services icon-->
-                    <div class="services-box-info">
-                        <h4>Web Development</h4>
-                        <p>
-                            Web development is not only my job, but my hobby too. I enjoy learning about all aspects of it, not only regarding web development,
-                            but also in web standards and security. I feel before you can be a good web developer you have to understand how the web works.
-                        </p>
-
-                    </div>
-                </div>
-                <!--services box-->
-            </div>
-            <!--services col-->
-            <div class="col-md-4 col-sm-6 margin20">
-                <div class="services-box animated fadeInUp">
-                    <div class="services-box-icon">
-                        <img src="/content/img/services/umbraco.jpg" alt="MS .Net" class="img-responsive" />
-                    </div>
-                    <!--services icon-->
-                    <div class="services-box-info">
-                        <h4>Umbraco CMS</h4>
-                        <p>
-                            Umbraco has been my default response when a project requires a CMS for a long time. Having tried many others, clients 
-                            feedback when given an umbraco based CMS makes this my go to option every time. I am yet to find a requirement where 
-                            Umbraco cannot be extended to fulfill.
-                        </p>
-                    </div>
-                </div>
-                <!--services box-->
-            </div>
-            <!--services col-->
-        </div>
-        <!--services row-->
-    </div>
-</section>
+    </section>
+}
 
 @if (Model.Work != null && Model.Work.Any())
 {
@@ -95,7 +52,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="center-heading">
-                        <h2>Things i've done recently</h2>
+                        <h2>Recent work</h2>
                         <span class="center-line"></span>
                     </div>
                 </div>
@@ -128,7 +85,7 @@
             <div class="divide30"></div>
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <a href="/blog/?c=work" class="btn border-theme btn-lg wow animated fadeInUp"><i class="fa fa-bars"></i>More of my work</a>
+                    <a href="@Urls.Blog?c=work" class="btn border-theme btn-lg wow animated fadeInUp"><i class="fa fa-bars"></i>More of my work</a>
                 </div>
             </div>
         </div>
@@ -179,7 +136,7 @@
         <div class="row">
             <div class="col-md-12 margin40">
                 <div class="center-heading">
-                    <h2>Things I've written</h2>
+                    <h2>Latest Blogs</h2>
                     <span class="center-line"></span>
                 </div>
                 <div id="news-carousel" class="owl-carousel owl-spaced">

@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="heading">Things I've written</h3>
+            <h3 class="heading">Blog & Recent Work</h3>
         </div>
     </div>
 </div>
@@ -23,7 +23,7 @@
         <div class="col-md-3 col-md-offset-1">
             <div class="sidebar-box margin40">
                 <h4>Search</h4>
-                <form role="form" method="GET" action="/blog" class="search-widget">
+                <form role="form" method="GET" action="@Urls.Blog" class="search-widget">
                     <input type="text" name="k" id="k" class="form-control">
                     <i class="fa fa-search"></i>
                 </form>
@@ -43,7 +43,7 @@
                     <ul class="list-unstyled cat-list">
                         @foreach (var category in viewModel.Categories)
                         {
-                            <li><a href="/blog?c=@category.Name">@category.Name.Humanize(LetterCasing.Title) (@category.Count)</a> <i class="fa fa-angle-right"></i></li>
+                            <li><a href="@Urls.Blog?c=@category.Name">@category.Name.Humanize(LetterCasing.Title) (@category.Count)</a> <i class="fa fa-angle-right"></i></li>
                         }
                     </ul>
                 </div>

@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Web;
 using MLWD.Umbraco.Context;
 using MLWD.Umbraco.Umbraco.Services.Container;
 
@@ -50,5 +51,19 @@ namespace MLWD.Umbraco
         }
 
         #endregion Web Config Settings
+
+        public class DomainSettings
+        {
+            public static string SiteUrl
+            {
+                get
+                {
+                    const string format = "{0}://{1}";
+
+                    return string.Format(format, HttpContext.Current.Request.Url.Scheme,
+                                         HttpContext.Current.Request.Url.Host);
+                }
+            }
+        }
     }
 }

@@ -20,8 +20,10 @@ namespace MLWD.Umbraco.Mvc.ActionResults
         {
             var encoding = context.HttpContext.Response.ContentEncoding.WebName;
 
+            var blank = XNamespace.Get(@"http://www.sitemaps.org/schemas/sitemap/0.9");
+
             var sitemap = new XDocument(new XDeclaration("1.0", encoding, "yes"),
-                                        new XElement("urlset", new XAttribute(XNamespace.Xmlns + "xhtml", "http://www.sitemaps.org/schemas/sitemap/0.9"),
+                                        new XElement(blank + "urlset",
                                                      from item in _items
                                                      select CreateItemElement(item)
                                             )
@@ -34,7 +36,7 @@ namespace MLWD.Umbraco.Mvc.ActionResults
 
         private XElement CreateItemElement(ISitemapItem item)
         {
-            var itemElement = new XElement("url", new XElement("loc", item.Url.ToLower()));
+            var itemElement = new XElement("url", new XElement("loc",  App.DomainSettings.SiteUrl + item.Url.ToLower()));
 
             if (item.LastModified.HasValue)
                 itemElement.Add(new XElement("lastmod", item.LastModified.Value.ToString("yyyy-MM-dd")));

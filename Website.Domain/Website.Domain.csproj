@@ -94,7 +94,9 @@
     <Compile Include="Contents\Controllers\ContentController.cs" />
     <Compile Include="Contents\ViewModels\ContentViewModel.cs" />
     <Compile Include="Contents\DocTypes\ContentPage.cs" />
+    <Compile Include="Home\Models\Archetypes\Service.cs" />
     <Compile Include="Home\Models\Archetypes\Testimonial.cs" />
+    <Compile Include="Shared\Constants\Urls.cs" />
     <Compile Include="Shared\Controllers\AppController.cs" />
     <Compile Include="Home\Controllers\HomeController.cs" />
     <Compile Include="Home\DocTypes\Homepage.cs" />
@@ -133,7 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Shared\Converters\Helpers\" />
-    <Folder Include="Shared\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
