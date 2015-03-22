@@ -25,7 +25,7 @@ namespace MLWD.Umbraco.Mvc.ActionResults
             var sitemap = new XDocument(new XDeclaration("1.0", encoding, "yes"),
                                         new XElement(blank + "urlset",
                                                      from item in _items
-                                                     select CreateItemElement(item)
+                                                     select CreateItemElement(blank, item)
                                             )
                 );
 
@@ -34,18 +34,18 @@ namespace MLWD.Umbraco.Mvc.ActionResults
             context.HttpContext.Response.Write(sitemap.Declaration + sitemap.ToString());
         }
 
-        private XElement CreateItemElement(ISitemapItem item)
+        private XElement CreateItemElement(XNamespace blank, ISitemapItem item)
         {
-            var itemElement = new XElement("url", new XElement("loc",  App.DomainSettings.SiteUrl + item.Url.ToLower()));
+            var itemElement = new XElement(blank + "url", new XElement(blank + "loc", App.DomainSettings.SiteUrl + item.Url.ToLower()));
 
             if (item.LastModified.HasValue)
-                itemElement.Add(new XElement("lastmod", item.LastModified.Value.ToString("yyyy-MM-dd")));
+                itemElement.Add(new XElement(blank + "lastmod", item.LastModified.Value.ToString("yyyy-MM-dd")));
 
             if (item.ChangeFrequency.HasValue)
-                itemElement.Add(new XElement("changefreq", item.ChangeFrequency.Value.ToString().ToLower()));
+                itemElement.Add(new XElement(blank + "changefreq", item.ChangeFrequency.Value.ToString().ToLower()));
 
             if (item.Priority.HasValue)
-                itemElement.Add(new XElement("priority", item.Priority.Value.ToString(CultureInfo.InvariantCulture)));
+                itemElement.Add(new XElement(blank + "priority", item.Priority.Value.ToString(CultureInfo.InvariantCulture)));
 
             return itemElement;
         }
