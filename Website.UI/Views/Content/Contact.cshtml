@@ -1,0 +1,27 @@
+﻿@model Website.Domain.Contents.ViewModels.ContactViewModel
+
+<div class="divide20"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="center-heading">
+            <h2>@Model.Content.ContactTitle</h2>
+            <span class="center-line"></span>
+        </div>
+    </div>
+</div>
+
+@if (Model.Content.ContactMap != null && !string.IsNullOrWhiteSpace(Model.Content.ContactMap))
+{
+    <div class="container">
+        @Html.RawUmbraco(Model.Content.ContactMap)
+    </div>
+}
+
+<div class="divide50"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 margin30">
+            @Html.RawUmbraco(Model.Content.ContactDescription)
+        </div>
+    </div>
+</div>

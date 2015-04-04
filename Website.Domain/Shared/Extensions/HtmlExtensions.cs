@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using MLWD.Umbraco.Mvc.Attributes;
+using MLWD.Umbraco.Mvc.Extensions;
+using MLWD.Umbraco.Mvc.Model.Archetypes;
 using MLWD.Umbraco.Mvc.Model.Media;
 using MLWD.Umbraco.Utils;
 
@@ -8,6 +11,26 @@ namespace Website.Domain.Shared.Extensions
 {
     public static class HtmlExtensions
     {
+        public static HtmlAttribute NewWindow(this HtmlHelper html, UrlPicker urlPicker, bool value = false)
+        {
+            if (urlPicker != null)
+            {
+                value = urlPicker.NewWindow;
+            }
+
+            return html.Attr("target", value, "_blank");
+        }
+
+        public static string Url(this HtmlHelper html, UrlPicker urlPicker, string value = "javascript:void(0);")
+        {
+            if (urlPicker != null)
+            {
+                value = urlPicker.DisplayUrl;
+            }
+
+            return value;
+        }
+
         public static IHtmlString FluidImage(this HtmlHelper html, Image image, int width, int? height = null, string alt = "", object htmlAttributes = null)
         {
             var noscript = new TagBuilder("noscript");

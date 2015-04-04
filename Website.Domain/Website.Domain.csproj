@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.AnsumOak|AnyCPU'">
+    <OutputPath>bin\Release.AnsumOak\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Archetype, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -48,11 +51,11 @@
     </Reference>
     <Reference Include="interfaces, Version=1.0.5462.37501, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Website.UI\bin\interfaces.dll</HintPath>
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Website.UI\bin\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,11 +79,11 @@
       <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\umbraco.dll</HintPath>
     </Reference>
     <Reference Include="Umbraco.Core">
-      <HintPath>..\Website.UI\bin\Umbraco.Core.dll</HintPath>
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\Umbraco.Core.dll</HintPath>
     </Reference>
     <Reference Include="umbraco.MacroEngines, Version=1.0.5462.37525, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Website.UI\bin\umbraco.MacroEngines.dll</HintPath>
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\umbraco.MacroEngines.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -92,8 +95,10 @@
     <Compile Include="Blog\ViewModels\BlogViewModel.cs" />
     <Compile Include="Blog\ViewModels\BlogDetailsViewModel.cs" />
     <Compile Include="Contents\Controllers\ContentController.cs" />
+    <Compile Include="Contents\DocTypes\Contact.cs" />
     <Compile Include="Contents\ViewModels\ContentViewModel.cs" />
     <Compile Include="Contents\DocTypes\ContentPage.cs" />
+    <Compile Include="Contents\ViewModels\ContactViewModel.cs" />
     <Compile Include="Home\Models\Archetypes\Service.cs" />
     <Compile Include="Home\Models\Archetypes\Testimonial.cs" />
     <Compile Include="Shared\Constants\Urls.cs" />

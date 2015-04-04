@@ -29,6 +29,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.AnsumOak|AnyCPU'">
+    <OutputPath>bin\Release.AnsumOak\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="businesslogic">
       <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\businesslogic.dll</HintPath>

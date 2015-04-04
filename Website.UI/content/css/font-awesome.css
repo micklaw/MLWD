@@ -615,6 +615,9 @@
 .fa-lemon-o:before {
   content: "\f094";
 }
+.fa-phone {
+    background-color: red;
+}
 .fa-phone:before {
   content: "\f095";
 }
@@ -1267,6 +1270,9 @@
 .fa-dribbble:before {
   content: "\f17d";
 }
+.fa-skype {
+    background-color: #12A5F4;
+}
 .fa-skype:before {
   content: "\f17e";
 }
@@ -1569,4 +1575,8 @@
 }
 .fa-bomb:before {
   content: "\f1e2";
+}
+
+#header-top .fa {
+    background-color: transparent;
 }

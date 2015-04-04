@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.AnsumOak|AnyCPU'">
+    <OutputPath>bin\Release.AnsumOak\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Archetype">
       <HintPath>..\packages\Archetype.1.6.0\lib\net40\Archetype.dll</HintPath>
@@ -110,6 +113,7 @@
     <Compile Include="Context\CoreApp.cs" />
     <Compile Include="Context\WebContext.cs" />
     <Compile Include="Mvc\Attributes\UmbracoRouteAttribute.cs" />
+    <Compile Include="Mvc\Model\Archetypes\UrlPicker.cs" />
     <Compile Include="Mvc\Model\Content\Page.cs" />
     <Compile Include="Mvc\Model\Content\Settings.cs" />
     <Compile Include="Mvc\Model\Enums\ChangeFrequency.cs" />

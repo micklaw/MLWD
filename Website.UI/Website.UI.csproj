@@ -418,7 +418,9 @@
     <Content Include="config\ExamineSettings.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\ExamineIndex.config" />
+    <Content Include="config\ExamineIndex.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\EmbeddedMedia.config" />
@@ -501,16 +503,24 @@
     <Content Include="config\uSyncSettings.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\Ansum Oak Release.pubxml" />
     <None Include="Properties\PublishProfiles\MLWD Release.pubxml" />
     <Content Include="Views\Content\_ViewStart.cshtml" />
     <Content Include="Views\Content\Content.cshtml" />
     <Content Include="Views\Shared\Og.cshtml" />
     <Content Include="Views\Preview.cshtml" />
     <Content Include="Views\Shared\Services.cshtml" />
+    <Content Include="Views\Content\Contact.cshtml" />
+    <None Include="Web.Release.AnsumOak.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.AnsumOak|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
