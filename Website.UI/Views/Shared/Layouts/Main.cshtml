@@ -92,13 +92,16 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (nav.Any())
                     {
+                        var current = url.Split('?')[0].ToLower();
+                        var isNotHomepage = (!current.Equals("/") && !current.StartsWith("/?"));
+                        
+                        <li @Html.Attr("class", !isNotHomepage, "active")>
+                            <a href="/">Home</a>
+                        </li>
                         foreach (var item in nav)
                         {
-                            var current = url.Split('?')[0].ToLower();
                             var linkUrl = Html.Url(item);
 
-                            var isNotHomepage = (!current.Equals("/") && !current.StartsWith("/?"));
-                            
                             <li @Html.Attr("class", isNotHomepage && current.StartsWith(linkUrl), "active")>
                                 <a href="@linkUrl" @Html.NewWindow(item)>@item.Title</a>
                             </li>

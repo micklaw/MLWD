@@ -64,7 +64,7 @@ namespace MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters
                 return BinderHelper.BindImage(id);
             }
 
-            return base.ConvertFrom(context, culture, value);
+            return null;
         }
 
         
