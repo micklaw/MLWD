@@ -14,7 +14,7 @@
         {
             if (image != null && image.HasUrl)
             {
-            @Html.FluidImage(image, 800, 400)
+                @Html.FluidImage(image, 800, 400)
             }
         }
     </div>
@@ -33,15 +33,13 @@
     }
     @if (Model.Content.Tags.Any())
     {
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 no-left-pad">
-                    <div class="tag-list">
-                        @foreach (var tag in Model.Content.Tags)
-                        {
-                            <a href="javascript:void(0);">@tag</a>
-                        }
-                    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tag-list">
+                    @foreach (var tag in Model.Content.Tags)
+                    {
+                        <a href="javascript:void(0);">@tag</a>
+                    }
                 </div>
             </div>
         </div>
@@ -52,27 +50,25 @@
 
 @if (Model.Content.WorkSlideshow != null && Model.Content.WorkSlideshow.Any())
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="grid" class="row">
-                    @foreach (var slide in Model.Content.WorkSlideshow)
-                    {
-                        <div class="mix col-sm-3 page1 page4 margin30">
-                            <div class="item-img-wrap ">
-                                @Html.FluidImage(slide, 300, 300)
-                                <div class="item-img-overlay">
-                                    <a href="@slide.Url" class="show-image">
-                                        <span></span>
-                                    </a>
-                                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="grid" class="row">
+                @foreach (var slide in Model.Content.WorkSlideshow)
+                {
+                    <div class="mix col-sm-3 page1 page4 margin30">
+                        <div class="item-img-wrap ">
+                            @Html.FluidImage(slide, 300, 300)
+                            <div class="item-img-overlay">
+                                <a href="@slide.Url" class="show-image">
+                                    <span></span>
+                                </a>
                             </div>
-
                         </div>
-                    }
-                </div>
-                <!--#grid-->
+
+                    </div>
+                }
             </div>
+            <!--#grid-->
         </div>
     </div>
 }
