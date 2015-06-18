@@ -1,12 +1,13 @@
 ﻿using System.Web.Mvc;
-using MLWD.Umbraco.Collections;
-using MLWD.Umbraco.Mvc.Controllers.App;
-using MLWD.Umbraco.Umbraco.Services.Search.Enums;
 using Website.Domain.Blog.DocTypes;
 using Website.Domain.Home.DocTypes;
 using Website.Domain.Home.ViewModels;
 using Website.Domain.Shared.Controllers;
 using Website.Domain.Shared.Search;
+using Website.Domain.Sitemap.Services;
+using Yomego.Umbraco;
+using Yomego.Umbraco.Collections;
+using Yomego.Umbraco.Umbraco.Services.Search.Enums;
 
 namespace Website.Domain.Home.Controllers
 {
@@ -32,7 +33,7 @@ namespace Website.Domain.Home.Controllers
 #endif
         public ActionResult SiteMap()
         {
-            var pages = App.Services.Content.GetSitemapPages();
+            var pages = App.Services.Get<SitemapService>().GetSitemapPages();
 
             return Sitemap(pages);
         }

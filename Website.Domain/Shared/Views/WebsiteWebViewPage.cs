@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Web.Mvc;
-using MLWD.Umbraco.Context;
+using Yomego.Umbraco.Context;
 
 namespace Website.Domain.Shared.Views
 {
     public abstract class WebsiteWebViewPage<T> : WebViewPage<T>
     {
-        private readonly Lazy<App> _lazyApp = new Lazy<App>();
+        private readonly Lazy<WebsiteApp> _lazyApp = new Lazy<WebsiteApp>();
 
-        protected App DomainApp
+        protected WebsiteApp DomainApp
         {
             get
             {

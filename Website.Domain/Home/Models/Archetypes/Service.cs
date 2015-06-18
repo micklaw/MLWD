@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Web;
 using Archetype.Models;
-using MLWD.Umbraco.Mvc.Model.Media;
-using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
+using Website.Domain.Shared.Ditto.TypeConverters;
+using Yomego.Umbraco.Mvc.Model.Media;
 
 namespace Website.Domain.Home.Models.Archetypes
 {
@@ -13,6 +13,7 @@ namespace Website.Domain.Home.Models.Archetypes
 
         public string Title { get; set; }
 
-        public IHtmlString Description { get; set; }
+        [TypeConverter(typeof(HtmlStringConverter))]
+        public HtmlString Description { get; set; }
     }
 }

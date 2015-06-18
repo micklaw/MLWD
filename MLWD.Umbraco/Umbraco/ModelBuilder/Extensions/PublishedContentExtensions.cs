@@ -292,13 +292,17 @@ namespace MLWD.Umbraco.Umbraco.ModelBuilder.Extensions
 
             if (constructorParams == null)
             {
-                var constructor = type.GetConstructors().OrderBy(x => x.GetParameters().Length).First();
-                constructorParams = constructor.GetParameters();
-                _constructorCache.TryAdd(type, constructorParams);
+                var constructor = type.GetConstructors().OrderBy(x => x.GetParameters().Length).FirstOrDefault();
+
+                if (constructor != null)
+                {
+                    constructorParams = constructor.GetParameters();
+                    _constructorCache.TryAdd(type, constructorParams);
+                }
             }
 
             object instance;
-            if (constructorParams.Length == 0)
+            if (constructorParams == null || constructorParams.Length == 0)
             {
                 // Internally this uses Activator.CreateInstance which is heavily optimized.
                 instance = type.GetInstance();

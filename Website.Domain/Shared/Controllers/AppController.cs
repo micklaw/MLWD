@@ -1,12 +1,21 @@
-﻿using System.Web;
-using MLWD.Umbraco.Mvc.Controllers.App;
-using MLWD.Umbraco.Mvc.Model;
-using MLWD.Umbraco.Mvc.Model.Content;
+﻿using System.Collections.Generic;
+using System.Web;
+using Website.Domain.Shared.DocTypes;
+using Website.Domain.Shared.Models;
+using Website.Domain.Sitemap.ActionResults;
+using Website.Domain.Sitemap.Models.Interfaces;
+using Yomego.Umbraco;
+using Yomego.Umbraco.Mvc.Controllers.App;
 
 namespace Website.Domain.Shared.Controllers
 {
-    public class AppController : BaseCMSController
+    public class AppController : UmbracoController<WebsiteApp>
     {
+        protected XmlSitemapResult Sitemap(IList<ISitemapItem> sitemap)
+        {
+            return new XmlSitemapResult(sitemap);
+        }
+
         private void CheckForSEOContent()
         {
             var page = Node as Page;
@@ -26,14 +35,11 @@ namespace Website.Domain.Shared.Controllers
 
         private void WriteCanonical()
         {
-            if (Node != null)
-            {
-                var node = Node as Page;
+            var node = Node as Page;
 
-                if (node != null)
-                {
-                    ViewBag.Canonical = App.Context.DomainUrl + node.Url;
-                }
+            if (node != null)
+            {
+                ViewBag.Canonical = App.Context.DomainUrl + node.Url;
             }
         }
 

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MLWD.Umbraco.Mvc.Controllers.App;
-using MLWD.Umbraco.Umbraco.Services.Search.Models;
 using Website.Domain.Blog.DocTypes;
 using Website.Domain.Blog.ViewModels;
 using Website.Domain.Shared.Controllers;
+using Yomego.Umbraco.Umbraco.Services.Search.Models;
 
 namespace Website.Domain.Blog.Controllers
 {

@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using MLWD.Umbraco.Mvc.Startup;
 
 namespace Website.UI
 {
@@ -7,7 +6,7 @@ namespace Website.UI
     {
         public static void Register(HttpConfiguration config)
         {
-            MLWDApiConfig.Register(config);
+           
         }
     }
 }

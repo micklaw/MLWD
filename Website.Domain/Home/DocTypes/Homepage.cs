@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using MLWD.Umbraco.Mvc.Attributes;
-using MLWD.Umbraco.Mvc.Model.Content;
-using MLWD.Umbraco.Mvc.Model.Media;
-using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
+using Yomego.Umbraco.Mvc.Attributes;
+using Yomego.Umbraco.Mvc.Model.Media;
 using Umbraco.Core.Models;
 using Website.Domain.Home.Models.Archetypes;
+using Website.Domain.Shared.Ditto.TypeConverters;
+using Website.Domain.Shared.DocTypes;
 
 namespace Website.Domain.Home.DocTypes
 {
@@ -17,10 +18,10 @@ namespace Website.Domain.Home.DocTypes
         [TypeConverter(typeof(ImageConverter))]
         public Image HeaderBackground { get; set; }
 
-        [TypeConverter(typeof(ArchetypeConverter<IList<Testimonial>>))]
+        [ArchetypeResolver]
         public IList<Testimonial> Testimonials { get; set; }
 
-        [TypeConverter(typeof(ArchetypeConverter<IList<Models.Archetypes.Service>>))]
+        [ArchetypeResolver]
         public IList<Models.Archetypes.Service> Services { get; set; }
     }
 }

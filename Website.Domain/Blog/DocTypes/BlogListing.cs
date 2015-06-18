@@ -1,6 +1,6 @@
-﻿using MLWD.Umbraco.Mvc.Attributes;
-using MLWD.Umbraco.Mvc.Model.Content;
-using Umbraco.Core.Models;
+﻿using Umbraco.Core.Models;
+using Website.Domain.Shared.DocTypes;
+using Yomego.Umbraco.Mvc.Attributes;
 
 namespace Website.Domain.Blog.DocTypes
 {

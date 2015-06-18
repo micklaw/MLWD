@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Archetype.Models;
-using MLWD.Umbraco.Mvc.Model.Media;
-using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
+using Website.Domain.Shared.Ditto.TypeConverters;
+using Yomego.Umbraco.Mvc.Model.Media;
 
 namespace Website.Domain.Home.Models.Archetypes
 {

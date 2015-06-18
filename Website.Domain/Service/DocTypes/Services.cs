@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using MLWD.Umbraco.Mvc.Attributes;
-using MLWD.Umbraco.Mvc.Model.Content;
-using MLWD.Umbraco.Mvc.Model.Media;
-using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
+using Yomego.Umbraco.Mvc.Attributes;
+using Yomego.Umbraco.Mvc.Model.Media;
 using Umbraco.Core.Models;
+using Website.Domain.Shared.Ditto.TypeConverters;
+using Website.Domain.Shared.DocTypes;
 
 namespace Website.Domain.Service.DocTypes
 {
@@ -16,7 +17,7 @@ namespace Website.Domain.Service.DocTypes
         [TypeConverter(typeof(ImageConverter))]
         public Image ServiceImage { get; set; }
 
-        [TypeConverter(typeof(ArchetypeConverter<IList<Home.Models.Archetypes.Service>>))]
+        [ArchetypeResolver]
         public IList<Home.Models.Archetypes.Service> ServicesList { get; set; }
     }
 }

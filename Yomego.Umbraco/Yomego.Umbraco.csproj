@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A10ADBEB-DEC2-4D15-87A6-846B2B012B1C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Yomego.Umbraco</RootNamespace>
+    <AssemblyName>Yomego.Umbraco</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Archetype, Version=1.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Archetype.1.7.5\lib\net40\Archetype.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="BoboBrowse.Net">
+      <HintPath>..\Dependencies\BoboBrowse.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="businesslogic">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\businesslogic.dll</HintPath>
+    </Reference>
+    <Reference Include="C5">
+      <HintPath>..\Dependencies\C5.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core">
+      <HintPath>..\packages\ClientDependency.1.8.0.0\lib\net45\ClientDependency.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core.Mvc">
+      <HintPath>..\packages\ClientDependency-Mvc.1.8.0.0\lib\net45\ClientDependency.Core.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="cms">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\cms.dll</HintPath>
+    </Reference>
+    <Reference Include="CookComputing.XmlRpcV2">
+      <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
+    <Reference Include="Examine, Version=0.1.57.2941, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Examine.0.1.57.2941\lib\Examine.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Humanizer">
+      <HintPath>..\packages\Humanizer.1.32.0\lib\portable-win+net40+sl50+wp8+wpa81\Humanizer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor">
+      <HintPath>..\packages\ImageProcessor.1.9.5.0\lib\ImageProcessor.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor.Web">
+      <HintPath>..\packages\ImageProcessor.Web.3.3.1.0\lib\net45\ImageProcessor.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="interfaces">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=2.9.4.1, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Lucene.Net.2.9.4.1\lib\net40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler">
+      <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.6.5\lib\net40\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.Ditto">
+      <HintPath>..\packages\Our.Umbraco.Ditto.0.7.0\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.Ditto.Resolvers">
+      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.1.0-alpha-000036\lib\net45\Our.Umbraco.Ditto.Resolvers.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.Ditto.Resolvers.Archetype">
+      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.1.0-alpha-000036\lib\net45\Our.Umbraco.Ditto.Resolvers.Archetype.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="umbraco">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\umbraco.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Core">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\Umbraco.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.DataLayer">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\umbraco.DataLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.MacroEngines">
+      <HintPath>..\packages\UmbracoCms.Core.7.2.1\lib\umbraco.MacroEngines.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.cs" />
+    <Compile Include="Collections\IPagedList.cs" />
+    <Compile Include="Collections\PagedList.cs" />
+    <Compile Include="Constants\Examine.cs" />
+    <Compile Include="Constants\Regex.cs" />
+    <Compile Include="Constants\Requests.cs" />
+    <Compile Include="Context\Caching\CacheProvider.cs" />
+    <Compile Include="Context\Caching\CookieProvider.cs" />
+    <Compile Include="Context\Caching\Interfaces\ICacheProvider.cs" />
+    <Compile Include="Context\Caching\RequestProvider.cs" />
+    <Compile Include="Context\Caching\SessionProvider.cs" />
+    <Compile Include="Context\App.cs" />
+    <Compile Include="Context\Container.cs" />
+    <Compile Include="Context\CoreApp.cs" />
+    <Compile Include="Context\WebContext.cs" />
+    <Compile Include="jumps.umbraco.usync\Extensions\IContentTypeExtensions.cs" />
+    <Compile Include="jumps.umbraco.usync\helpers\ContentWalker.cs" />
+    <Compile Include="jumps.umbraco.usync\helpers\DiffrenceEngine.cs" />
+    <Compile Include="jumps.umbraco.usync\helpers\tracker.cs" />
+    <Compile Include="jumps.umbraco.usync\helpers\uSyncIO.cs" />
+    <Compile Include="jumps.umbraco.usync\helpers\uSyncStrings.cs" />
+    <Compile Include="jumps.umbraco.usync\helpers\XElementExtensions.cs" />
+    <Compile Include="jumps.umbraco.usync\helpers\XmlDoc.cs" />
+    <Compile Include="jumps.umbraco.usync\helpers\XmlDocFileEventArgs.cs" />
+    <Compile Include="jumps.umbraco.usync\Interfaces\IuSyncService.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncDataType.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncDictionary.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncDocType.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncFileWatcher.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncLanguage.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncMacro.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncMediaTypes.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncStylesheet.cs" />
+    <Compile Include="jumps.umbraco.usync\SyncTemplate.cs" />
+    <Compile Include="jumps.umbraco.usync\uSync.cs" />
+    <Compile Include="jumps.umbraco.usync\uSyncService.cs" />
+    <Compile Include="jumps.umbraco.usync\uSyncSettings.cs" />
+    <Compile Include="Mvc\Attributes\UmbracoRouteAttribute.cs" />
+    <Compile Include="Mvc\Model\ApiResultsModel.cs" />
+    <Compile Include="Mvc\Model\Media\Asset.cs" />
+    <Compile Include="Mvc\Model\Media\Focalpoint.cs" />
+    <Compile Include="Mvc\Model\Media\Image.cs" />
+    <Compile Include="Mvc\Model\Media\ImageCrops.cs" />
+    <Compile Include="Mvc\Model\Media\MediaItem.cs" />
+    <Compile Include="Mvc\Model\SimpleLink.cs" />
+    <Compile Include="Mvc\Routing\YomegoRouteTable.cs" />
+    <Compile Include="Mvc\Serializing\Converters\HtmlStringConverter.cs" />
+    <Compile Include="Mvc\Serializing\ExcludeContractResolver.cs" />
+    <Compile Include="Mvc\Settings\WebConfig.cs" />
+    <Compile Include="Umbraco\Helpers\BinderHelper.cs" />
+    <Compile Include="Umbraco\Helpers\ConverterHelper.cs" />
+    <Compile Include="Umbraco\Model\Content.cs" />
+    <Compile Include="Umbraco\Services\CoreService.cs" />
+    <Compile Include="Umbraco\Services\Search\Enums\OperatorEnum.cs" />
+    <Compile Include="Mvc\Attributes\HtmlAttribute.cs" />
+    <Compile Include="Mvc\ActionResults\JsonNetResult.cs" />
+    <Compile Include="Mvc\Controllers\App\BaseController.cs" />
+    <Compile Include="Mvc\Controllers\CMS\Api\BaseApiController.cs" />
+    <Compile Include="Mvc\Controllers\CMS\Api\DataTypeApiController.cs" />
+    <Compile Include="Mvc\Controllers\CMS\Api\DocumentApiController.cs" />
+    <Compile Include="Mvc\Controllers\CMS\Api\UmbracoApiController.cs" />
+    <Compile Include="Mvc\Controllers\App\UmbracoController.cs" />
+    <Compile Include="Mvc\Controllers\CMS\YomegoAdminCMSController.cs" />
+    <Compile Include="Mvc\Extensions\HtmlExtensions.cs" />
+    <Compile Include="Mvc\Extensions\HtmlExtensionsDropDownList.cs" />
+    <Compile Include="Mvc\Routing\YomegoCMSHandler.cs" />
+    <Compile Include="Mvc\Routing\YomegoCMSRouteConstraint.cs" />
+    <Compile Include="Mvc\Routing\YomegoCMSRouteHandler.cs" />
+    <Compile Include="Mvc\Startup\YomegoApiConfig.cs" />
+    <Compile Include="Mvc\Startup\YomegoRouteConfig.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Umbraco\Events\DatabaseEvents.cs" />
+    <Compile Include="Umbraco\Events\ExamineEvents.cs" />
+    <Compile Include="Umbraco\Sections\YomegoSectionStartup.cs" />
+    <Compile Include="Umbraco\Sections\YomegoTreeController.cs" />
+    <Compile Include="Umbraco\Services\BaseService.cs" />
+    <Compile Include="Umbraco\Services\Content\ContentService.cs" />
+    <Compile Include="Umbraco\Services\Container\CoreServiceContainer.cs" />
+    <Compile Include="Umbraco\Services\DataTypes\DataTypeService.cs" />
+    <Compile Include="Umbraco\Services\Content\Facets\FacetGenerator.cs" />
+    <Compile Include="Umbraco\Services\Search\Models\Criteria.cs" />
+    <Compile Include="Umbraco\Services\Search\Models\Facet.cs" />
+    <Compile Include="Umbraco\Services\Search\Models\Interfaces\ICriteria.cs" />
+    <Compile Include="Umbraco\Services\Search\Enums\SearchOrder.cs" />
+    <Compile Include="Umbraco\Services\Search\Models\SearchParams.cs" />
+    <Compile Include="Umbraco\Services\Search\Models\TypedCriteria.cs" />
+    <Compile Include="Umbraco\Services\Service.cs" />
+    <Compile Include="Umbraco\Services\Container\ServiceContainer.cs" />
+    <Compile Include="Umbraco\Services\Content\UmbracoContentService.cs" />
+    <Compile Include="Umbraco\Services\DataTypes\UmbracoDataTypeService.cs" />
+    <Compile Include="YomegoStartup.cs" />
+    <Compile Include="Utils\DatabaseUtils.cs" />
+    <Compile Include="Utils\DynamicMediaUtils.cs" />
+    <Compile Include="Utils\EnumerableUtils.cs" />
+    <Compile Include="Utils\IntUtils.cs" />
+    <Compile Include="Utils\KeyValuePairUtils.cs" />
+    <Compile Include="Utils\ListUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\UrlUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

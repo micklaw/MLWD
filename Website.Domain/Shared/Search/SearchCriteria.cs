@@ -1,5 +1,5 @@
-﻿using MLWD.Umbraco.Umbraco.Services.Search.Enums;
-using MLWD.Umbraco.Umbraco.Services.Search.Models;
+﻿using Yomego.Umbraco.Umbraco.Services.Search.Enums;
+using Yomego.Umbraco.Umbraco.Services.Search.Models;
 
 namespace Website.Domain.Shared.Search
 {

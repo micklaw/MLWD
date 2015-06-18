@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web;
-using MLWD.Umbraco.Mvc.Attributes;
-using MLWD.Umbraco.Mvc.Model.Content;
-using MLWD.Umbraco.Mvc.Model.Media;
-using MLWD.Umbraco.Umbraco.ModelBuilder.ComponentModel.TypeConverters;
 using Umbraco.Core.Models;
 using System.Linq;
+using Website.Domain.Shared.Ditto.TypeConverters;
+using Website.Domain.Shared.DocTypes;
+using Yomego.Umbraco.Mvc.Attributes;
+using Yomego.Umbraco.Mvc.Model.Media;
 
 namespace Website.Domain.Blog.DocTypes
 {
@@ -18,7 +18,8 @@ namespace Website.Domain.Blog.DocTypes
 
         public string BlogTitle { get; set; }
 
-        public IHtmlString BlogDescription { get; set; }
+        [TypeConverter(typeof(HtmlStringConverter))]
+        public HtmlString BlogDescription { get; set; }
 
         public string BlogSummary { get; set; }
 

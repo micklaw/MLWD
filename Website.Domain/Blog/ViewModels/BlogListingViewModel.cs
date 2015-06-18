@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Web;
-using MLWD.Umbraco.Umbraco.Services.Search.Models;
 using Website.Domain.Blog.DocTypes;
 using System.Linq;
+using Yomego.Umbraco.Umbraco.Services.Search.Models;
 
 namespace Website.Domain.Blog.ViewModels
 {

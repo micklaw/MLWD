@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
-using MLWD.Umbraco.Mvc.Startup;
 
 namespace Website.UI
 {
@@ -21,8 +20,6 @@ namespace Website.UI
                 url: "sitemap.xml",
                 defaults: new { controller = "Home", action = "SiteMap" }
             );
-
-            MLWDRouteConfig.RegisterRoutes(routes);
         }
     }
 }

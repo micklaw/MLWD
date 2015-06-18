@@ -43,7 +43,7 @@
                     <ul class="list-unstyled cat-list">
                         @foreach (var category in viewModel.Categories)
                         {
-                            <li><a href="@Urls.Blog?c=@category.Name">@category.Name.Humanize(LetterCasing.Title) (@category.Count)</a> <i class="fa fa-angle-right"></i></li>
+                            <li><a href="@Urls.Blog?c=@category.Name.ToLower()">@category.Name.Humanize(LetterCasing.Title) (@category.Count)</a> <i class="fa fa-angle-right"></i></li>
                         }
                     </ul>
                 </div>

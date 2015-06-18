@@ -273,7 +273,7 @@
     <Content Include="App_Plugins\Archetype\views\archetype.default.html" />
     <Content Include="App_Plugins\Archetype\views\archetype.html" />
     <Content Include="App_Plugins\dummy.txt" />
-    <Content Include="App_Plugins\MLWDAdmin\backoffice\MLWDAdminTree\edit.html" />
+    <Content Include="App_Plugins\YomegoAdmin\backoffice\YomegoAdminTree\edit.html" />
     <Content Include="config\grid.editors.config.js" />
     <Content Include="content\css\animate.css" />
     <Content Include="content\css\bootstrap.css" />
@@ -444,17 +444,13 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\jumps.umbraco.usync\jumps.umbraco.usync.csproj">
-      <Project>{e583d541-4531-4213-a514-287ea1375358}</Project>
-      <Name>jumps.umbraco.usync</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MLWD.Umbraco\MLWD.Umbraco.csproj">
-      <Project>{55e97ca3-d1ae-4544-bb55-0a0491de13b3}</Project>
-      <Name>MLWD.Umbraco</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Website.Domain\Website.Domain.csproj">
       <Project>{A0AE2975-A401-4D7C-B625-2DC1C330DC93}</Project>
       <Name>Website.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yomego.Umbraco\Yomego.Umbraco.csproj">
+      <Project>{A10ADBEB-DEC2-4D15-87A6-846B2B012B1C}</Project>
+      <Name>Yomego.Umbraco</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

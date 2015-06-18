@@ -1,8 +1,10 @@
-﻿using System.Web;
-using MLWD.Umbraco.Mvc.Attributes;
-using MLWD.Umbraco.Mvc.Model.Content;
+﻿using System.ComponentModel;
+using System.Web;
+using Yomego.Umbraco.Mvc.Attributes;
 using Umbraco.Core.Models;
 using Umbraco.Web.Routing;
+using Website.Domain.Shared.Ditto.TypeConverters;
+using Website.Domain.Shared.DocTypes;
 
 namespace Website.Domain.Contents.DocTypes
 {
@@ -15,6 +17,7 @@ namespace Website.Domain.Contents.DocTypes
 
         public string ContactTitle { get; set; }
 
-        public IHtmlString ContactDescription { get; set; }
+        [TypeConverter(typeof(HtmlStringConverter))]
+        public HtmlString ContactDescription { get; set; }
     }
 }

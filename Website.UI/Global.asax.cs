@@ -3,9 +3,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using MLWD.Umbraco.Umbraco.Startup;
 using Website.Domain.Shared.Serializing;
 using Website.Domain.Shared.Serializing.Converters;
+using Yomego.Umbraco;
 
 namespace Website.UI
 {
@@ -17,13 +17,14 @@ namespace Website.UI
         {
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            var config = GlobalConfiguration.Configuration;
+
+            WebApiConfig.Register(config);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            MLWDDependencyConfig.Register();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            var config = GlobalConfiguration.Configuration;
+            YomegoStartup.Register(RouteTable.Routes, config);
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new ExcludeContractResolver(new[]
             {
