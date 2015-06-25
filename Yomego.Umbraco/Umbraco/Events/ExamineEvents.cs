@@ -39,18 +39,28 @@ namespace Yomego.Umbraco.Umbraco.Events
                     e.Fields.Add("SystemPublishDate", publishDate.Value);
                 }
 
-                exists = false;
                 var datePublished = node.GetProperty("datePublished", out exists);
+
                 if (!exists)
                 {
                     datePublished = node.GetProperty("published", out exists);
                 }
+
+                // [ML] - override with th blog date
+
+                var blogDatePublished = node.GetProperty("blogPublishDate", out exists);
+
                 if (exists)
+                {
+                    datePublished = blogDatePublished;
+                }
+
+                if (datePublished != null)
                 {
                     DateTime date;
                     if (DateTime.TryParse(datePublished.Value, out date))
                     {
-                        e.Fields.Add("ContentDatePublished", date.ToString("ddMMyyyyHHmmss"));
+                        e.Fields.Add("ContentDatePublished", date.ToString("yyyyMMddHHmmss"));
                     }
                 }
 

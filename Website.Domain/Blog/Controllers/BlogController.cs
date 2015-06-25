@@ -16,7 +16,7 @@ namespace Website.Domain.Blog.Controllers
                                               .AndBlogTag(t)
                                               .AndBlogKeyword(k)
                                               .AndPaging(FixPage(p), content.BlogPageCount)
-                                              .OrderByDescending(SearchOrder.PublishDate);
+                                              .OrderBy("ContentDatePublished", true);
 
             var model = new BlogViewModel
             {
