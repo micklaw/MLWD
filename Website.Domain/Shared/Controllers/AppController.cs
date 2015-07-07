@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web;
+using Umbraco.Web;
+using Umbraco.Web.Security;
 using Website.Domain.Shared.DocTypes;
 using Website.Domain.Shared.Models;
 using Website.Domain.Sitemap.ActionResults;
@@ -65,11 +67,22 @@ namespace Website.Domain.Shared.Controllers
             }
         }
 
+        private void FixUmbracoContext()
+        {
+            if (Node == null)
+            {
+                var appcontext = global::Umbraco.Core.ApplicationContext.Current;
+
+                UmbracoContext.EnsureContext(HttpContext, appcontext, new WebSecurity(HttpContext, appcontext));
+            }
+        }
+
         protected override void OnActionExecuting(System.Web.Mvc.ActionExecutingContext filterContext)
         {
             WriteCanonical();
             CheckForSEOContent();
             WriteOg();
+            FixUmbracoContext();
 
             base.OnActionExecuting(filterContext);
         }
