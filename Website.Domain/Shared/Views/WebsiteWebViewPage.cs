@@ -6,7 +6,7 @@ namespace Website.Domain.Shared.Views
 {
     public abstract class WebsiteWebViewPage<T> : WebViewPage<T>
     {
-        private readonly Lazy<WebsiteApp> _lazyApp = new Lazy<WebsiteApp>();
+        private readonly Lazy<WebsiteApp> _lazyApp = new Lazy<WebsiteApp>(() => new WebsiteApp());
 
         protected WebsiteApp DomainApp
         {
