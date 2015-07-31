@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using umbraco.dialogs;
 using Website.Domain.Shared.Archetypes;
 using Yomego.Umbraco.Mvc.Attributes;
 using Yomego.Umbraco.Mvc.Extensions;

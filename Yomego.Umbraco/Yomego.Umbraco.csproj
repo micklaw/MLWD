@@ -374,6 +374,7 @@
     <Compile Include="Umbraco\Services\Container\ServiceContainer.cs" />
     <Compile Include="Umbraco\Services\Content\UmbracoContentService.cs" />
     <Compile Include="Umbraco\Services\DataTypes\UmbracoDataTypeService.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="YomegoStartup.cs" />
     <Compile Include="Utils\DatabaseUtils.cs" />
     <Compile Include="Utils\DynamicMediaUtils.cs" />

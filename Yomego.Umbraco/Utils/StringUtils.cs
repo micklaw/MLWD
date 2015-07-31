@@ -5,11 +5,49 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Humanizer;
+using Yomego.Umbraco.Mvc.Model.Media;
 
 namespace Yomego.Umbraco.Utils
 {
     public static class StringUtils
     {
+        public static string GetCrop(this string url, ImageCrops crops, int? width = null, int? height = null)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return url;
+            }
+
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+
+            if (width.HasValue)
+            {
+                parameters["width"] = width.Value.ToString();
+            }
+
+            // [ML] - Having a fixed height is the only way we can use a focal point
+
+            if (height.HasValue)
+            {
+                parameters["height"] = height.Value.ToString();
+
+                if (crops != null && crops.focalPoint != null)
+                {
+                    parameters["center"] = crops.focalPoint.QueryString;
+                }
+            }
+
+            if (width.HasValue || height.HasValue)
+            {
+                parameters["scale"] = "both";
+                parameters["mode"] = "crop";
+            }
+
+            var queryString = parameters.ToString();
+
+            return url + (!string.IsNullOrWhiteSpace(queryString) ? "?" + queryString : string.Empty);
+        }
+
         public static string GetImageGenThumbnail(this string imageUrl, int? width, int? height, int? compression = null)
         {
             if (string.IsNullOrWhiteSpace(imageUrl))

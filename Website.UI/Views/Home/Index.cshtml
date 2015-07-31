@@ -1,5 +1,6 @@
 ﻿@using Website.Domain.Home.Models.Archetypes
 @using System.Linq
+@using Yomego.Umbraco.Mvc.Model.Media
 @model Website.Domain.Home.ViewModels.HomeViewModel
 @{
     var testimonials = (Model.Content.Testimonials ?? new List<Testimonial>()).Where(i => !i.Disabled).ToList();

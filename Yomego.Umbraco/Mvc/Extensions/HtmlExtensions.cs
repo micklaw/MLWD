@@ -257,22 +257,24 @@ namespace Yomego.Umbraco.Mvc.Extensions
             return html.Attr("selected", (value.ToLower() == postValue.ToString().ToLower()), "selected");
         }
 
-        public static IHtmlString FluidImage(this HtmlHelper html, Image image, int width, int? height = null, string alt = "", object htmlAttributes = null)
+        public static IHtmlString FluidImage(this HtmlHelper html, string imageUrl, ImageCrops crops, int? width = null, int? height = null, string alt = "", object htmlAttributes = null)
         {
             var noscript = new TagBuilder("noscript");
 
-            if (image != null && image.HasUrl)
+            if (!string.IsNullOrWhiteSpace(imageUrl))
             {
+                var url = imageUrl.GetCrop(crops, width, height);
+
                 noscript.Attributes.Add("data-lazy-image", "");
                 noscript.Attributes.Add("data-actual", width.ToString());
                 noscript.Attributes.Add("data-actual-height", height.ToString());
-                noscript.Attributes.Add("data-src", image.GetCrop(width, height));
+                noscript.Attributes.Add("data-src", url);
                 noscript.Attributes.Add("data-alt", alt);
 
                 var imageTag = new TagBuilder("img");
 
                 imageTag.Attributes.Add("data-lazy-image", "");
-                imageTag.Attributes.Add("src", image.GetCrop(width, height));
+                imageTag.Attributes.Add("src", url);
                 imageTag.Attributes.Add("alt", alt);
 
                 if (htmlAttributes != null)
@@ -292,14 +294,34 @@ namespace Yomego.Umbraco.Mvc.Extensions
             return new HtmlString(noscript.ToString());
         }
 
-        public static IHtmlString FluidImage(this HtmlHelper html, Image image, int? width = null, int? height = null, object htmlAttributes = null)
+        public static IHtmlString FluidImage(this HtmlHelper html, string imageUrl, int? width = null, int? height = null, string alt = "", object htmlAttributes = null, bool isRemote = true)
+        {
+            if (string.IsNullOrWhiteSpace(imageUrl))
+            {
+                return new HtmlString(string.Empty);
+            }
+
+            return html.FluidImage((isRemote ? "/remote.axd?" : string.Empty) + HttpUtility.UrlEncode(imageUrl), null, width, height, alt, htmlAttributes);
+        }
+
+        public static IHtmlString FluidImage(this HtmlHelper html, Image image, bool isRemote = true, int? width = null, int? height = null, string alt = "", object htmlAttributes = null)
         {
             if (image == null || !image.HasUrl)
             {
                 return new HtmlString(string.Empty);
             }
 
-            return html.FluidImage(image, width ?? image.Width, height ?? image.Height, image.Alt, htmlAttributes);
+            return html.FluidImage((isRemote ? "/remote.axd?" : string.Empty) + HttpUtility.UrlEncode(image.Url), image.ImageCrops, width ?? image.Width, height ?? image.Height, alt ?? image.Alt, htmlAttributes);
+        }
+
+        public static IHtmlString FluidImage(this HtmlHelper html, Image image, int? width = null, int? height = null, string alt = "", object htmlAttributes = null)
+        {
+            return html.FluidImage(image, true, width, height, alt, htmlAttributes);
+        }
+
+        public static IHtmlString FluidImage(this HtmlHelper html, Image image, object htmlAttributes, int? width = null, int? height = null)
+        {
+            return html.FluidImage(image, width, height, null, htmlAttributes);
         }
 
         public static string ToDate(this HtmlHelper html, DateTime? date, string format = "MMMM yyyy")

@@ -155,6 +155,7 @@
     })();
 
     var design = (function () {
+
         var doEqualise = function(element) {
             equalise(element);
 
@@ -286,84 +287,93 @@
             }
         };
 
+        var remoteImagePrefix = "/remote.axd?";
+
+        function updateQueryStringParameter(uri, key, value) {
+            var isRemote = uri.indexOf(remoteImagePrefix) != -1;
+            var replacedUri = uri.replace("/remote.axd?", "");
+
+            var prefix = isRemote ? remoteImagePrefix : "";
+            var returnUrl = "";
+
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = replacedUri.indexOf('?') !== -1 ? "&" : "?";
+            if (replacedUri.match(re)) {
+                returnUrl = prefix + replacedUri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                returnUrl = prefix + replacedUri + separator + key + "=" + value;
+            }
+
+            return returnUrl;
+        }
+
+        function createImage(element) {
+            var $noScript = $(element);
+
+            var src = getUrl($noScript);
+
+            var $img = $("<img data-lazy-image />");
+            $img.attr("class", $noScript.attr("class"));
+            $img.attr("alt", $noScript.attr("data-alt"));
+            $img.attr("data-actual", $noScript.attr("data-actual"));
+            $img.attr("data-actual-height", $noScript.attr("data-actual-height"));
+            $img.attr("data-src", $noScript.attr("data-src"));
+            $img.attr("src", src);
+
+            $noScript.after($img);
+        }
+
+        function getUrl(element) {
+            var $element = $(element);
+            var $parent = $element.parents(":visible:not(a):first");
+
+            var width = $parent.width();
+            var url = $element.attr("data-src");
+            var maxWidth = parseInt($element.attr("data-actual"));
+            var maxHeight = parseInt($element.attr("data-actual-height"));
+
+            var resizeWidth = maxWidth;
+            var resizeHeight = maxHeight;
+
+            if (width > 0 && width < maxWidth) {
+                var ratio = width / maxWidth;
+
+                resizeWidth = width;
+                resizeHeight = maxHeight * ratio;
+            }
+
+            url = updateQueryStringParameter(url, "width", resizeWidth);
+            url = updateQueryStringParameter(url, "height", resizeHeight);
+
+            return url;
+        }
+
+        function resizeImage(img) {
+            var $img = $(img);
+            var src = getUrl($img);
+
+            $img.attr("src", src);
+        }
+
+        var resizeImages = function () {
+            var $lazy = $("img[data-lazy-image]");
+
+            if ($lazy.length > 0) {
+                $lazy.each(function () {
+                    resizeImage(this);
+                });
+            }
+        }
+
         var loadImages = function () {
 
             var noScript = $("noscript[data-lazy-image]");
 
-            console.log(noScript.length);
-            
             if (noScript.length > 0) {
                 noScript.each(function () {
                     createImage(this);
                 });
-            }
-
-            function updateQueryStringParameter(uri, key, value) {
-                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-                var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-                if (uri.match(re)) {
-                    return uri.replace(re, '$1' + key + "=" + value + '$2');
-                }
-                else {
-                    return uri + separator + key + "=" + value;
-                }
-            }
-            
-            function createImage(element) {
-                var $noScript = $(element);
-
-                var src = getUrl($noScript);
-
-                var $img = $("<img data-lazy-image />");
-                $img.attr("class", $noScript.attr("class"));
-                $img.attr("alt", $noScript.attr("data-alt"));
-                $img.attr("data-actual", $noScript.attr("data-actual"));
-                $img.attr("data-actual-height", $noScript.attr("data-actual-height"));
-                $img.attr("data-src", $noScript.attr("data-src"));
-                $img.attr("src", src);
-
-                $noScript.after($img);
-            }
-
-            function getUrl(element) {
-                var $element = $(element);
-                var $parent = $element.parents(":visible:first");
-
-                var width = $parent.width();
-                var url = $element.attr("data-src");
-                var maxWidth = parseInt($element.attr("data-actual"));
-                var maxHeight = parseInt($element.attr("data-actual-height"));
-
-                var resizeWidth = maxWidth;
-                var resizeHeight = maxHeight;
-                
-                if (width < maxWidth) {
-                    var ratio = width / maxWidth;
-
-                    resizeWidth = width;
-                    resizeHeight = maxHeight * ratio;
-                }
-
-                url = updateQueryStringParameter(url, "width", resizeWidth);
-                url = updateQueryStringParameter(url, "height", resizeHeight);
-
-                return url;
-            }
-
-            function resizeImage(img) {
-                var $img = $(img);
-                var src = getUrl($img);
-
-                $img.attr("src", src);
-            }
-            function resizeImages() {
-                var $lazy = $("img[data-lazy-image]");
-
-                if ($lazy.length > 0) {
-                    $lazy.each(function () {
-                        resizeImage(this);
-                    });
-                }
             }
 
             var doImage;
