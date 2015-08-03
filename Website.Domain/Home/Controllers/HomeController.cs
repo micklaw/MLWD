@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using System.Web.Mvc;
 using Website.Domain.Blog.DocTypes;
 using Website.Domain.Home.DocTypes;
 using Website.Domain.Home.ViewModels;
@@ -15,8 +19,12 @@ namespace Website.Domain.Home.Controllers
     {
         public ActionResult Index()
         {
-            var searchCriteriaBlog = SearchCriteria.WithExcludeBlogCategory("work").AndPaging(0, 4).OrderByDescending(SearchOrder.PublishDate);
-            var searchCriteriaWork = SearchCriteria.WithBlogCategory("work").AndPaging(0, 6).OrderByDescending(SearchOrder.PublishDate);
+            var searchCriteriaBlog =
+                SearchCriteria.WithExcludeBlogCategory("work")
+                    .AndPaging(0, 4)
+                    .OrderByDescending(SearchOrder.PublishDate);
+            var searchCriteriaWork =
+                SearchCriteria.WithBlogCategory("work").AndPaging(0, 6).OrderByDescending(SearchOrder.PublishDate);
 
             var model = new HomeViewModel
             {
