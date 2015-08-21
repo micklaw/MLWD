@@ -2,14 +2,20 @@
 .archetypeEditor {
   width: 98%;
 }
+.archetypeEditor .open {
+  position: relative;
+}
 .archetypeEditor .dropdown-menu {
   top: auto;
+}
+.archetypeEditor .dropdown-menu > li > a {
+  border-radius: 6px;
 }
 .archetypeEditor .controls-no-label {
   padding: 10px;
 }
 .archetypeEditor a + ul.dropdown-menu {
-  margin-left: 25px;
+  margin-left: 0;
 }
 .archetypeEditor .icon {
   color: #333;
@@ -54,7 +60,6 @@
   border-radius: 0;
   box-shadow: none;
   margin-top: -10px;
-  /*margin-left: -200px;*/
 }
 .archetypeEditor fieldset .archetypeFieldsetLabel span {
   font-weight: bold;
@@ -117,7 +122,6 @@
   background-color: #fff;
   border-top: 1px solid silver;
   border-radius: 0 0 0 5px;
-  overflow: hidden;
 }
 .archetypeEditor fieldset .archetypeCollapser form {
   margin-left: 20px;
@@ -142,6 +146,7 @@
 }
 .archetypeEditor .archetypeAddButton:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 .archetypeEditor .archetypeAddButton:hover .archetypeAddButtonText {
   text-decoration: underline;

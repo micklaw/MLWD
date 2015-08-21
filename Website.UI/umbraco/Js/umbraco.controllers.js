@@ -1105,7 +1105,7 @@ angular.module("umbraco").controller("Umbraco.Dialogs.MacroPickerController", fu
 //used for the media picker dialog
 angular.module("umbraco")
     .controller("Umbraco.Dialogs.MediaPickerController",
-        function ($scope, mediaResource, umbRequestHelper, entityResource, $log, mediaHelper, eventsService, treeService, $cookies, $element, $timeout) {
+        function ($scope, mediaResource, umbRequestHelper, entityResource, $log, mediaHelper, eventsService, treeService, $cookies, $element, $timeout, notificationsService) {
 
             var dialogOptions = $scope.dialogOptions;
 
@@ -1201,6 +1201,12 @@ angular.module("umbraco")
                         $scope.progress = 0;
                         $scope.gotoFolder($scope.currentFolder);
                     });
+                }
+                //Show notifications!!!!
+                if (data.result && data.result.notifications && angular.isArray(data.result.notifications)) {
+                    for (var n = 0; n < data.result.notifications.length; n++) {
+                        notificationsService.showNotification(data.result.notifications[n]);
+                    }
                 }
             });
 
@@ -2277,7 +2283,7 @@ angular.module('umbraco').controller("Umbraco.Editors.Content.CreateController",
  * @description
  * The controller for deleting content
  */
-function ContentDeleteController($scope, contentResource, treeService, navigationService, editorState, $location) {
+function ContentDeleteController($scope, contentResource, treeService, navigationService, editorState, $location, dialogService, notificationsService) {
 
     $scope.performDelete = function() {
 
@@ -2312,6 +2318,20 @@ function ContentDeleteController($scope, contentResource, treeService, navigatio
             }
 
             navigationService.hideMenu();
+        }, function(err) {
+
+            $scope.currentNode.loading = false;
+
+            //check if response is ysod
+            if (err.status && err.status >= 500) {
+                dialogService.ysodDialog(err);
+            }
+            
+            if (err.data && angular.isArray(err.data.notifications)) {
+                for (var i = 0; i < err.data.notifications.length; i++) {
+                    notificationsService.showNotification(err.data.notifications[i]);
+                }
+            }
         });
 
     };
@@ -2712,7 +2732,7 @@ angular.module("umbraco").controller("Umbraco.Editors.Content.MoveController",
  * 
  */
 
-function ContentRecycleBinController($scope, $routeParams, dataTypeResource) {
+function ContentRecycleBinController($scope, $routeParams, dataTypeResource, navigationService) {
 
     //ensures the list view doesn't actually load until we query for the list view config
     // for the section
@@ -2728,6 +2748,8 @@ function ContentRecycleBinController($scope, $routeParams, dataTypeResource) {
 
     $scope.model = { config: { entityType: $routeParams.section } };
 
+    // sync tree node
+    navigationService.syncTree({ tree: "content", path: ["-1", $routeParams.id], forceReload: false });
 }
 
 angular.module('umbraco').controller("Umbraco.Editors.Content.RecycleBinController", ContentRecycleBinController);
@@ -3127,7 +3149,7 @@ function examineMgmtController($scope, umbRequestHelper, $log, $http, $q, $timeo
                 'Failed to check index processing')
             .then(function(data) {
 
-                if (data) {
+                if (data !== null && data !== "null") {
 
                     //copy all resulting properties
                     for (var k in data) {
@@ -3184,7 +3206,9 @@ function examineMgmtController($scope, umbRequestHelper, $log, $http, $q, $timeo
                         "Depending on how much content there is in your site this could take a while. " +
                         "It is not recommended to rebuild an index during times of high website traffic " +
                         "or when editors are editing content.")) {
+
             indexer.isProcessing = true;
+            indexer.processingAttempts = 0;
 
             umbRequestHelper.resourcePromise(
                     $http.post(umbRequestHelper.getApiUrl("examineMgmtBaseUrl", "PostRebuildIndex", { indexerName: indexer.name })),
@@ -3524,7 +3548,7 @@ angular.module('umbraco').controller("Umbraco.Editors.Media.CreateController", m
  * @description
  * The controller for deleting content
  */
-function MediaDeleteController($scope, mediaResource, treeService, navigationService, editorState, $location) {
+function MediaDeleteController($scope, mediaResource, treeService, navigationService, editorState, $location, dialogService, notificationsService) {
 
     $scope.performDelete = function() {
 
@@ -3560,8 +3584,20 @@ function MediaDeleteController($scope, mediaResource, treeService, navigationSer
 
             navigationService.hideMenu();
 
-        },function() {
+        }, function (err) {
+
             $scope.currentNode.loading = false;
+
+            //check if response is ysod
+            if (err.status && err.status >= 500) {
+                dialogService.ysodDialog(err);
+            }
+
+            if (err.data && angular.isArray(err.data.notifications)) {
+                for (var i = 0; i < err.data.notifications.length; i++) {
+                    notificationsService.showNotification(err.data.notifications[i]);
+                }
+            }
         });
     };
 
@@ -3682,6 +3718,13 @@ function mediaEditController($scope, $routeParams, appState, mediaResource, enti
                         rebindCallback: contentEditingHelper.reBindChangedProperties($scope.content, err.data)
                     });
                     
+                    //show any notifications
+                    if (angular.isArray(err.data.notifications)) {
+                        for (var i = 0; i < err.data.notifications.length; i++) {
+                            notificationsService.showNotification(err.data.notifications[i]);
+                        }
+                    }
+
                     editorState.set($scope.content);
                     $scope.busy = false;
                 });
@@ -3795,7 +3838,7 @@ angular.module("umbraco").controller("Umbraco.Editors.Media.MoveController",
  * 
  */
 
-function MediaRecycleBinController($scope, $routeParams, dataTypeResource) {
+function MediaRecycleBinController($scope, $routeParams, dataTypeResource, navigationService) {
 
     //ensures the list view doesn't actually load until we query for the list view config
     // for the section
@@ -3811,6 +3854,8 @@ function MediaRecycleBinController($scope, $routeParams, dataTypeResource) {
 
     $scope.model = { config: { entityType: $routeParams.section } };
 
+    // sync tree node
+    navigationService.syncTree({ tree: "media", path: ["-1", $routeParams.id], forceReload: false });
 }
 
 angular.module('umbraco').controller("Umbraco.Editors.Media.RecycleBinController", MediaRecycleBinController);
@@ -4644,7 +4689,7 @@ angular.module("umbraco").controller("Umbraco.PrevalueEditors.MultiColorPickerCo
         assetsService.load([
             //"lib/spectrum/tinycolor.js",
             "lib/spectrum/spectrum.js"          
-        ]).then(function () {
+        ], $scope).then(function () {
             var elem = $element.find("input");
             elem.spectrum({
                 color: null,
@@ -4938,6 +4983,10 @@ function dateTimePickerController($scope, notificationsService, assetsService, a
 
     //map the user config
     $scope.model.config = angular.extend(config, $scope.model.config);
+    //ensure the format doesn't get overwritten with an empty string
+    if ($scope.model.config.format === "" || $scope.model.config.format === undefined || $scope.model.config.format === null) {
+        $scope.model.config.format = $scope.model.config.pickTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD";
+    }
 
     $scope.hasDatetimePickerValue = $scope.model.value ? true : false;
     $scope.datetimePickerValue = null;
@@ -4960,12 +5009,7 @@ function dateTimePickerController($scope, notificationsService, assetsService, a
             if (e.date && e.date.isValid()) {
                 $scope.datePickerForm.datepicker.$setValidity("pickerError", true);
                 $scope.hasDatetimePickerValue = true;
-                if (!$scope.model.config.format) {
-                    $scope.datetimePickerValue = e.date;
-                }
-                else {
-                    $scope.datetimePickerValue = e.date.format($scope.model.config.format);
-                }
+                $scope.datetimePickerValue = e.date.format($scope.model.config.format);
             }
             else {
                 $scope.hasDatetimePickerValue = false;
@@ -4999,8 +5043,8 @@ function dateTimePickerController($scope, notificationsService, assetsService, a
 		$scope.model.config.language = user.locale;
 		
 
-		assetsService.load(filesToLoad).then(
-			function () {
+		assetsService.load(filesToLoad, $scope).then(
+            function () {
 				//The Datepicker js and css files are available and all components are ready to use.
 
 				// Get the id of the datepicker button that was clicked
@@ -5019,15 +5063,10 @@ function dateTimePickerController($scope, notificationsService, assetsService, a
 
 			    if ($scope.hasDatetimePickerValue) {
 
-                    //assign value to plugin/picker
-			        element.datetimepicker("setValue", $scope.model.value ? new Date($scope.model.value) : moment());
-
-			        if (!$scope.model.config.format) {
-			            $scope.datetimePickerValue = moment($scope.model.value);
-			        }
-			        else {
-			            $scope.datetimePickerValue = moment($scope.model.value).format($scope.model.config.format);
-			        }
+			        //assign value to plugin/picker
+			        var dateVal = $scope.model.value ? moment($scope.model.value, $scope.model.config.format) : moment();
+			        element.datetimepicker("setValue", dateVal);
+			        $scope.datetimePickerValue = moment($scope.model.value).format($scope.model.config.format);
 			    }
 
 			    element.find("input").bind("blur", function() {
@@ -5400,7 +5439,7 @@ angular.module("umbraco")
 
 angular.module("umbraco")
 .controller("Umbraco.PropertyEditors.GoogleMapsController",
-    function ($rootScope, $scope, notificationsService, dialogService, assetsService, $log, $timeout) {
+    function ($element, $rootScope, $scope, notificationsService, dialogService, assetsService, $log, $timeout) {
 
         assetsService.loadJs('http://www.google.com/jsapi')
             .then(function () {
@@ -5458,8 +5497,21 @@ angular.module("umbraco")
                 });
             });
 
-            $('a[data-toggle="tab"]').on('shown', function (e) {
+            var tabShown = function(e) {
                 google.maps.event.trigger(map, 'resize');
+            };
+
+            //listen for tab changes
+            if (tabsCtrl != null) {
+                tabsCtrl.onTabShown(function (args) {
+                    tabShown();
+                });
+            }
+
+            $element.closest('.umb-panel.tabbable').on('shown', '.nav-tabs a', tabShown);
+
+            $scope.$on('$destroy', function () {
+                $element.closest('.umb-panel.tabbable').off('shown', '.nav-tabs a', tabShown);
             });
         }
 
@@ -5856,7 +5908,7 @@ angular.module("umbraco")
         $timeout(function(){
             if($scope.control.$initializing){
                 $scope.setImage();
-            }else{
+            }else if($scope.control.value){
                 $scope.setUrl();
             }
         }, 200);
@@ -5892,8 +5944,8 @@ angular.module("umbraco")
         $scope.sortableOptions = {
             distance: 10,
             cursor: "move",
-            placeholder: 'ui-sortable-placeholder',
-            handle: '.cell-tools-move',
+            placeholder: "ui-sortable-placeholder",
+            handle: ".cell-tools-move",
             forcePlaceholderSize: true,
             tolerance: "pointer",
             zIndex: 999999999999999999,
@@ -5906,30 +5958,30 @@ angular.module("umbraco")
             sort: function (event, ui) {
                 /* prevent vertical scroll out of the screen */
                 var max = $(".usky-grid").width() - 150;
-                if (parseInt(ui.helper.css('left')) > max) {
-                    ui.helper.css({ 'left': max + "px" })
+                if (parseInt(ui.helper.css("left")) > max) {
+                    ui.helper.css({ "left": max + "px" });
                 }
-                if (parseInt(ui.helper.css('left')) < 20) {
-                    ui.helper.css({ 'left': 20 })
+                if (parseInt(ui.helper.css("left")) < 20) {
+                    ui.helper.css({ "left": 20 });
                 }
             },
 
             start: function (e, ui) {
                 draggedRteSettings = {};
-                ui.item.find('.mceNoEditor').each(function () {
+                ui.item.find(".mceNoEditor").each(function () {
                     // remove all RTEs in the dragged row and save their settings
-                    var id = $(this).attr('id');
+                    var id = $(this).attr("id");
                     draggedRteSettings[id] = _.findWhere(tinyMCE.editors, { id: id }).settings;
-                    tinyMCE.execCommand('mceRemoveEditor', false, id);
+                    tinyMCE.execCommand("mceRemoveEditor", false, id);
                 });
             },
 
             stop: function (e, ui) {
                 // reset all RTEs affected by the dragging
-                ui.item.parents(".usky-column").find('.mceNoEditor').each(function () {
-                    var id = $(this).attr('id');
+                ui.item.parents(".usky-column").find(".mceNoEditor").each(function () {
+                    var id = $(this).attr("id");
                     draggedRteSettings[id] = draggedRteSettings[id] || _.findWhere(tinyMCE.editors, { id: id }).settings;
-                    tinyMCE.execCommand('mceRemoveEditor', false, id);
+                    tinyMCE.execCommand("mceRemoveEditor", false, id);
                     tinyMCE.init(draggedRteSettings[id]);
                 });
             }
@@ -5942,7 +5994,7 @@ angular.module("umbraco")
             distance: 10,
             cursor: "move",
             placeholder: "ui-sortable-placeholder",
-            handle: '.cell-tools-move',
+            handle: ".cell-tools-move",
             connectWith: ".usky-cell",
             forcePlaceholderSize: true,
             tolerance: "pointer",
@@ -5955,18 +6007,18 @@ angular.module("umbraco")
 
             sort: function (event, ui) {
                 /* prevent vertical scroll out of the screen */
-                var position = parseInt(ui.item.parent().offset().left) + parseInt(ui.helper.css('left')) - parseInt($(".usky-grid").offset().left);
+                var position = parseInt(ui.item.parent().offset().left) + parseInt(ui.helper.css("left")) - parseInt($(".usky-grid").offset().left);
                 var max = $(".usky-grid").width() - 220;
                 if (position > max) {
-                    ui.helper.css({ 'left': max - parseInt(ui.item.parent().offset().left) + parseInt($(".usky-grid").offset().left) + "px" })
+                    ui.helper.css({ "left": max - parseInt(ui.item.parent().offset().left) + parseInt($(".usky-grid").offset().left) + "px" });
                 }
                 if (position < 0) {
-                    ui.helper.css({ 'left': 0 - parseInt(ui.item.parent().offset().left) + parseInt($(".usky-grid").offset().left) + "px" })
+                    ui.helper.css({ "left": 0 - parseInt(ui.item.parent().offset().left) + parseInt($(".usky-grid").offset().left) + "px" });
                 }
             },
 
             over: function (event, ui) {
-                allowedEditors = $(event.target).scope().area.allowed;
+                var allowedEditors = $(event.target).scope().area.allowed;
 
                 if ($.inArray(ui.item.scope().control.editor.alias, allowedEditors) < 0 && allowedEditors) {
                     ui.placeholder.hide();
@@ -5985,16 +6037,16 @@ angular.module("umbraco")
                     if (cancelMove) {
                         ui.item.sortable.cancel();
                     }
-                    ui.item.parents(".usky-cell").find('.mceNoEditor').each(function () {
-                        if ($.inArray($(this).attr('id'), notIncludedRte) < 0) {
-                            notIncludedRte.splice(0, 0, $(this).attr('id'));
+                    ui.item.parents(".usky-cell").find(".mceNoEditor").each(function () {
+                        if ($.inArray($(this).attr("id"), notIncludedRte) < 0) {
+                            notIncludedRte.splice(0, 0, $(this).attr("id"));
                         }
                     });
                 }
                 else {
-                    $(event.target).find('.mceNoEditor').each(function () {
-                        if ($.inArray($(this).attr('id'), notIncludedRte) < 0) {
-                            notIncludedRte.splice(0, 0, $(this).attr('id'));
+                    $(event.target).find(".mceNoEditor").each(function () {
+                        if ($.inArray($(this).attr("id"), notIncludedRte) < 0) {
+                            notIncludedRte.splice(0, 0, $(this).attr("id"));
                         }
                     });
                 }
@@ -6005,22 +6057,22 @@ angular.module("umbraco")
                 // reset dragged RTE settings in case a RTE isn't dragged
                 draggedRteSettings = undefined;
 
-                ui.item.find('.mceNoEditor').each(function () {
+                ui.item.find(".mceNoEditor").each(function () {
                     notIncludedRte = [];
 
                     // save the dragged RTE settings
-                    draggedRteSettings = _.findWhere(tinyMCE.editors, { id: $(this).attr('id') }).settings;
+                    draggedRteSettings = _.findWhere(tinyMCE.editors, { id: $(this).attr("id") }).settings;
 
                     // remove the dragged RTE
-                    tinyMCE.execCommand('mceRemoveEditor', false, $(this).attr('id'));
+                    tinyMCE.execCommand("mceRemoveEditor", false, $(this).attr("id"));
                 });
             },
 
             stop: function (e, ui) {
-                ui.item.parents(".usky-cell").find('.mceNoEditor').each(function () {
-                    if ($.inArray($(this).attr('id'), notIncludedRte) < 0) {
+                ui.item.parents(".usky-cell").find(".mceNoEditor").each(function () {
+                    if ($.inArray($(this).attr("id"), notIncludedRte) < 0) {
                         // add all dragged's neighbouring RTEs in the new cell
-                        notIncludedRte.splice(0, 0, $(this).attr('id'));
+                        notIncludedRte.splice(0, 0, $(this).attr("id"));
                     }
                 });
                 $timeout(function () {
@@ -6031,9 +6083,9 @@ angular.module("umbraco")
 
                     _.forEach(notIncludedRte, function (id) {
                         // reset all the other RTEs
-                        if (draggedRteSettings === undefined || id != draggedRteSettings.id) {
+                        if (draggedRteSettings === undefined || id !== draggedRteSettings.id) {
                             var rteSettings = _.findWhere(tinyMCE.editors, { id: id }).settings;
-                            tinyMCE.execCommand('mceRemoveEditor', false, id);
+                            tinyMCE.execCommand("mceRemoveEditor", false, id);
                             tinyMCE.init(rteSettings);
                         }
                     });
@@ -6061,7 +6113,6 @@ angular.module("umbraco")
             //todo calculate position...
             var offset = $(event.target).offset();
             var height = $(window).height();
-            var width = $(window).width();
 
             if ((height - offset.top) < 250) {
                 $scope.overlayMenu.style.bottom = 0;
@@ -6133,11 +6184,11 @@ angular.module("umbraco")
                 });
             }
             else {
-                
+
 
                 return layouts;
             }
-        };
+        }
 
         $scope.addRow = function (section, layout) {
 
@@ -6158,7 +6209,8 @@ angular.module("umbraco")
                 section.rows.splice($index, 1);
                 $scope.currentRow = null;
                 $scope.openRTEToolbarId = null;
-                $scope.initContent();
+
+                //$scope.initContent();
             }
         };
 
@@ -6245,9 +6297,6 @@ angular.module("umbraco")
             $scope.currentInfohighlightControl = null;
         };
 
-        $scope.setUniqueId = function (cell, index) {
-            return guid();
-        };
 
         var guid = (function () {
             function s4() {
@@ -6256,18 +6305,23 @@ angular.module("umbraco")
                            .substring(1);
             }
             return function () {
-                return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                       s4() + '-' + s4() + s4() + s4();
+                return s4() + s4() + "-" + s4() + "-" + s4() + "-" +
+                       s4() + "-" + s4() + s4() + s4();
             };
         })();
 
-        $scope.addControl = function (editor, cell, index) {
+        $scope.setUniqueId = function (cell, index) {
+            return guid();
+        };
+
+        $scope.addControl = function (editor, cell, index, initialize) {
             $scope.closeItemOverlay();
+            initialize = (initialize !== false);
 
             var newControl = {
                 value: null,
                 editor: editor,
-                $initializing: true
+                $initializing: initialize
             };
 
             if (index === undefined) {
@@ -6303,11 +6357,11 @@ angular.module("umbraco")
             scopedObject.deletePrompt = false;
             e.preventDefault();
             e.stopPropagation();
-        }
+        };
 
         $scope.showPrompt = function (scopedObject) {
             scopedObject.deletePrompt = true;
-        }
+        };
 
 
         // *********************************************
@@ -6326,11 +6380,12 @@ angular.module("umbraco")
             var clear = true;
 
             //settings indicator shortcut
-            if ($scope.model.config.items.config || $scope.model.config.items.styles) {
+            if ( ($scope.model.config.items.config && $scope.model.config.items.config.length > 0) || ($scope.model.config.items.styles && $scope.model.config.items.styles.length > 0)) {
                 $scope.hasSettings = true;
             }
 
-            //ensure the grid has a column value set, if nothing is found, set it to 12
+            //ensure the grid has a column value set,
+            //if nothing is found, set it to 12
             if ($scope.model.config.items.columns && angular.isString($scope.model.config.items.columns)) {
                 $scope.model.config.items.columns = parseInt($scope.model.config.items.columns);
             } else {
@@ -6342,7 +6397,7 @@ angular.module("umbraco")
                 if ($scope.model.value.name && angular.isArray($scope.model.config.items.templates)) {
 
                     //This will occur if it is an existing value, in which case
-                    // we need to determine which layout was applied by looking up 
+                    // we need to determine which layout was applied by looking up
                     // the name
                     // TODO: We need to change this to an immutable ID!!
 
@@ -6352,14 +6407,14 @@ angular.module("umbraco")
 
                     if (found && angular.isArray(found.sections) && found.sections.length === $scope.model.value.sections.length) {
 
-                        //Cool, we've found the template associated with our current value with matching sections counts, now we need to 
+                        //Cool, we've found the template associated with our current value with matching sections counts, now we need to
                         // merge this template data on to our current value (as if it was new) so that we can preserve what is and isn't
                         // allowed for this template based on the current config.
 
                         _.each(found.sections, function (templateSection, index) {
                             angular.extend($scope.model.value.sections[index], angular.copy(templateSection));
                         });
-                         
+
                     }
                 }
 
@@ -6378,6 +6433,7 @@ angular.module("umbraco")
                 });
             } else if ($scope.model.config.items.templates && $scope.model.config.items.templates.length === 1) {
                 $scope.addTemplate($scope.model.config.items.templates[0]);
+                clear = false;
             }
 
             if (clear) {
@@ -6390,8 +6446,11 @@ angular.module("umbraco")
 
             section.$allowedLayouts = getAllowedLayouts(section);
 
-            if (!section.rows) {
+            if (!section.rows || section.rows.length === 0) {
                 section.rows = [];
+                if(section.$allowedLayouts.length === 1){
+                    $scope.addRow(section, section.$allowedLayouts[0]);
+                }
             } else {
                 _.forEach(section.rows, function (row, index) {
                     if (!row.$initialized) {
@@ -6438,22 +6497,6 @@ angular.module("umbraco")
                             area.styles = currentArea.styles;
                         }
 
-                        //copy over existing controls into the new areas
-                        if (row.areas.length > areaIndex && row.areas[areaIndex].controls) {
-                            area.controls = currentArea.controls;
-
-                            _.forEach(area.controls, function (control, controlIndex) {
-                                $scope.initControl(control, controlIndex);
-                            });
-
-                        } else {
-                            area.controls = [];
-                        }
-
-                        //set width
-                        area.$percentage = $scope.percentage(area.grid);
-                        area.$uniqueId = $scope.setUniqueId();
-
                         //set editor permissions
                         if (!area.allowed || area.allowAll === true) {
                             area.$allowedEditors = $scope.availableEditors;
@@ -6467,6 +6510,29 @@ angular.module("umbraco")
                                 area.$allowsRTE = true;
                             }
                         }
+
+                        //copy over existing controls into the new areas
+                        if (row.areas.length > areaIndex && row.areas[areaIndex].controls) {
+                            area.controls = currentArea.controls;
+
+                            _.forEach(area.controls, function (control, controlIndex) {
+                                $scope.initControl(control, controlIndex);
+                            });
+
+                        } else {
+                            //if empty
+                            area.controls = [];
+
+                            //if only one allowed editor
+                            if(area.$allowedEditors.length === 1){
+                                $scope.addControl(area.$allowedEditors[0], area, 0, false);
+                            }
+                        }
+
+                        //set width
+                        area.$percentage = $scope.percentage(area.grid);
+                        area.$uniqueId = $scope.setUniqueId();
+
                     } else {
                         original.areas.splice(areaIndex, 1);
                     }
@@ -6496,7 +6562,7 @@ angular.module("umbraco")
             control.$uniqueId = $scope.setUniqueId();
 
             //error handling in case of missing editor..
-            //should only happen if stripped earlier 
+            //should only happen if stripped earlier
             if (!control.editor) {
                 control.$editorPath = "views/propertyeditors/grid/editors/error.html";
             }
@@ -6537,13 +6603,13 @@ angular.module("umbraco")
 
         });
 
-        //Clean the grid value before submitting to the server, we don't need 
+        //Clean the grid value before submitting to the server, we don't need
         // all of that grid configuration in the value to be stored!! All of that
         // needs to be merged in at runtime to ensure that the real config values are used
         // if they are ever updated.
 
-        var unsubscribe = $scope.$on("formSubmitting", function (ev, args) {
-            
+        var unsubscribe = $scope.$on("formSubmitting", function () {
+
             if ($scope.model.value && $scope.model.value.sections) {
                 _.each($scope.model.value.sections, function(section) {
                     if (section.rows) {
@@ -6565,7 +6631,7 @@ angular.module("umbraco")
                                                 var alias = control.editor.alias;
                                                 control.editor = {
                                                     alias: alias
-                                                }
+                                                };
                                             }
                                         });
                                     }
@@ -6578,7 +6644,7 @@ angular.module("umbraco")
         });
 
         //when the scope is destroyed we need to unsubscribe
-        $scope.$on('$destroy', function () {
+        $scope.$on("$destroy", function () {
             unsubscribe();
         });
 
@@ -7281,6 +7347,27 @@ function listViewController($rootScope, $scope, $routeParams, $injector, notific
         }
     });
 
+    function showNotificationsAndReset(err, reload) {
+
+        //check if response is ysod
+        if(err.status && err.status >= 500) {
+            dialogService.ysodDialog(err);
+        }
+
+        $scope.bulkStatus = "";        
+        $scope.actionInProgress = false;
+
+        if (reload === true) {
+            $scope.reloadView($scope.contentId);
+        }
+
+        if (err.data && angular.isArray(err.data.notifications)) {
+            for (var i = 0; i < err.data.notifications.length; i++) {
+                notificationsService.showNotification(err.data.notifications[i]);
+            }
+        }
+    }
+
     $scope.isSortDirection = function (col, direction) {
         return $scope.options.orderBy.toUpperCase() == col.toUpperCase() && $scope.options.orderDirection == direction;
     }
@@ -7330,8 +7417,12 @@ function listViewController($rootScope, $scope, $routeParams, $injector, notific
     /*Pagination is done by an array of objects, due angularJS's funky way of monitoring state
     with simple values */
 
-    $scope.reloadView = function(id) {
+    $scope.reloadView = function (id) {
+
         getListResultsCallback(id, $scope.options).then(function (data) {
+
+            $scope.actionInProgress = false;
+
             $scope.listViewResultSet = data;
 
             //update all values for display
@@ -7393,11 +7484,17 @@ function listViewController($rootScope, $scope, $routeParams, $injector, notific
         });
     };
 
-    //assign debounce method to the search to limit the queries
-    $scope.search = _.debounce(function() {
-        $scope.options.pageNumber = 1;
-        $scope.reloadView($scope.contentId);
-    }, 100);
+    $scope.$watch(function() {
+        return $scope.options.filter;
+    }, _.debounce(function(newVal, oldVal) {
+        $scope.$apply(function() {
+            if (newVal !== null && newVal !== undefined && newVal !== oldVal) {
+                $scope.options.pageNumber = 1;
+                $scope.actionInProgress = true;
+                $scope.reloadView($scope.contentId);
+            }
+        });
+    }, 200));
 
     $scope.enterSearch = function($event) {
         $($event.target).next().focus();
@@ -7456,12 +7553,13 @@ function listViewController($rootScope, $scope, $routeParams, $injector, notific
                 $scope.bulkStatus = "Deleted item " + current + " out of " + total + " item" + pluralSuffix;
                 deleteItemCallback(getIdCallback(selected[i])).then(function (data) {
                     if (current === total) {
+                        //TODO: Should probably add notifications on the server side
                         notificationsService.success("Bulk action", "Deleted " + total + " item" + pluralSuffix);
-                        $scope.bulkStatus = "";
-                        $scope.reloadView($scope.contentId);
-                        $scope.actionInProgress = false;
+                        showNotificationsAndReset(data, true);
                     }
                     current++;
+                }, function (err) {
+                    showNotificationsAndReset(err, false);
                 });
             }
         }
@@ -7490,26 +7588,12 @@ function listViewController($rootScope, $scope, $routeParams, $injector, notific
                 .then(function(content) {
                     if (current == total) {
                         notificationsService.success("Bulk action", "Published " + total + " document" + pluralSuffix);
-                        $scope.bulkStatus = "";
-                        $scope.reloadView($scope.contentId);
-                        $scope.actionInProgress = false;
+                        showNotificationsAndReset(content, true);
                     }
                     current++;
                 }, function(err) {
-
-                    $scope.bulkStatus = "";
-                    $scope.reloadView($scope.contentId);
-                    $scope.actionInProgress = false;
-
-                    //if there are validation errors for publishing then we need to show them
-                    if (err.status === 400 && err.data && err.data.Message) {
-                        notificationsService.error("Publish error", err.data.Message);
-                    }
-                    else {
-                        dialogService.ysodDialog(err);
-                    }
+                    showNotificationsAndReset(err, false);
                 });
-
         }
     };
 
@@ -7536,12 +7620,12 @@ function listViewController($rootScope, $scope, $routeParams, $injector, notific
 
                     if (current == total) {
                         notificationsService.success("Bulk action", "Unpublished " + total + " document" + pluralSuffix);
-                        $scope.bulkStatus = "";
-                        $scope.reloadView($scope.contentId);
-                        $scope.actionInProgress = false;
+                        showNotificationsAndReset(content, true);
                     }
 
                     current++;
+                }, function(err) {
+                    showNotificationsAndReset(err, false);
                 });
         }
     };

@@ -38,22 +38,33 @@ angular.module("umbraco").controller("Imulus.ArchetypeController", function ($sc
         var parsedTemplate = template;
 
         while ((results = rgx.exec(template)) !== null) {
-            var propertyAlias = "";
+            // split the template in case it consists of multiple property aliases and/or functions
+            var parts = results[1].split("|");
+            var templateLabelValue = "";
+            for(var i = 0; i < parts.length; i++) {
+                // stop looking for a template label value if a previous template part already yielded a value
+                if(templateLabelValue != "") {
+                    break;
+                }
+                
+                var part = parts[i];
+                
+                //test for function
+                var beginIndexOf = part.indexOf("(");
+                var endIndexOf = part.indexOf(")");
 
-            //test for function
-            var beginIndexOf = results[1].indexOf("(");
-            var endIndexOf = results[1].indexOf(")");
-
-            if(beginIndexOf != -1 && endIndexOf != -1)
-            {
-                var functionName = results[1].substring(0, beginIndexOf);
-                propertyAlias = results[1].substring(beginIndexOf + 1, endIndexOf);
-                parsedTemplate = parsedTemplate.replace(results[0], executeFunctionByName(functionName, window, $scope.getPropertyValueByAlias(fieldset, propertyAlias), $scope));
+                if(beginIndexOf != -1 && endIndexOf != -1)
+                {
+                    var functionName = part.substring(0, beginIndexOf);
+                    var propertyAlias = part.substring(beginIndexOf + 1, endIndexOf);
+                    templateLabelValue = executeFunctionByName(functionName, window, $scope.getPropertyValueByAlias(fieldset, propertyAlias), $scope);
+                }
+                else {
+                    propertyAlias = part;
+                    templateLabelValue = $scope.getPropertyValueByAlias(fieldset, propertyAlias);
+                }                
             }
-            else {
-                propertyAlias = results[1];
-                parsedTemplate = parsedTemplate.replace(results[0], $scope.getPropertyValueByAlias(fieldset, propertyAlias));
-            }
+            parsedTemplate = parsedTemplate.replace(results[0], templateLabelValue);
         }
 
         return parsedTemplate;
@@ -76,25 +87,39 @@ angular.module("umbraco").controller("Imulus.ArchetypeController", function ($sc
         return "";
     }
 
+    var draggedRteSettings;
+
     //sort config
     $scope.sortableOptions = {
         axis: 'y',
         cursor: "move",
         handle: ".handle",
+        start: function(ev, ui) {
+            draggedRteSettings = {};
+            ui.item.parent().find('.mceNoEditor').each(function () {
+                // remove all RTEs in the dragged row and save their settings
+                var id = $(this).attr('id');
+                draggedRteSettings[id] = _.findWhere(tinyMCE.editors, { id: id }).settings;
+                tinyMCE.execCommand('mceRemoveEditor', false, id);
+            });
+        },
         update: function (ev, ui) {
             $scope.setDirty();
         },
         stop: function (ev, ui) {
-
+            ui.item.parent().find('.mceNoEditor').each(function () {
+                var id = $(this).attr('id');
+                draggedRteSettings[id] = draggedRteSettings[id] || _.findWhere(tinyMCE.editors, { id: id }).settings;
+                tinyMCE.execCommand('mceRemoveEditor', false, id);
+                tinyMCE.init(draggedRteSettings[id]);
+            });
         }
     };
 
     //handles a fieldset add
     $scope.addRow = function (fieldsetAlias, $index) {
-        if ($scope.canAdd())
-        {
-            if ($scope.model.config.fieldsets)
-            {
+        if ($scope.canAdd()) {
+            if ($scope.model.config.fieldsets) {
                 var newFieldset = getEmptyRenderFieldset($scope.getConfigFieldsetByAlias(fieldsetAlias));
 
                 if (typeof $index != 'undefined')
@@ -122,6 +147,22 @@ angular.module("umbraco").controller("Imulus.ArchetypeController", function ($sc
         }
     }
 
+    $scope.cloneRow = function ($index) {
+        if ($scope.canClone() && typeof $index != 'undefined') {
+            var newFieldset = angular.copy($scope.model.value.fieldsets[$index]);
+
+            if(newFieldset) {
+
+                $scope.model.value.fieldsets.splice($index + 1, 0, newFieldset);
+
+                $scope.setDirty();
+
+                newFieldset.collapse = $scope.model.config.enableCollapsing ? true : false;
+                $scope.focusFieldset(newFieldset);
+            }
+        }
+    }
+
     $scope.enableDisable = function (fieldset) {
         fieldset.disabled = !fieldset.disabled;
         // explicitly set the form as dirty when manipulating the enabled/disabled state of a fieldset
@@ -129,8 +170,7 @@ angular.module("umbraco").controller("Imulus.ArchetypeController", function ($sc
     }
 
     //helpers for determining if a user can do something
-    $scope.canAdd = function ()
-    {
+    $scope.canAdd = function () {
         if ($scope.model.config.maxFieldsets)
         {
             return countVisible() < $scope.model.config.maxFieldsets;
@@ -140,11 +180,24 @@ angular.module("umbraco").controller("Imulus.ArchetypeController", function ($sc
     }
 
     //helper that returns if an item can be removed
-    $scope.canRemove = function ()
-    {
+    $scope.canRemove = function () {
         return countVisible() > 1 
             || ($scope.model.config.maxFieldsets == 1 && $scope.model.config.fieldsets.length > 1)
             || $scope.model.config.startWithAddButton;
+    }
+
+    $scope.canClone = function () {
+
+        if (!$scope.model.config.enableCloning) {
+            return false;
+        }
+
+        if ($scope.model.config.maxFieldsets)
+        {
+            return countVisible() < $scope.model.config.maxFieldsets;
+        }
+
+        return true;
     }
 
     //helper that returns if an item can be sorted
@@ -255,6 +308,8 @@ angular.module("umbraco").controller("Imulus.ArchetypeController", function ($sc
                 $scope.model.value.toString = stringify;
             }
         }
+        // reset submit watcher counter on save
+        $scope.activeSubmitWatcher = 0;
     });
 
     //helper to count what is visible
@@ -354,6 +409,19 @@ angular.module("umbraco").controller("Imulus.ArchetypeController", function ($sc
     {
         assetsService.loadCss($scope.model.config.customCssPath);
     }
+
+    // submit watcher handling:
+    // because some property editors use the "formSubmitting" event to set/clean up their model.value,
+    // we need to monitor the "formSubmitting" event from a custom property and broadcast our own event
+    // to forcefully update the appropriate model.value's
+    $scope.activeSubmitWatcher = 0;
+    $scope.submitWatcherOnLoad = function () {
+        $scope.activeSubmitWatcher++;
+        return $scope.activeSubmitWatcher;
+    }
+    $scope.submitWatcherOnSubmit = function () {
+        $scope.$broadcast("archetypeFormSubmitting");
+    }
 });
 
 angular.module("umbraco").controller("Imulus.ArchetypeConfigController", function ($scope, $http, assetsService, dialogService, archetypePropertyEditorResource) {
@@ -364,7 +432,7 @@ angular.module("umbraco").controller("Imulus.ArchetypeConfigController", functio
     //define empty items
     var newPropertyModel = '{"alias": "", "remove": false, "collapse": false, "label": "", "helpText": "", "dataTypeGuid": "0cc0eba1-9960-42c9-bf9b-60e150b429ae", "value": ""}';
     var newFieldsetModel = '{"alias": "", "remove": false, "collapse": false, "labelTemplate": "", "icon": "", "label": "", "properties": [' + newPropertyModel + ']}';
-    var defaultFieldsetConfigModel = JSON.parse('{"showAdvancedOptions": false, "startWithAddButton": false, "hideFieldsetToolbar": false, "enableMultipleFieldsets": false, "hideFieldsetControls": false, "hidePropertyLabel": false, "maxFieldsets": null, "enableCollapsing": true, "enableDisabling": true, "enableDeepDatatypeRequests": true, "fieldsets": [' + newFieldsetModel + ']}');
+    var defaultFieldsetConfigModel = JSON.parse('{"showAdvancedOptions": false, "startWithAddButton": false, "hideFieldsetToolbar": false, "enableMultipleFieldsets": false, "hideFieldsetControls": false, "hidePropertyLabel": false, "maxFieldsets": null, "enableCollapsing": true, "enableCloning": false, "enableDisabling": true, "enableDeepDatatypeRequests": false, "fieldsets": [' + newFieldsetModel + ']}');
 
     //ini the model
     $scope.model.value = $scope.model.value || defaultFieldsetConfigModel;
@@ -739,7 +807,7 @@ angular.module("umbraco.directives").directive('archetypeProperty', function ($c
             });
         });
 
-        scope.$on("formSubmitting", function (ev, args) {
+        scope.$on("archetypeFormSubmitting", function (ev, args) {
             // validate all fieldset properties
             _.each(scope.fieldset.properties, function (property) {
                 validateProperty(scope.fieldset, property);
@@ -754,6 +822,7 @@ angular.module("umbraco.directives").directive('archetypeProperty', function ($c
             var validationKey = "validation-f" + scope.fieldsetIndex;
             ngModelCtrl.$setValidity(validationKey, scope.fieldset.isValid);
         });
+
 
         // called when the value of any property in a fieldset changes
         function propertyValueChanged(fieldset, property) {
@@ -811,6 +880,14 @@ angular.module("umbraco.directives").directive('archetypeProperty', function ($c
         return _.unique(propertyAliasParts).reverse().join("-");
     };
 
+    var getFieldset = function(scope) {
+        return scope.archetypeRenderModel.fieldsets[scope.fieldsetIndex];
+    }
+
+    var getFieldsetProperty = function (scope) {
+        return getFieldset(scope).properties[scope.renderModelPropertyIndex];
+    }
+
     function loadView(view, config, defaultValue, alias, propertyAlias, scope, element, ngModelCtrl, propertyValueChanged) {
         if (view)
         {
@@ -827,14 +904,15 @@ angular.module("umbraco.directives").directive('archetypeProperty', function ($c
                     scope.model.config = {};
 
                     //ini the property value after test to make sure a prop exists in the renderModel
-                    var renderModelPropertyIndex = getPropertyIndexByAlias(scope.archetypeRenderModel.fieldsets[scope.fieldsetIndex].properties, alias);
+                    scope.renderModelPropertyIndex = getPropertyIndexByAlias(getFieldset(scope).properties, alias);
 
-                    if (!renderModelPropertyIndex)
+                    if (!scope.renderModelPropertyIndex)
                     {
-                        scope.archetypeRenderModel.fieldsets[scope.fieldsetIndex].properties.push(JSON.parse('{"alias": "' + alias + '", "value": "' + defaultValue + '"}'));
-                        renderModelPropertyIndex = getPropertyIndexByAlias(scope.archetypeRenderModel.fieldsets[scope.fieldsetIndex].properties, alias);
+                        getFieldset(scope).properties.push(JSON.parse('{"alias": "' + alias + '", "value": "' + defaultValue + '"}'));
+                        scope.renderModelPropertyIndex = getPropertyIndexByAlias(getFieldset(scope).properties, alias);
                     }
-                    scope.model.value = scope.archetypeRenderModel.fieldsets[scope.fieldsetIndex].properties[renderModelPropertyIndex].value;
+                    scope.renderModel = {};
+                    scope.model.value = getFieldsetProperty(scope).value;
 
                     //set the config from the prevalues
                     scope.model.config = config;
@@ -861,10 +939,24 @@ angular.module("umbraco.directives").directive('archetypeProperty', function ($c
 
                     //watch for changes since there is no two-way binding with the local model.value
                     scope.$watch('model.value', function (newValue, oldValue) {
-                        scope.archetypeRenderModel.fieldsets[scope.fieldsetIndex].properties[renderModelPropertyIndex].value = newValue;
+                        getFieldsetProperty(scope).value = newValue;
 
                         // notify the linker that the property value changed
-                        propertyValueChanged(scope.archetypeRenderModel.fieldsets[scope.fieldsetIndex], scope.archetypeRenderModel.fieldsets[scope.fieldsetIndex].properties[renderModelPropertyIndex]);
+                        propertyValueChanged(getFieldset(scope), getFieldsetProperty(scope));
+                    });
+
+                    scope.$on('archetypeFormSubmitting', function (ev, args) {
+                        // did the value change (if it did, it most likely did so during the "formSubmitting" event)
+                        var property = getFieldsetProperty(scope);
+
+                        var currentValue = property.value;
+
+                        if (currentValue != scope.model.value) {
+                            getFieldsetProperty(scope).value = scope.model.value;
+
+                            // notify the linker that the property value changed
+                            propertyValueChanged(getFieldset(scope), getFieldsetProperty(scope));
+                        }
                     });
 
                     element.html(data).show();
@@ -895,6 +987,31 @@ angular.module("umbraco.directives").directive('archetypeProperty', function ($c
             archetypeRenderModel: '=',
             umbracoPropertyAlias: '=',
             umbracoForm: '='
+        }
+    }
+});
+
+angular.module("umbraco.directives").directive('archetypeSubmitWatcher', function ($rootScope) {
+    var linker = function (scope, element, attrs, ngModelCtrl) {
+        // call the load callback on scope to obtain the ID of this submit watcher
+        var id = scope.loadCallback();
+        scope.$on("formSubmitting", function (ev, args) {
+            // on the "formSubmitting" event, call the submit callback on scope to notify the Archetype controller to do it's magic
+            if (id == scope.activeSubmitWatcher) {
+                scope.submitCallback();
+            }
+        });
+    }
+
+    return {
+        restrict: "E",
+        replace: true,
+        link: linker,
+        template: "",
+        scope: {
+            loadCallback: '=',
+            submitCallback: '=',
+            activeSubmitWatcher: '='
         }
     }
 });
@@ -1030,7 +1147,7 @@ angular.module('umbraco.resources').factory('archetypePropertyEditorResource', f
         getAllDataTypes: function() {
             // Hack - grab DataTypes from Tree API, as `dataTypeService.getAll()` isn't implemented yet
             return umbRequestHelper.resourcePromise(
-                $http.get("/umbraco/backoffice/ArchetypeApi/ArchetypeDataType/GetAll", { cache: true }), 'Failed to retrieve datatypes from tree service'
+                $http.get("/umbraco/backoffice/ArchetypeApi/ArchetypeDataType/GetAll"), 'Failed to retrieve datatypes from tree service'
             );
         },
         getDataType: function (guid, useDeepDatatypeLookup, contentTypeAlias, propertyTypeAlias, archetypeAlias, nodeId) {
