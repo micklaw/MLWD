@@ -19,12 +19,8 @@ namespace Website.Domain.Home.Controllers
     {
         public ActionResult Index()
         {
-            var searchCriteriaBlog =
-                SearchCriteria.WithExcludeBlogCategory("work")
-                    .AndPaging(0, 4)
-                    .OrderByDescending(SearchOrder.PublishDate);
-            var searchCriteriaWork =
-                SearchCriteria.WithBlogCategory("work").AndPaging(0, 6).OrderByDescending(SearchOrder.PublishDate);
+            var searchCriteriaBlog = SearchCriteria.WithExcludeBlogCategory("work").AndPaging(0, 4).OrderByDescending(SearchOrder.PublishDate);
+            var searchCriteriaWork = SearchCriteria.WithBlogCategory("work").AndPaging(0, 6).OrderBy("ContentDatePublished", true);
 
             var model = new HomeViewModel
             {
