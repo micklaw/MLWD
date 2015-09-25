@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.IO ; 
-using System.Xml ;
-using System.Xml.Linq;
-
-using umbraco.BusinessLogic ; 
-
-using Umbraco.Core.IO ;
-using Umbraco.Core.Logging;
-
 using System.Security.Cryptography;
-
-using jumps.umbraco.usync.Extensions;
-
-using System.Runtime.InteropServices; 
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
 
 namespace jumps.umbraco.usync.helpers
 {
@@ -133,7 +122,6 @@ namespace jumps.umbraco.usync.helpers
             else {
                 if ( File.Exists(savePath) ) 
                 {
-                    // TODO: Archive here..? 
                     if ( _versions ) {
                         ArchiveFile(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path), false);  
                     }
@@ -214,7 +202,7 @@ namespace jumps.umbraco.usync.helpers
                     }
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                // archive is a non critical thing - if it fails we are not stopping
                // umbraco, but we are going to log that it didn't work. 
@@ -337,7 +325,7 @@ namespace jumps.umbraco.usync.helpers
         public static string CalculateMD5Hash(string input)
         {
             string hash = "";
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
             using( var md5 = MD5.Create())
             {
                 hash = BitConverter.ToString(md5.ComputeHash(inputBytes)).Replace("-", "").ToLower();
@@ -363,8 +351,6 @@ namespace jumps.umbraco.usync.helpers
         /// <param name="filename"></param>
         public static string ScrubFile(string filename)
         {
-            // TODO: a better scrub
-
             StringBuilder sb = new StringBuilder(filename);
             char[] invalid = Path.GetInvalidFileNameChars();
             foreach (char item in invalid)

@@ -26,10 +26,7 @@ namespace Yomego.Umbraco.Context.Caching
         /// <returns></returns>
         public object Add(string key, object data)
         {
-            if (Current != null)
-            {
-                Current.Add(key, data);
-            }
+            Current?.Add(key, data);
 
             return data;
         }
@@ -41,7 +38,7 @@ namespace Yomego.Umbraco.Context.Caching
         /// <returns></returns>
         public object Get(string key)
         {
-            return Current != null ? Current[key] : null;
+            return Current?[key];
         }
 
         /// <summary>
@@ -57,7 +54,7 @@ namespace Yomego.Umbraco.Context.Caching
                 return default(T);
             }
 
-            object item = Current[key];
+            var item = Current[key];
 
             if (item == null || item.GetType() != typeof(T))
             {

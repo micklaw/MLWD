@@ -1,12 +1,7 @@
-﻿using System;
-using System.Web;
-using System.Web.Mvc;
-using umbraco.dialogs;
+﻿using System.Web.Mvc;
 using Website.Domain.Shared.Archetypes;
 using Yomego.Umbraco.Mvc.Attributes;
 using Yomego.Umbraco.Mvc.Extensions;
-using Yomego.Umbraco.Mvc.Model.Media;
-using Yomego.Umbraco.Utils;
 
 namespace Website.Domain.Shared.Extensions
 {

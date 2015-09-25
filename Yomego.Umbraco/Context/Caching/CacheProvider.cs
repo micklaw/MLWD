@@ -16,7 +16,7 @@ namespace Yomego.Umbraco.Context.Caching
                     return null;
                 }
 
-                return HttpContext.Current.Cache;
+                return HttpRuntime.Cache;
             }
         }
 
@@ -29,10 +29,7 @@ namespace Yomego.Umbraco.Context.Caching
         /// <returns></returns>
         public object Add(string key, object data, DateTime expiryDate)
         {
-            if (Current != null)
-            {
-                Current.Insert(key, data, null, expiryDate, Cache.NoSlidingExpiration);
-            }
+            Current?.Insert(key, data, null, expiryDate, Cache.NoSlidingExpiration);
 
             return data;
         }
@@ -44,7 +41,7 @@ namespace Yomego.Umbraco.Context.Caching
         /// <returns></returns>
         public object Get(string key)
         {
-            return Current != null ? Current.Get(key) : null;
+            return Current?.Get(key);
         }
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace Yomego.Umbraco.Context.Caching
                 return default(T);
             }
 
-            object item = Current.Get(key);
+            var item = Current.Get(key);
 
             if (item == null || item.GetType() != typeof(T))
             {
@@ -80,11 +77,6 @@ namespace Yomego.Umbraco.Context.Caching
             {
                 Current.Remove(key);
             }
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException("Not used on the HTTP cache provider.");
         }
     }
 }

@@ -33,10 +33,5 @@ namespace Yomego.Umbraco.Context.Caching.Interfaces
         /// </summary>
         /// <param name="key"></param>
         void Remove(string key);
-
-        /// <summary>
-        /// Clear all cache items
-        /// </summary>
-        void Clear();
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Our.Umbraco.Ditto;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
+using Yomego.Umbraco.Umbraco.Ditto.Resolvers.TemplateName;
 
 namespace Yomego.Umbraco.Umbraco.Model
 {
@@ -12,6 +9,10 @@ namespace Yomego.Umbraco.Umbraco.Model
     {
         public Content(IPublishedContent content) : base(content)
         {
+            
         }
+
+        [DittoValueResolver(typeof(TemplateNameValueResolver))]
+        public string TemplateName { get; set; }
     }
 }

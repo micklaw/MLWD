@@ -2,16 +2,10 @@
 
 namespace Yomego.Umbraco.Mvc.Controllers.App
 {
-    public class UmbracoController<TApp> : BaseController where TApp : class
+    public class UmbracoController<TApp> : BaseController where TApp : Yomego.Umbraco.App
     {
-        private Lazy<TApp> LazyApp = new Lazy<TApp>();
+        private readonly Lazy<TApp> _lazyApp = new Lazy<TApp>();
 
-        protected TApp App
-        {
-            get
-            {
-                return LazyApp.Value;
-            }
-        }
+        protected TApp App => _lazyApp.Value;
     }
 }

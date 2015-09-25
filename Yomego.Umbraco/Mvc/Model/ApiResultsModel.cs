@@ -1,5 +1,4 @@
-﻿using Umbraco.Core.Models.PublishedContent;
-using Yomego.Umbraco.Collections;
+﻿using Yomego.Umbraco.Collections;
 using Yomego.Umbraco.Umbraco.Model;
 
 namespace Yomego.Umbraco.Mvc.Model

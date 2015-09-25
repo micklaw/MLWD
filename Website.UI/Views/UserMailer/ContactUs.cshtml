@@ -1,0 +1,26 @@
+﻿@using Website.Domain.Contents.Form
+@{
+    Layout = "_Layout.cshtml";
+
+    var form = ViewBag.Form as ContactForm;
+    var date = DateTime.Now;
+}
+
+<p>This is your friendly website calling, how the hell are ya?</p>
+
+<p>It looks like <strong>@form.Name</strong> @Html.Raw(!string.IsNullOrWhiteSpace(form.Company) ? "from <strong>" + form.Company + "</strong> " : string.Empty)got in contact on <strong>@date.Day.ToOrdinal() @date.ToString("MMMM") @date.ToString("h:mm tt")</strong></p>
+
+<p>Theyre giving it?...</p>
+
+<p><strong>MESSAGE: </strong> - @form.Message</p>
+
+<p>If you give a fuck?...</p>
+
+<p><strong>EMAIL: </strong> <a href="mailto:@form.Email">@form.Email</a></p>
+
+@if (!string.IsNullOrWhiteSpace(form.Telephone))
+{
+    <p><strong>TELEPHONE: </strong> <a href="tel:@form.Telephone">@form.Telephone</a></p>
+}
+
+<p>Peace</p>

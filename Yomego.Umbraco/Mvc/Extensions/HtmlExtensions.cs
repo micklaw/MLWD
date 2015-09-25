@@ -168,13 +168,6 @@ namespace Yomego.Umbraco.Mvc.Extensions
             return helper.RenderMacro(alias, htmlAttributes);
         }
 
-        public static IHtmlString Dictionary(this HtmlHelper html, string key)
-        {
-            var helper = new UmbracoHelper(UmbracoContext.Current);
-
-            return new HtmlString(helper.GetDictionaryValue(key) ?? String.Empty);
-        }
-
         public static IHtmlString RawUmbraco(this HtmlHelper html, IHtmlString body)
         {
             if (body == null)

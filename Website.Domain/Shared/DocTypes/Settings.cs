@@ -4,8 +4,8 @@ using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 using Website.Domain.Shared.Archetypes;
-using Website.Domain.Shared.Ditto.TypeConverters;
 using Yomego.Umbraco.Mvc.Model.Media;
+using Yomego.Umbraco.Umbraco.Ditto.TypeConverters;
 
 namespace Website.Domain.Shared.DocTypes
 {
@@ -42,7 +42,7 @@ namespace Website.Domain.Shared.DocTypes
 
         public string CompanySkype { get; set; }
 
-        [ArchetypeResolver]
+        [ArchetypeValueResolver]
         public List<UrlPicker> NavItems { get; set; }
     }
 }

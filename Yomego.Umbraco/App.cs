@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Web;
 using Yomego.Umbraco.Context;
 using Yomego.Umbraco.Mvc.Settings;
 using Yomego.Umbraco.Umbraco.Services.Container;
+using Yomego.Umbraco.Umbraco.Services.Content;
 
 namespace Yomego.Umbraco
 {
@@ -10,9 +10,11 @@ namespace Yomego.Umbraco
     {
         private readonly Lazy<WebConfig> _webConfig = new Lazy<WebConfig>();
 
-        public WebConfig WebConfig
-        {
-            get { return _webConfig.Value; }
-        }
+        public WebConfig WebConfig => _webConfig.Value;
+
+
+        private readonly Lazy<DictionaryService> _dictionary = new Lazy<DictionaryService>();
+
+        public DictionaryService Dictionary => _dictionary.Value;
     }
 }

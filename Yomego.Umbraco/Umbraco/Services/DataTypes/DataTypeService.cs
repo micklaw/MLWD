@@ -2,7 +2,7 @@
 
 namespace Yomego.Umbraco.Umbraco.Services.DataTypes
 {
-    public abstract class DataTypeService : BaseService
+    public abstract class DataTypeService : BaseService<App>
     {
         #region Abstract Methods
 

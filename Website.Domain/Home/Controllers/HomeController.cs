@@ -1,15 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Website.Domain.Blog.DocTypes;
 using Website.Domain.Home.DocTypes;
 using Website.Domain.Home.ViewModels;
 using Website.Domain.Shared.Controllers;
 using Website.Domain.Shared.Search;
 using Website.Domain.Sitemap.Services;
-using Yomego.Umbraco;
 using Yomego.Umbraco.Collections;
 using Yomego.Umbraco.Umbraco.Services.Search.Enums;
 

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Yomego.Umbraco.Context
 {
+    /// <summary>
+    /// Simple IoC
+    /// </summary>
     public class Container
     {
         #region Resolution

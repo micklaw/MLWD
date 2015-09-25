@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Umbraco.Core.Configuration.UmbracoSettings;
 using Umbraco.Core.Models.PublishedContent;
 using Yomego.Umbraco.Umbraco.Services.Search.Enums;
 using Yomego.Umbraco.Umbraco.Services.Search.Models.Interfaces;
@@ -10,7 +9,7 @@ namespace Yomego.Umbraco.Umbraco.Services.Search.Models
 {
     public abstract class TypedCriteria<T> : ICriteria where T : TypedCriteria<T>
     {
-        private List<Tuple<List<string>, List<string>, OperatorEnum>> _SearchItems { get; set; }
+        private List<Tuple<List<string>, List<string>, OperatorEnum>> _searchItems { get; set; }
 
         // Explicit implementation is deliberate here as not to expose SearchItems to inheriters,
         // they should use the AddSearchItem methods instead
@@ -18,11 +17,11 @@ namespace Yomego.Umbraco.Umbraco.Services.Search.Models
         {
             get
             {
-                return _SearchItems;
+                return _searchItems;
             }
             set
             {
-                _SearchItems = value;
+                _searchItems = value;
             }
         }
 

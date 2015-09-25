@@ -5,10 +5,13 @@ using System.Globalization;
 using System.IO;
 using System.Xml;
 using umbraco.cms.businesslogic.web;
-using Umbraco.Core;
 using umbraco.NodeFactory;
+using Umbraco.Core;
+using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
+using Umbraco.Web.Models.ContentEditing;
 using Yomego.Umbraco.Mvc.Attributes;
+#pragma warning disable 618
 
 namespace Yomego.Umbraco.Umbraco.Helpers
 {
@@ -19,6 +22,10 @@ namespace Yomego.Umbraco.Umbraco.Helpers
     public static class ConverterHelper
     {
         private static ConcurrentDictionary<string, Type> _baseTypes = new ConcurrentDictionary<string, Type>();
+
+        private static ConcurrentDictionary<string, string> _documentTypeDefaultActions = new ConcurrentDictionary<string, string>();
+
+        private static ConcurrentDictionary<int, string> _templateNames = new ConcurrentDictionary<int, string>();
 
         /// <summary>
         /// Gets the <see cref="UmbracoHelper"/> for querying published content or media.
@@ -197,6 +204,61 @@ namespace Yomego.Umbraco.Umbraco.Helpers
                     }
                 }
             }
+        }
+
+        public static string GetTemplateName(int templateId, string docTypeAlias)
+        {
+            string action;
+
+            if (templateId == 0)
+            {
+                // [ML] - Try and get it from the template 0, documentAlias cache
+
+                if (!_documentTypeDefaultActions.TryGetValue(docTypeAlias, out action))
+                {
+                    // [ML] - If we cant find it get it with the route attribute action and update the template 0, document type alias cache
+
+                    var type = FirstFromBaseType<PublishedContentModel>(docTypeAlias);
+
+                    var routeAttribute = type?.GetCustomAttribute<UmbracoRouteAttribute>(false);
+
+                    if (!string.IsNullOrWhiteSpace(routeAttribute?.Action))
+                    {
+                        action = routeAttribute.Action;
+                    }
+
+                    // [ML] - If its not populated, default to Index like Mvc
+
+                    if (string.IsNullOrWhiteSpace(action) || action.ToLower().Equals("default"))
+                    {
+                        action = "Index";
+                    }
+
+                    _documentTypeDefaultActions.TryAdd(docTypeAlias, action);
+                }
+
+                return action;
+            }
+
+            // [ML] - If a custom template has been selected then get its name from the cache
+
+            _templateNames.TryGetValue(templateId, out action);
+
+            if (string.IsNullOrWhiteSpace(action))
+            {
+                // [ML] - If not found, grab the template name and update the cache template name cache
+
+                action = ApplicationContext.Current.Services.FileService.GetTemplate(templateId)?.Alias;
+
+                if (string.IsNullOrWhiteSpace(action))
+                {
+                    throw new NullReferenceException($"No action has been found for the template {templateId}.");
+                }
+
+                _templateNames.TryAdd(templateId, action);
+            }
+
+            return action;
         }
     }
 }

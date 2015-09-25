@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using BoboBrowse.Api;
 using BoboBrowse.Facets;
 using BoboBrowse.Facets.impl;
 using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
+using Directory = Lucene.Net.Store.Directory;
+using Version = Lucene.Net.Util.Version;
 
 namespace Yomego.Umbraco.Umbraco.Services.Content.Facets
 {
@@ -51,7 +53,7 @@ namespace Yomego.Umbraco.Umbraco.Services.Content.Facets
 
             try
             {
-                idx = FSDirectory.Open(new System.IO.DirectoryInfo(IndexPath));
+                idx = FSDirectory.Open(new DirectoryInfo(IndexPath));
 
                 reader = IndexReader.Open(idx, true);
 
@@ -144,7 +146,7 @@ namespace Yomego.Umbraco.Umbraco.Services.Content.Facets
 
         private Query GetQuery(string fieldName, string queryString)
         {
-            var parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_29, fieldName, new WhitespaceAnalyzer());
+            var parser = new QueryParser(Version.LUCENE_29, fieldName, new WhitespaceAnalyzer());
 
             var q = parser.Parse(queryString);
 

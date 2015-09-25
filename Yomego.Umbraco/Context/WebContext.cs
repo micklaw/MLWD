@@ -10,37 +10,12 @@ namespace Yomego.Umbraco.Context
 {
     public class WebContext
     {
-        private CookieProvider _Cookies = new CookieProvider();
+        public virtual NameValueCollection QueryString => HttpContext.Current.Request.QueryString;
 
-        private RequestProvider _Request = new RequestProvider();
+        public virtual IDictionary Items => HttpContext.Current.Items;
 
-        private SessionProvider _Session = new SessionProvider();
+        public virtual IPrincipal User => HttpContext.Current.User;
 
-        private ICacheProvider _Cache = new CacheProvider();
-
-        public virtual NameValueCollection QueryString
-        {
-            get
-            {
-                return HttpContext.Current.Request.QueryString;
-            }
-        }
-
-        public virtual IDictionary Items
-        {
-            get
-            {
-                return HttpContext.Current.Items;
-            }
-        }
-
-        public virtual IPrincipal User
-        {
-            get
-            {
-                return HttpContext.Current.User;
-            }
-        }
 
         public virtual string DomainUrl
         {
@@ -52,45 +27,15 @@ namespace Yomego.Umbraco.Context
             }
         }
 
-        public virtual Uri CurrentUrl
-        {
-            get
-            {
-                return HttpContext.Current.Request.Url;
-            }
-        }
+        public virtual Uri CurrentUrl => HttpContext.Current.Request.Url;
 
-        public virtual SessionProvider Session 
-        {
-            get
-            {
-                return _Session;
-            }
-        }
+        public virtual SessionProvider Session { get; } = new SessionProvider();
 
-        public virtual RequestProvider RequestCache
-        {
-            get
-            {
-                return _Request;
-            }
-        }
+        public virtual RequestProvider RequestCache { get; } = new RequestProvider();
 
-        public virtual CookieProvider Cookies
-        {
-            get
-            {
-                return _Cookies;
-            }
-        }
+        public virtual CookieProvider Cookies { get; } = new CookieProvider();
 
-        public virtual ICacheProvider Cache
-        {
-            get
-            {
-                return _Cache;
-            }
-        }
+        public virtual ICacheProvider Cache { get; } = new CacheProvider();
 
         public string CurrentCulture
         {

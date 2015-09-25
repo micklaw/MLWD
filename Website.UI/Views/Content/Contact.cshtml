@@ -1,27 +1,67 @@
 ﻿@model Website.Domain.Contents.ViewModels.ContactViewModel
-
+@{
+    var content = Model.Content;
+    var form = Model.Form;
+}
 <div class="divide20"></div>
 <div class="row">
     <div class="col-md-12">
         <div class="center-heading">
-            <h2>@Model.Content.ContactTitle</h2>
+            <h2>@content.ContactTitle</h2>
             <span class="center-line"></span>
         </div>
     </div>
 </div>
 
-@if (Model.Content.ContactMap != null && !string.IsNullOrWhiteSpace(Model.Content.ContactMap))
+@if (!Model.Success)
 {
+    if (content.ContactMap != null && !string.IsNullOrWhiteSpace(content.ContactMap))
+    {
+        <div class="container">
+            @Html.RawUmbraco(content.ContactMap)
+        </div>
+    }
+
+    <div class="divide20"></div>
     <div class="container">
-        @Html.RawUmbraco(Model.Content.ContactMap)
+        <div class="row text-center">
+            <div class="col-md-12">
+                @Html.RawUmbraco(content.ContactDescription)
+            </div>
+        </div>
     </div>
 }
 
-<div class="divide50"></div>
+<div class="divide20"></div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-12 margin30">
-            @Html.RawUmbraco(Model.Content.ContactDescription)
-        </div>
+    <div class="col-md-offset-3 col-md-6">
+        @if (Model.Success)
+        {
+            <div class="row text-center">
+                <h3>@content.ThanksTitle</h3>
+                @Html.RawUmbraco(content.ThanksDescription)
+
+                <div class="row">
+                    <div class="form-group text-center">
+                        <a href="/" class="btn btn-theme-bg btn-lg">Back to site</a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-contact">
+
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { action = Request.RawUrl, id = "", novalidate = "" }))
+                {
+                    @Html.ValidationSummary(false)
+                    @Html.AntiForgeryToken()
+
+                    @Html.Partial("Forms/Contact", form)
+                }
+
+            </div>
+        }
     </div>
 </div>
+<div class="divide50"></div>

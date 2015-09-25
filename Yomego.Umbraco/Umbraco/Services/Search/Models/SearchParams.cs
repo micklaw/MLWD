@@ -57,5 +57,11 @@ namespace Yomego.Umbraco.Umbraco.Services.Search.Models
         public bool Descending { get; set; }
 
         public string Categories { get; set; }
+
+        public string Tags { get; set; }
+        
+        public int Page { get; set; }
+        
+        public int PageSize { get; set; }
     }
 }

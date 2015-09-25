@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.IO;
-
-using Umbraco.Core.Logging;
+﻿using System.IO;
+using System.Threading;
 using System.Timers;
+using Umbraco.Core.Logging;
+using Timer = System.Timers.Timer;
 
 namespace jumps.umbraco.usync
 {
@@ -79,7 +74,7 @@ namespace jumps.umbraco.usync
             {
                 if (_lockCount > 0)
                 {
-                    System.Threading.Interlocked.Decrement(ref _lockCount);
+                    Interlocked.Decrement(ref _lockCount);
                 }
 
                 LogHelper.Debug<SyncFileWatcher>("Watcher Lock {0}", ()=> _lockCount); 
@@ -98,7 +93,7 @@ namespace jumps.umbraco.usync
         {
             if (watcher != null)
             {
-                System.Threading.Interlocked.Increment(ref _lockCount);
+                Interlocked.Increment(ref _lockCount);
                 LogHelper.Debug<SyncFileWatcher>("Watcher Lock {0}", () => _lockCount);
 
 

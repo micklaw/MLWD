@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Xml ;
-using System.Xml.Linq;
-
+using System.Diagnostics;
 using System.IO;
-
+using System.Linq;
+using System.Xml.Linq;
+using jumps.umbraco.usync.helpers;
 using Umbraco.Core;
-using Umbraco.Core.Services;
-using Umbraco.Core.Models;
+using Umbraco.Core.Events;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
-
-using System.Diagnostics;
-
-using jumps.umbraco.usync.helpers;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 
 namespace jumps.umbraco.usync
 {
@@ -77,7 +70,7 @@ namespace jumps.umbraco.usync
             sw.Start();
 
             string path = IOHelper.MapPath(string.Format("{0}{1}",
-                helpers.uSyncIO.RootFolder,
+                uSyncIO.RootFolder,
                 "Macro"));
 
             ReadFromDisk(path);
@@ -192,7 +185,7 @@ namespace jumps.umbraco.usync
             MacroService.Deleted += MacroService_Deleted;
         }
 
-        static void MacroService_Deleted(IMacroService sender, Umbraco.Core.Events.DeleteEventArgs<IMacro> e)
+        static void MacroService_Deleted(IMacroService sender, DeleteEventArgs<IMacro> e)
         {
             if (!uSync.EventsPaused)
             {
@@ -203,7 +196,7 @@ namespace jumps.umbraco.usync
             }
         }
 
-        static void MacroService_Saved(IMacroService sender, Umbraco.Core.Events.SaveEventArgs<IMacro> e)
+        static void MacroService_Saved(IMacroService sender, SaveEventArgs<IMacro> e)
         {
             if (!uSync.EventsPaused)
             {

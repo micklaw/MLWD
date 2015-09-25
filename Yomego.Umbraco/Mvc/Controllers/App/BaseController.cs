@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using Umbraco.Core.Models.PublishedContent;
 using Yomego.Umbraco.Constants;
 using Yomego.Umbraco.Mvc.ActionResults;
@@ -26,13 +27,7 @@ namespace Yomego.Umbraco.Mvc.Controllers.App
             return result;
         }
 
-        public PublishedContentModel Node
-        {
-            get
-            {
-                return HttpContext.Items[Requests.Node] as PublishedContentModel;
-            }
-        }
+        public PublishedContentModel Node => HttpContext.Items[Requests.Node] as PublishedContentModel;
 
         #endregion UmbracoHelpers
 
@@ -78,6 +73,16 @@ namespace Yomego.Umbraco.Mvc.Controllers.App
             return result;
         }
 
+        protected override JsonResult Json(object data, string contentType, Encoding contentEncoding)
+        {
+            return new JsonNetResult(data, contentType, contentEncoding);
+        }
+
+        protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior)
+        {
+            return new JsonNetResult(data, contentType, contentEncoding, behavior);
+        }
+
         private void InvalidateControllerContext()
         {
             if (ControllerContext == null)
@@ -89,20 +94,6 @@ namespace Yomego.Umbraco.Mvc.Controllers.App
 
         #endregion
 
-        #region Json Overrides
-
-        protected override JsonResult Json(object data, string contentType, Encoding contentEncoding)
-        {
-            return new JsonNetResult(data, contentType, contentEncoding);
-        }
-
-        protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior)
-        {
-            return new JsonNetResult(data, contentType, contentEncoding, behavior);
-        }
-
-        #endregion
-
         public int FixPage(int? page)
         {
             if (!page.HasValue)
@@ -110,7 +101,9 @@ namespace Yomego.Umbraco.Mvc.Controllers.App
                 return 0;
             }
 
-            return page.Value - 1;
+            var finalPage = page.Value - 1;
+
+            return (finalPage < 0) ? 0 : finalPage;
         }
     }
 }

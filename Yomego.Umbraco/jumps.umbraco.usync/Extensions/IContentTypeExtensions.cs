@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.Linq;
-
+using jumps.umbraco.usync.helpers;
 using Umbraco.Core;
+using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
-
-using Umbraco.Core.Logging;
-
-using jumps.umbraco.usync.helpers;
 
 namespace jumps.umbraco.usync.Extensions
 {
@@ -189,61 +183,10 @@ namespace jumps.umbraco.usync.Extensions
                     // for existing items.
                     LogHelper.Debug<uSync>("Updating prop {0} for {1}", () => property.Alias, () => item.Alias);
 
-
-                    /* not sure we need to do this, we just call EditorAlias - it will find it ? */
-                    /*
-                    var legacyEditorId = Guid.Empty;
-                    Guid.TryParse(propertyNode.Element("Type").Value, out legacyEditorId);
-
-
-                    if ( legacyEditorId == Guid.Empty)
-                    {
-                        // new style id...?
-                    }
-
-                    var dataTypeDefinitionId = new Guid(propertyNode.Element("Definition").Value);
-                    IDataTypeService _dataTypeService = ApplicationContext.Current.Services.DataTypeService;
-
-                    var dataTypeDefinition = _dataTypeService.GetDataTypeDefinitionById(dataTypeDefinitionId);
-                    */
                     var editorAlias = propertyNode.Element("Type").Value; 
 
                     IDataTypeService _dataTypeService = ApplicationContext.Current.Services.DataTypeService;
                     var dataTypeDefinition = _dataTypeService.GetDataTypeDefinitionByPropertyEditorAlias(editorAlias).FirstOrDefault();
-
-                    /*
-                    if ( dataTypeDefinition != null &&
-                         dataTypeDefinition.Key == dataTypeDefinitionId  )
-                    {
-                        // all good, we are here..
-                    }
-                    else
-                    {
-                        // we need to do even more looking...
-                        var dataTypeDefinitions = _dataTypeService.GetDataTypeDefinitionByControlId(legacyEditorId);
-
-                        if ( dataTypeDefinition != null && dataTypeDefinitions.Any())
-                        {
-                            dataTypeDefinition = dataTypeDefinitions.First();
-                        }
-                    }
-                    */
-
-                    /*
-                    if ( dataTypeDefinition != null)
-                    {
-                        // phew we have found what we are looking for.
-
-                        // now we set it in the DB 
-                        // property.DataTypeDefinitionId = dataTypeDefinition.Id;
-
-                        // this is wrong, because you can't 
-                        // actually change the DataTypeId and that prob
-                        // matters when changing a type.
-
-                        // TODO: make changes to the datatype import/export properly. 
-                    }
-                    */
 
                     property.Name = propertyNode.Element("Name").Value;
                     property.Description = propertyNode.Element("Description").Value;
@@ -316,7 +259,7 @@ namespace jumps.umbraco.usync.Extensions
                 {
                     path = _contentTypeService.GetContentType(item.ParentId).GetSyncPath();
                 }
-                path = string.Format("{0}\\{1}", path, helpers.XmlDoc.ScrubFile(item.Alias));
+                path = string.Format("{0}\\{1}", path, XmlDoc.ScrubFile(item.Alias));
             }
             return path;
         }

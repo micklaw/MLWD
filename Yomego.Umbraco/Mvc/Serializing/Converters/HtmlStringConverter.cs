@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Yomego.Umbraco.Mvc.Serializing.Converters
 {
-    public class HtmlStringConverter : Newtonsoft.Json.JsonConverter
+    public class HtmlStringConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
             return typeof(IHtmlString).IsAssignableFrom(objectType);
         }
 
-        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var source = value as IHtmlString;
 
@@ -22,7 +23,7 @@ namespace Yomego.Umbraco.Mvc.Serializing.Converters
             writer.WriteValue(source.ToString());
         }
 
-        public override object ReadJson(Newtonsoft.Json.JsonReader reader, Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             HtmlString htmlString = null;
 

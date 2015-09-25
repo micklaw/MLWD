@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.XPath;
+using umbraco;
 
 namespace Yomego.Umbraco.Umbraco.Services.DataTypes
 {
@@ -9,7 +10,7 @@ namespace Yomego.Umbraco.Umbraco.Services.DataTypes
         {
             var models = new Dictionary<string, string>();
 
-            XPathNodeIterator nodes = umbraco.library.GetPreValues(id);
+            XPathNodeIterator nodes = library.GetPreValues(id);
 
             nodes.MoveNext();
 

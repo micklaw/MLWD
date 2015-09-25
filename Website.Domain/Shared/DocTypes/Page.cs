@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using Our.Umbraco.Ditto;
 using Umbraco.Core.Models;
-using Umbraco.Core.Models.PublishedContent;
-using Website.Domain.Shared.Ditto.TypeConverters;
 using Yomego.Umbraco.Mvc.Model.Media;
+using Yomego.Umbraco.Umbraco.Ditto.TypeConverters;
 
 namespace Website.Domain.Shared.DocTypes
 {

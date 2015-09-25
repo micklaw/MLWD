@@ -1,22 +1,26 @@
-﻿using System;
+﻿#pragma warning disable 618
+using System;
 using System.Collections;
-using System.Linq;
-using System.Xml; 
-using System.IO ;
-
-using umbraco; 
-using umbraco.cms.businesslogic;
-using umbraco.cms.businesslogic.media ;
-using umbraco.cms.businesslogic.propertytype;
-using umbraco.BusinessLogic ; 
-
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Services;
-using Umbraco.Core.Logging;
-
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Xml;
 using jumps.umbraco.usync.helpers;
+using umbraco;
+using umbraco.BusinessLogic;
+using umbraco.cms.businesslogic;
+using umbraco.cms.businesslogic.datatype.controls;
+using Umbraco.Core;
+using Umbraco.Core.Events;
+using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
+using ContentType = umbraco.cms.businesslogic.ContentType;
+using DataTypeDefinition = umbraco.cms.businesslogic.datatype.DataTypeDefinition;
+using MediaType = umbraco.cms.businesslogic.media.MediaType;
+using PropertyType = umbraco.cms.businesslogic.propertytype.PropertyType;
+#pragma warning disable 618
 
 namespace jumps.umbraco.usync
 {
@@ -28,10 +32,10 @@ namespace jumps.umbraco.usync
             {
                 try
                 {
-                    XmlDocument xmlDoc = helpers.XmlDoc.CreateDoc();
+                    XmlDocument xmlDoc = XmlDoc.CreateDoc();
                     xmlDoc.AppendChild(MediaTypeHelper.ToXml(xmlDoc, item));
                     xmlDoc.AddMD5Hash();
-                    helpers.XmlDoc.SaveXmlDoc(item.GetType().ToString(), GetMediaPath(item), "def", xmlDoc);
+                    XmlDoc.SaveXmlDoc(item.GetType().ToString(), GetMediaPath(item), "def", xmlDoc);
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +77,7 @@ namespace jumps.umbraco.usync
 
                 // buld the final path (as path is "" to start with we always get
                 // a preceeding '/' on the path, which is nice
-                path = string.Format(@"{0}\{1}", path, helpers.XmlDoc.ScrubFile(item.Alias));
+                path = string.Format(@"{0}\{1}", path, XmlDoc.ScrubFile(item.Alias));
             }
 
             return path; 
@@ -85,7 +89,7 @@ namespace jumps.umbraco.usync
             sw.Start();
 
             string path = IOHelper.MapPath(string.Format("{0}{1}",
-                helpers.uSyncIO.RootFolder,
+                uSyncIO.RootFolder,
                 "MediaType"));
 
             ReadFromDisk(path, false);
@@ -135,19 +139,19 @@ namespace jumps.umbraco.usync
             ContentTypeService.DeletingMediaType += ContentTypeService_DeletingMediaType;
         }
 
-        static void ContentTypeService_DeletingMediaType(IContentTypeService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMediaType> e)
+        static void ContentTypeService_DeletingMediaType(IContentTypeService sender, DeleteEventArgs<IMediaType> e)
         {
             if (!uSync.EventsPaused)
             {
                 LogHelper.Debug<SyncMediaTypes>("DeletingMediaType for {0} items", () => e.DeletedEntities.Count());
                 foreach (var mediaType in e.DeletedEntities)
                 {
-                    helpers.XmlDoc.ArchiveFile("MediaType", GetMediaPath(new MediaType(mediaType.Id)), "def");
+                    XmlDoc.ArchiveFile("MediaType", GetMediaPath(new MediaType(mediaType.Id)), "def");
                 }
             }
         }
 
-        static void ContentTypeService_SavedMediaType(IContentTypeService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMediaType> e)
+        static void ContentTypeService_SavedMediaType(IContentTypeService sender, SaveEventArgs<IMediaType> e)
         {
             if (!uSync.EventsPaused)
             {
@@ -362,8 +366,8 @@ namespace jumps.umbraco.usync
             }
 
             // properties..
-            global::umbraco.cms.businesslogic.datatype.controls.Factory f =
-                new global::umbraco.cms.businesslogic.datatype.controls.Factory();
+            Factory f =
+                new Factory();
 
             foreach (XmlNode gp in n.SelectNodes("GenericProperties/GenericProperty"))
             {
@@ -402,7 +406,7 @@ namespace jumps.umbraco.usync
                     if (pt == null)
                     {
                         mt.AddPropertyType(
-                            global::umbraco.cms.businesslogic.datatype.DataTypeDefinition.GetDataTypeDefinition(dfId),
+                            DataTypeDefinition.GetDataTypeDefinition(dfId),
                             xmlHelper.GetNodeValue(gp.SelectSingleNode("Alias")),
                             xmlHelper.GetNodeValue(gp.SelectSingleNode("Name"))
                             );
@@ -410,7 +414,7 @@ namespace jumps.umbraco.usync
                     }
                     else
                     {
-                        pt.DataTypeDefinition = global::umbraco.cms.businesslogic.datatype.DataTypeDefinition.GetDataTypeDefinition(dfId);
+                        pt.DataTypeDefinition = DataTypeDefinition.GetDataTypeDefinition(dfId);
                         pt.Name = xmlHelper.GetNodeValue(gp.SelectSingleNode("Name"));
                     }
 
@@ -445,7 +449,7 @@ namespace jumps.umbraco.usync
                             if (dtt != null)
                                 allowed.Add(dtt.Id);
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             LogHelper.Info<uSync>("Can't find structure mediatype - so skipping");
                         }
@@ -474,7 +478,7 @@ namespace jumps.umbraco.usync
         private static int findDataTypeDefinitionFromType(ref Guid dtId)
         {
             int dfId = 0;
-            foreach (global::umbraco.cms.businesslogic.datatype.DataTypeDefinition df in global::umbraco.cms.businesslogic.datatype.DataTypeDefinition.GetAll())
+            foreach (DataTypeDefinition df in DataTypeDefinition.GetAll())
                 if (df.DataType.Id == dtId)
                 {
                     dfId = df.Id;

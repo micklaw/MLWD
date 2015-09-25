@@ -8,24 +8,15 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.IO; // so we can write to disk..
-using System.Xml; // so we can serialize stuff
-
-using Umbraco.Core.IO;
-using Umbraco.Core;
-using Umbraco.Core.Logging;
-
-using umbraco.businesslogic;
-using umbraco.BusinessLogic;
-using Umbraco.Web;
-
 using System.Diagnostics;
-using System.Reflection;
+using System.IO;
+using jumps.umbraco.usync.helpers;
+using Umbraco.Core;
+using Umbraco.Core.Configuration;
+using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
+// so we can write to disk..
+// so we can serialize stuff
 
 
 namespace jumps.umbraco.usync
@@ -49,12 +40,9 @@ namespace jumps.umbraco.usync
         private static object _syncObj = new object(); 
         private static bool _synced = false ; 
         
-        // TODO: Config this
         private bool _read;
         private bool _write;
         private bool _attach;
-
-        private bool _docTypeSaveWorks = false;
 
         // our own events - fired when we start and stop
         public static event uSyncBulkEventHander Starting;
@@ -113,9 +101,6 @@ namespace jumps.umbraco.usync
                 _attach = attach ?? uSyncSettings.Attach;
                 LogHelper.Debug<uSync>("Settings : Attach = {0}", () => _attach);
 
-                // Remove version check
-                // we don't work on pre v6.0.1 anymore anyway 
-                _docTypeSaveWorks = true;
             }
             catch ( Exception ex )
             {
@@ -164,7 +149,7 @@ namespace jumps.umbraco.usync
         /// </summary>
         public void ReadAllFromDisk()
         {
-            if (!File.Exists(Path.Combine(IOHelper.MapPath(helpers.uSyncIO.RootFolder), "usync.stop")))
+            if (!File.Exists(Path.Combine(IOHelper.MapPath(uSyncIO.RootFolder), "usync.stop")))
             {
                 lock (_readSync)
                 {
@@ -199,12 +184,12 @@ namespace jumps.umbraco.usync
 
                     LogHelper.Debug<uSync>("Reading from Disk - End");
 
-                    if (File.Exists(Path.Combine(IOHelper.MapPath(helpers.uSyncIO.RootFolder), "usync.once")))
+                    if (File.Exists(Path.Combine(IOHelper.MapPath(uSyncIO.RootFolder), "usync.once")))
                     {
                         LogHelper.Debug<uSync>("Renaming once file");
 
-                        File.Move(Path.Combine(IOHelper.MapPath(helpers.uSyncIO.RootFolder), "usync.once"),
-                            Path.Combine(IOHelper.MapPath(helpers.uSyncIO.RootFolder), "usync.stop"));
+                        File.Move(Path.Combine(IOHelper.MapPath(uSyncIO.RootFolder), "usync.once"),
+                            Path.Combine(IOHelper.MapPath(uSyncIO.RootFolder), "usync.stop"));
                         LogHelper.Debug<uSync>("Once renamed to stop");
                     }
 
@@ -256,7 +241,7 @@ namespace jumps.umbraco.usync
             if (uSyncSettings.WatchFolder)
             {
                 LogHelper.Info<uSync>("Watching uSync Folder for Changes"); 
-                SyncFileWatcher.Init(IOHelper.MapPath(helpers.uSyncIO.RootFolder));
+                SyncFileWatcher.Init(IOHelper.MapPath(uSyncIO.RootFolder));
                 SyncFileWatcher.Start();
             }
         }
@@ -283,7 +268,7 @@ namespace jumps.umbraco.usync
 
                 // Save Everything to disk.
                 // only done first time or when write = true           
-                if (!Directory.Exists(IOHelper.MapPath(helpers.uSyncIO.RootFolder)) || _write)
+                if (!Directory.Exists(IOHelper.MapPath(uSyncIO.RootFolder)) || _write)
                 {
                     SaveAllToDisk();
                 }
@@ -325,7 +310,7 @@ namespace jumps.umbraco.usync
         /// </summary>
         public void CleanDirectory()
         {
-            var uSyncRoot = IOHelper.MapPath(helpers.uSyncIO.RootFolder);
+            var uSyncRoot = IOHelper.MapPath(uSyncIO.RootFolder);
 
             var folders = new string[] {
                 "DataTypeDefinition", 
@@ -350,13 +335,13 @@ namespace jumps.umbraco.usync
 
         public string GetVersion()
         {
-            return typeof(jumps.umbraco.usync.uSync).Assembly.GetName().Version.ToString();
+            return typeof(uSync).Assembly.GetName().Version.ToString();
         }
 
-        public void OnApplicationStarted(UmbracoApplicationBase httpApplication, Umbraco.Core.ApplicationContext applicationContext)
+        public void OnApplicationStarted(UmbracoApplicationBase httpApplication, ApplicationContext applicationContext)
         {
-            if ( Umbraco.Core.Configuration.UmbracoVersion.Current.Major >= 7 && 
-                Umbraco.Core.Configuration.UmbracoVersion.Current.Minor >= 1 ) 
+            if ( UmbracoVersion.Current.Major >= 7 && 
+                UmbracoVersion.Current.Minor >= 1 ) 
             {
                 /* [ML] - Disabled this a beezer as its messing up our shit on startup,
                  * uncomment to start fucking things up again */
@@ -368,12 +353,12 @@ namespace jumps.umbraco.usync
             }
         }
 
-        public void OnApplicationStarting(UmbracoApplicationBase httpApplication, Umbraco.Core.ApplicationContext applicationContext)
+        public void OnApplicationStarting(UmbracoApplicationBase httpApplication, ApplicationContext applicationContext)
         {
             // don't think i do it here.
         }
 
-        public void OnApplicationInitialized(UmbracoApplicationBase httpApplication, Umbraco.Core.ApplicationContext applicationContext)
+        public void OnApplicationInitialized(UmbracoApplicationBase httpApplication, ApplicationContext applicationContext)
         {
             // don't think i do it here.
         }

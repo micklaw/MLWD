@@ -1,27 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Diagnostics;
+using System.IO;
 using System.Xml;
+using jumps.umbraco.usync.helpers;
+using umbraco.BusinessLogic;
 using umbraco.cms.businesslogic;
 using umbraco.cms.businesslogic.web;
-
-using umbraco.BusinessLogic; 
-
-using System.IO ;
-
-using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
-
-using Umbraco.Core.Models;
-using Umbraco.Core.Services;
-
-using System.Diagnostics;
-
-using jumps.umbraco.usync.helpers;
+#pragma warning disable 618
 
 namespace jumps.umbraco.usync
 {
@@ -46,11 +33,11 @@ namespace jumps.umbraco.usync
             {
                 try
                 {
-                    XmlDocument xmlDoc = helpers.XmlDoc.CreateDoc();
+                    XmlDocument xmlDoc = XmlDoc.CreateDoc();
                     xmlDoc.AppendChild(item.ToXml(xmlDoc));
                     xmlDoc.AddMD5Hash();
 
-                    helpers.XmlDoc.SaveXmlDoc(item.GetType().ToString(), item.Text, xmlDoc);
+                    XmlDoc.SaveXmlDoc(item.GetType().ToString(), item.Text, xmlDoc);
                 }
                 catch (Exception ex)
                 {
@@ -81,7 +68,7 @@ namespace jumps.umbraco.usync
             sw.Start();
 
             string path = IOHelper.MapPath(string.Format("{0}{1}",
-                helpers.uSyncIO.RootFolder,
+                uSyncIO.RootFolder,
                 "StyleSheet" )) ;
 
             ReadFromDisk(path);
@@ -130,7 +117,7 @@ namespace jumps.umbraco.usync
         {
             if (!uSync.EventsPaused)
             {
-                helpers.XmlDoc.ArchiveFile(sender.GetType().ToString(), sender.Text);
+                XmlDoc.ArchiveFile(sender.GetType().ToString(), sender.Text);
                 e.Cancel = false;
             }
         }

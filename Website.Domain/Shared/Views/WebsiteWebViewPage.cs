@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Mvc;
-using Yomego.Umbraco.Context;
 
 namespace Website.Domain.Shared.Views
 {

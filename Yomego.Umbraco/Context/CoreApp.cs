@@ -4,8 +4,8 @@ namespace Yomego.Umbraco.Context
 {
     public class CoreApp<TServiceContainer> : Container where TServiceContainer : CoreServiceContainer, new()
     {
-        public TServiceContainer Services { get { return Get<TServiceContainer>(); } }
+        public TServiceContainer Services => Get<TServiceContainer>();
 
-        public WebContext Context { get { return Get<WebContext>(); } }
+        public WebContext Context => Get<WebContext>();
     }
 }

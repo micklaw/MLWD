@@ -20,10 +20,10 @@ namespace Yomego.Umbraco.Umbraco.Events
                 new DatabaseServerMessengerOptions
                 {
                     InitializingCallbacks = new Action[]
-				{
-					() => global::umbraco.content.Instance.RefreshContentFromDatabase(),
-					() => Examine.ExamineManager.Instance.RebuildIndex()
-				}
+                    {
+                        () => global::umbraco.content.Instance.RefreshContentFromDatabase(),
+                        () => Examine.ExamineManager.Instance.RebuildIndex()
+                    }
                 }));
 
             ServerRegistrarResolver.Current.SetServerRegistrar(new DatabaseServerRegistrar(new Lazy<IServerRegistrationService>(() => applicationContext.Services.ServerRegistrationService), new DatabaseServerRegistrarOptions()));

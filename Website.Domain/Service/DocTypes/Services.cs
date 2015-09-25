@@ -4,8 +4,8 @@ using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Yomego.Umbraco.Mvc.Attributes;
 using Yomego.Umbraco.Mvc.Model.Media;
 using Umbraco.Core.Models;
-using Website.Domain.Shared.Ditto.TypeConverters;
 using Website.Domain.Shared.DocTypes;
+using Yomego.Umbraco.Umbraco.Ditto.TypeConverters;
 
 namespace Website.Domain.Service.DocTypes
 {
@@ -17,7 +17,7 @@ namespace Website.Domain.Service.DocTypes
         [TypeConverter(typeof(ImageConverter))]
         public Image ServiceImage { get; set; }
 
-        [ArchetypeResolver]
+        [ArchetypeValueResolver]
         public IList<Home.Models.Archetypes.Service> ServicesList { get; set; }
     }
 }

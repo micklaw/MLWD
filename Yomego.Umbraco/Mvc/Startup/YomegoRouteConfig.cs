@@ -6,7 +6,7 @@ namespace Yomego.Umbraco.Mvc.Startup
 {
     public class YomegoRouteConfig
     {
-        public static void RegisterRoutes(RouteCollection routes)
+        public static void RegisterRoutes(RouteCollection routes, bool withCatchAll)
         {
             routes.IgnoreRoute("favicon.ico");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -25,9 +25,12 @@ namespace Yomego.Umbraco.Mvc.Startup
                 defaults: new { controller = "YomegoAdminCMS", action = "SaveDataTypes" }
             );
 
-            var umbraco = new Route("{*url}", new RouteValueDictionary() { }, new RouteValueDictionary() { { "url", new YomegoCMSRouteConstraint() } }, new YomegoCMSRouteHandler());
+            if (withCatchAll)
+            {
+                var umbraco = new Route("{*url}", new RouteValueDictionary() {}, new RouteValueDictionary() {{"url", new YomegoCMSRouteConstraint()}}, new YomegoCMSRouteHandler());
 
-            routes.Add(umbraco);
+                routes.Add(umbraco);
+            }
         }
     }
 }

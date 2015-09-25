@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Web;
 using Umbraco.Core.Models;
 using System.Linq;
-using Website.Domain.Shared.Ditto.TypeConverters;
 using Website.Domain.Shared.DocTypes;
 using Yomego.Umbraco.Mvc.Attributes;
 using Yomego.Umbraco.Mvc.Model.Media;
+using Yomego.Umbraco.Umbraco.Ditto.TypeConverters;
 
 namespace Website.Domain.Blog.DocTypes
 {

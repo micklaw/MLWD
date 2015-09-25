@@ -1,5 +1,4 @@
 ﻿using System;
-using CookComputing.MetaWeblog;
 using Newtonsoft.Json;
 using umbraco.MacroEngines;
 using Yomego.Umbraco.Mvc.Model.Media;
@@ -27,7 +26,7 @@ namespace Yomego.Umbraco.Umbraco.Helpers
             {
                 var mediaPath = mediaItem.GetPropertyAsString("umbracoFile");
 
-                img.ImageCrops = mediaPath != null ? JsonConvert.DeserializeObject<ImageCrops>(mediaPath) : new ImageCrops();
+                img.ImageCrops = mediaPath != null && !mediaPath.StartsWith("/") ? JsonConvert.DeserializeObject<ImageCrops>(mediaPath) : new ImageCrops();
 
                 img.Url = !string.IsNullOrWhiteSpace(img.ImageCrops.src) ? img.ImageCrops.src : mediaPath;
 

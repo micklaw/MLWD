@@ -3,8 +3,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Website.Domain.Shared.Serializing;
-using Website.Domain.Shared.Serializing.Converters;
 using Yomego.Umbraco;
 
 namespace Website.UI
@@ -24,25 +22,7 @@ namespace Website.UI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            YomegoStartup.Register(RouteTable.Routes, config);
-
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new ExcludeContractResolver(new[]
-            {
-                "Children",
-                "ContentSet",
-                "ContentType",
-                "ItemType",
-                "Parent",
-                "Properties",
-                "properties",
-                "this",
-                "Content"
-            });
-
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
-            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new HtmlStringConverter());
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            YomegoStartup.Register(config, RouteTable.Routes);
 
             base.OnApplicationStarted(sender, e);
         }

@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using umbraco.cms.businesslogic.language;
-
-using System.Xml;
+using System.Diagnostics;
 using System.IO;
-
+using System.Xml;
+using jumps.umbraco.usync.helpers;
+using umbraco.cms.businesslogic;
+using umbraco.cms.businesslogic.language;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
-
-using jumps.umbraco.usync.helpers;
-using System.Diagnostics;
+#pragma warning disable 618
 
 namespace jumps.umbraco.usync
 {
@@ -23,10 +17,10 @@ namespace jumps.umbraco.usync
         {
             if (item != null)
             {
-                XmlDocument xmlDoc = helpers.XmlDoc.CreateDoc(); 
+                XmlDocument xmlDoc = XmlDoc.CreateDoc(); 
                 xmlDoc.AppendChild(item.ToXml(xmlDoc));
                 xmlDoc.AddMD5Hash();
-                helpers.XmlDoc.SaveXmlDoc(item.GetType().ToString(), item.CultureAlias, xmlDoc) ; 
+                XmlDoc.SaveXmlDoc(item.GetType().ToString(), item.CultureAlias, xmlDoc) ; 
             }
         }
 
@@ -46,7 +40,7 @@ namespace jumps.umbraco.usync
             sw.Start();
 
             string path = IOHelper.MapPath(String.Format("{0}{1}",
-                helpers.uSyncIO.RootFolder,
+                uSyncIO.RootFolder,
                 "Language"));
 
             ReadFromDisk(path);
@@ -95,7 +89,7 @@ namespace jumps.umbraco.usync
             Language.AfterDelete += Language_AfterDelete;
         }
 
-        static void Language_New(Language sender, global::umbraco.cms.businesslogic.NewEventArgs e)
+        static void Language_New(Language sender, NewEventArgs e)
         {
             if (!uSync.EventsPaused)
             {
@@ -103,15 +97,15 @@ namespace jumps.umbraco.usync
             }
         }
 
-        static void Language_AfterDelete(Language sender, global::umbraco.cms.businesslogic.DeleteEventArgs e)
+        static void Language_AfterDelete(Language sender, DeleteEventArgs e)
         {
             if (!uSync.EventsPaused)
             {
-                helpers.XmlDoc.ArchiveFile(sender.GetType().ToString(), sender.CultureAlias);
+                XmlDoc.ArchiveFile(sender.GetType().ToString(), sender.CultureAlias);
             }
         }
 
-        static void Language_AfterSave(Language sender, global::umbraco.cms.businesslogic.SaveEventArgs e)
+        static void Language_AfterSave(Language sender, SaveEventArgs e)
         {
             if (!uSync.EventsPaused)
             {

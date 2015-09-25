@@ -1,7 +1,7 @@
 ﻿using System;
 using Examine;
-using Umbraco.Core;
 using umbraco.NodeFactory;
+using Umbraco.Core;
 using Yomego.Umbraco.Context;
 using Yomego.Umbraco.Umbraco.Services.Container;
 
@@ -14,7 +14,7 @@ namespace Yomego.Umbraco.Umbraco.Events
 
         public void OnApplicationInitialized(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            //throw new NotImplementedException();
+           
         }
 
         void ExamineEventsGatheringNodeData(object sender, IndexingNodeDataEventArgs e)
@@ -34,6 +34,7 @@ namespace Yomego.Umbraco.Umbraco.Events
 
                 bool exists;
                 var publishDate = node.GetProperty("publishDate", out exists);
+
                 if (exists)
                 {
                     e.Fields.Add("SystemPublishDate", publishDate.Value);
@@ -46,15 +47,6 @@ namespace Yomego.Umbraco.Umbraco.Events
                     datePublished = node.GetProperty("published", out exists);
                 }
 
-                // [ML] - override with th blog date
-
-                var blogDatePublished = node.GetProperty("blogPublishDate", out exists);
-
-                if (exists)
-                {
-                    datePublished = blogDatePublished;
-                }
-
                 if (datePublished != null)
                 {
                     DateTime date;
@@ -62,12 +54,6 @@ namespace Yomego.Umbraco.Umbraco.Events
                     {
                         e.Fields.Add("ContentDatePublished", date.ToString("yyyyMMddHHmmss"));
                     }
-                }
-
-                var tags = node.GetProperty("blogTags", out exists);
-                if (exists)
-                {
-                    e.Fields.Add("SystemBlogTags", tags.Value.Replace(",", " "));
                 }
 
                 var culture = app.Services.Content.GetCulture(node.Id);
@@ -90,7 +76,7 @@ namespace Yomego.Umbraco.Umbraco.Events
                 {
                     if (!_ran)
                     {
-                        ExamineManager.Instance.IndexProviderCollection[Yomego.Umbraco.Constants.Examine.MainExamineIndexProvider].GatheringNodeData += ExamineEventsGatheringNodeData;
+                        ExamineManager.Instance.IndexProviderCollection[Constants.Examine.MainExamineIndexProvider].GatheringNodeData += ExamineEventsGatheringNodeData;
                         _ran = true;
                     }
                 }
@@ -99,7 +85,7 @@ namespace Yomego.Umbraco.Umbraco.Events
 
         public void OnApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            //throw new NotImplementedException();
+            
         }
     }
 }

@@ -2,6 +2,7 @@
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
 using Yomego.Umbraco.Utils;
+#pragma warning disable 618
 
 namespace Yomego.Umbraco.Umbraco.Events
 {
@@ -49,8 +50,7 @@ namespace Yomego.Umbraco.Umbraco.Events
 
                 if (hasValidField == false)
                 {
-                    var updateSql = string.Format("ALTER TABLE {0} ALTER COLUMN {1} {2}", tableName, columnName,
-                        expectedColumnDataType);
+                    var updateSql = string.Format("ALTER TABLE {0} ALTER COLUMN {1} {2}", tableName, columnName,expectedColumnDataType);
 
                     db.Execute(updateSql);
                 }

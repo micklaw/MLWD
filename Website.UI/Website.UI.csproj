@@ -108,10 +108,6 @@
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="idseefeld.de.UmbracoAzure, Version=1.0.10.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UmbracoAzureBlobStorageProvider.1.0.10.5\lib\net45\idseefeld.de.UmbracoAzure.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ImageProcessor, Version=1.9.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ImageProcessor.1.9.5.0\lib\ImageProcessor.dll</HintPath>
       <Private>True</Private>
@@ -145,18 +141,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -184,10 +168,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
     </Reference>
     <Reference Include="MiniProfiler, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
@@ -406,6 +386,8 @@
     <Content Include="config\Lang\ru-RU.user.xml" />
     <Content Include="config\Lang\sv-SE.user.xml" />
     <Content Include="config\Lang\zh-CN.user.xml" />
+    <Content Include="content\bootstrap.css" />
+    <Content Include="content\bootstrap.min.css" />
     <Content Include="content\css\animate.css" />
     <Content Include="content\css\bootstrap.css" />
     <Content Include="content\css\flexslider.css" />
@@ -465,15 +447,26 @@
     <Content Include="content\js\vendor\jquery.mixitup.js" />
     <Content Include="content\js\vendor\jquery.stellar.js" />
     <Content Include="content\js\vendor\jquery.sticky.js" />
+    <Content Include="content\js\vendor\jquery.validate.js" />
+    <Content Include="content\js\vendor\jquery.validate.unobtrusive.js" />
     <Content Include="content\js\vendor\owl.carousel.js" />
     <Content Include="content\js\theme\theme.js" />
     <Content Include="content\js\vendor\jquery.js" />
     <Content Include="content\js\custom\utils.js" />
     <Content Include="content\js\vendor\waypoints.js" />
     <Content Include="content\js\vendor\wow.js" />
+    <Content Include="content\Site.css" />
     <Content Include="default.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\bootstrap.js" />
+    <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\dummy.txt" />
+    <None Include="scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="scripts\jquery-1.10.2.js" />
+    <Content Include="scripts\jquery-1.10.2.min.js" />
+    <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="umbraco\Config\Lang\en.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -573,6 +566,9 @@
     <Content Include="config\404handlers.config" />
     <Content Include="config\FileSystemProviders.config" />
     <Content Include="packages.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\Ansum Oak Release.pubxml" />
     <None Include="Properties\PublishProfiles\MLWD Release.pubxml" />
     <Content Include="Views\Content\_ViewStart.cshtml" />
@@ -589,10 +585,64 @@
     <Content Include="Views\Partials\Grid\Editors\Base.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Content\Forms\Contact.cshtml" />
+    <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\UserMailer\ContactUs.cshtml" />
+    <Content Include="Views\UserMailer\_Layout.cshtml" />
+    <Content Include="uSync\DataTypeDefinition\Approved Color.config" />
+    <Content Include="uSync\DataTypeDefinition\Checkbox list.config" />
+    <Content Include="uSync\DataTypeDefinition\Content Picker.config" />
+    <Content Include="uSync\DataTypeDefinition\Custom - Blog Categories.config" />
+    <Content Include="uSync\DataTypeDefinition\Custom - Media Picker.config" />
+    <Content Include="uSync\DataTypeDefinition\Custom - Multi Url Picker.config" />
+    <Content Include="uSync\DataTypeDefinition\Custom - Services.config" />
+    <Content Include="uSync\DataTypeDefinition\Custom - Testimonials.config" />
+    <Content Include="uSync\DataTypeDefinition\Date Picker with time.config" />
+    <Content Include="uSync\DataTypeDefinition\Date Picker.config" />
+    <Content Include="uSync\DataTypeDefinition\Dropdown multiple.config" />
+    <Content Include="uSync\DataTypeDefinition\Dropdown.config" />
+    <Content Include="uSync\DataTypeDefinition\Folder Browser.config" />
+    <Content Include="uSync\DataTypeDefinition\Image Cropper.config" />
+    <Content Include="uSync\DataTypeDefinition\Label.config" />
+    <Content Include="uSync\DataTypeDefinition\List View - Content.config" />
+    <Content Include="uSync\DataTypeDefinition\List View - Media.config" />
+    <Content Include="uSync\DataTypeDefinition\List View - Members.config" />
+    <Content Include="uSync\DataTypeDefinition\Media Picker.config" />
+    <Content Include="uSync\DataTypeDefinition\Member Picker.config" />
+    <Content Include="uSync\DataTypeDefinition\Multiple Media Picker.config" />
+    <Content Include="uSync\DataTypeDefinition\Numeric.config" />
+    <Content Include="uSync\DataTypeDefinition\Radiobox.config" />
+    <Content Include="uSync\DataTypeDefinition\Related Links.config" />
+    <Content Include="uSync\DataTypeDefinition\Richtext editor.config" />
+    <Content Include="uSync\DataTypeDefinition\Tags.config" />
+    <Content Include="uSync\DataTypeDefinition\Textbox multiple.config" />
+    <Content Include="uSync\DataTypeDefinition\Textstring.config" />
+    <Content Include="uSync\DataTypeDefinition\Truefalse.config" />
+    <Content Include="uSync\DataTypeDefinition\Upload.config" />
+    <Content Include="uSync\DocumentType\Page\BlogDetails\def.config" />
+    <Content Include="uSync\DocumentType\Page\BlogListing\def.config" />
+    <Content Include="uSync\DocumentType\Page\Contact\def.config" />
+    <Content Include="uSync\DocumentType\Page\ContentPage\def.config" />
+    <Content Include="uSync\DocumentType\Page\def.config" />
+    <Content Include="uSync\DocumentType\Page\Homepage\def.config" />
+    <Content Include="uSync\DocumentType\Page\Services\def.config" />
+    <Content Include="uSync\DocumentType\Page\WorkDetails\def.config" />
+    <Content Include="uSync\DocumentType\Page\WorkListing\def.config" />
+    <Content Include="uSync\DocumentType\Partial\def.config" />
+    <Content Include="uSync\DocumentType\Partial\Folder\def.config" />
+    <Content Include="uSync\DocumentType\Settings\def.config" />
+    <Content Include="uSync\MediaType\File\def.config" />
+    <Content Include="uSync\MediaType\Folder\def.config" />
+    <Content Include="uSync\MediaType\Image\def.config" />
+    <Content Include="uSync\Template\Preview\Preview.config" />
+    <Content Include="uSync\Template\_ViewStart\_ViewStart.config" />
     <None Include="Web.Release.AnsumOak.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

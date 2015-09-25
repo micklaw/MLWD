@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Website.Domain.Sitemap.Models.Interfaces;
-using Yomego.Umbraco;
 
 namespace Website.Domain.Sitemap.ActionResults
 {

@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Diagnostics;
 using System.IO;
-using System.Xml;
+using System.Linq;
 using System.Xml.Linq;
-
-using System.Diagnostics; 
-
-using Umbraco.Core ;
-using Umbraco.Core.IO;
-using Umbraco.Core.Services;
-using Umbraco.Core.Models;
-using Umbraco.Core.Logging;
-
 using jumps.umbraco.usync.Extensions;
 using jumps.umbraco.usync.helpers;
+using Umbraco.Core;
+using Umbraco.Core.Events;
+using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 
 namespace jumps.umbraco.usync
 {
@@ -105,10 +99,8 @@ namespace jumps.umbraco.usync
             sw.Start();
             _readCount = 0;
 
-            // TODO: nicer way of getting the type string 
-            //       (without creating a dummy doctype?)
             string path = IOHelper.MapPath(string.Format("{0}{1}",
-                helpers.uSyncIO.RootFolder,
+                uSyncIO.RootFolder,
                 "DocumentType"));
 
             // rest the alias names
@@ -237,7 +229,7 @@ namespace jumps.umbraco.usync
         }
 
 
-        static void ContentTypeService_SavedContentType(IContentTypeService sender, Umbraco.Core.Events.SaveEventArgs<IContentType> e)
+        static void ContentTypeService_SavedContentType(IContentTypeService sender, SaveEventArgs<IContentType> e)
         {
             if (!uSync.EventsPaused)
             {
@@ -255,7 +247,7 @@ namespace jumps.umbraco.usync
             }
         }
 
-        static void ContentTypeService_DeletingContentType(IContentTypeService sender, Umbraco.Core.Events.DeleteEventArgs<IContentType> e)
+        static void ContentTypeService_DeletingContentType(IContentTypeService sender, DeleteEventArgs<IContentType> e)
         {
             if (!uSync.EventsPaused)
             {
@@ -263,7 +255,7 @@ namespace jumps.umbraco.usync
                 // delete things (there can sometimes be more than one??)
                 foreach (var docType in e.DeletedEntities)
                 {
-                    helpers.XmlDoc.ArchiveFile("DocumentType", docType.GetSyncPath(), "def");
+                    XmlDoc.ArchiveFile("DocumentType", docType.GetSyncPath(), "def");
                 }
             }
         }

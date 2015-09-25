@@ -36,7 +36,7 @@ namespace Yomego.Umbraco.Context.Caching
         /// <returns></returns>
         public object Add(string key, object data, DateTime? expires)
         {
-            HttpCookie cookie = HttpContext.Current.Request.Cookies[key];
+            var cookie = HttpContext.Current.Request.Cookies[key];
 
             if (cookie == null)
             {
@@ -64,7 +64,7 @@ namespace Yomego.Umbraco.Context.Caching
         /// <returns>Object expected or if null the default(T) response</returns>
         public T Get<T>(string key)
         {
-            HttpCookie cookie = HttpContext.Current.Request.Cookies[key];
+            var cookie = HttpContext.Current.Request.Cookies[key];
 
             if (cookie == null)
             {
@@ -80,7 +80,7 @@ namespace Yomego.Umbraco.Context.Caching
         /// <param name="key"></param>
         public void Remove(string key)
         {
-            HttpCookie cookie = HttpContext.Current.Request.Cookies[key];
+            var cookie = HttpContext.Current.Request.Cookies[key];
 
             if (cookie != null)
             {

@@ -2,7 +2,7 @@
 
 namespace Yomego.Umbraco.Mvc.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class UmbracoRouteAttribute : Attribute
     {
         public UmbracoRouteAttribute(string controller, string action = "Index", string alias = null)

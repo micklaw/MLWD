@@ -1,28 +1,19 @@
 ﻿using System;
-using System.Collections; 
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Diagnostics; 
-
-using System.Xml;
-using System.Xml.Linq;
-
+using System.Diagnostics;
 using System.IO;
-
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Timers;
+using System.Xml.Linq;
+using jumps.umbraco.usync.helpers;
 using Umbraco.Core;
-using Umbraco.Core.Models;
-using Umbraco.Core.Services;
+using Umbraco.Core.Events;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
-
-using jumps.umbraco.usync.helpers;
-
-using System.Text.RegularExpressions;
-
-using System.Timers;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
+#pragma warning disable 618
 
 namespace jumps.umbraco.usync
 {
@@ -88,7 +79,7 @@ namespace jumps.umbraco.usync
             sw.Start();
 
             string path = IOHelper.MapPath(string.Format("{0}{1}",
-                helpers.uSyncIO.RootFolder,
+                uSyncIO.RootFolder,
                 "DataTypeDefinition"));
 
             ReadFromDisk(path);
@@ -194,7 +185,6 @@ namespace jumps.umbraco.usync
                     }
                 }
 
-
                 var valuesWithoutKeys = preValues.Elements("PreValue")
                                                       .Where(x => ((string)x.Attribute("Alias")).IsNullOrWhiteSpace())
                                                       .Select(x => x.Attribute("Value").Value);
@@ -228,7 +218,7 @@ namespace jumps.umbraco.usync
         }
 
 
-        static void DataTypeService_Deleted(IDataTypeService sender, Umbraco.Core.Events.DeleteEventArgs<IDataTypeDefinition> e)
+        static void DataTypeService_Deleted(IDataTypeService sender, DeleteEventArgs<IDataTypeDefinition> e)
         {
             if (!uSync.EventsPaused)
             {
@@ -239,7 +229,7 @@ namespace jumps.umbraco.usync
             }
         }
 
-        static void DataTypeService_Saved(IDataTypeService sender, Umbraco.Core.Events.SaveEventArgs<IDataTypeDefinition> e)
+        static void DataTypeService_Saved(IDataTypeService sender, SaveEventArgs<IDataTypeDefinition> e)
         {
             if (!uSync.EventsPaused)
             {
@@ -337,14 +327,14 @@ namespace jumps.umbraco.usync
                                         // we have an ID : yippe, time to do some walking...
                                         string type = "content";
 
-                                        helpers.ContentWalker cw = new ContentWalker();
+                                        ContentWalker cw = new ContentWalker();
                                         string nodePath = cw.GetPathFromID(id);
 
                                         // Didn't find the content id try media ...
                                         if (string.IsNullOrWhiteSpace(nodePath))                                             
                                         {
                                             type = "media";
-                                            helpers.MediaWalker mw = new MediaWalker();
+                                            MediaWalker mw = new MediaWalker();
                                             nodePath = mw.GetPathFromID(id);
                                         }
 

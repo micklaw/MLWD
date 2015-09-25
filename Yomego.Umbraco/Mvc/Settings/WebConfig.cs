@@ -5,23 +5,8 @@ namespace Yomego.Umbraco.Mvc.Settings
 {
     public class WebConfig
     {
-        private WebConfig() { }
-
-        private WebConfig _current { get; set; }
-
-        public WebConfig Current
-        {
-            get
-            {
-                if (_current == null)
-                {
-                    _current = new WebConfig();
-                }
-
-                return _current;
-            }
-        }
-                
+        public WebConfig() { }
+   
         public string GetString(string key)
         {
             return ConfigurationManager.AppSettings[key];

@@ -146,12 +146,12 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MiniProfiler, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mvc.Mailer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
@@ -163,10 +163,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Our.Umbraco.Ditto">
-      <HintPath>..\packages\Our.Umbraco.Ditto.0.7.0\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+      <HintPath>..\packages\Our.Umbraco.Ditto.0.8.2\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.Ditto.Resolvers">
+      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.2.0-alpha-000058\lib\net45\Our.Umbraco.Ditto.Resolvers.dll</HintPath>
     </Reference>
     <Reference Include="Our.Umbraco.Ditto.Resolvers.Archetype">
-      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.1.0-alpha-000036\lib\net45\Our.Umbraco.Ditto.Resolvers.Archetype.dll</HintPath>
+      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.2.0-alpha-000058\lib\net45\Our.Umbraco.Ditto.Resolvers.Archetype.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -181,6 +184,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.3.0-RC\lib\System.Data.SqlServerCe.dll</HintPath>
@@ -301,11 +305,15 @@
     <Compile Include="Blog\ViewModels\BlogDetailsViewModel.cs" />
     <Compile Include="Contents\Controllers\ContentController.cs" />
     <Compile Include="Contents\DocTypes\Contact.cs" />
+    <Compile Include="Contents\Form\ContactForm.cs" />
     <Compile Include="Contents\ViewModels\ContentViewModel.cs" />
     <Compile Include="Contents\DocTypes\ContentPage.cs" />
     <Compile Include="Contents\ViewModels\ContactViewModel.cs" />
     <Compile Include="Home\Models\Archetypes\Service.cs" />
     <Compile Include="Home\Models\Archetypes\Testimonial.cs" />
+    <Compile Include="Mailer\Models\BaseMailerModel.cs" />
+    <Compile Include="Mailer\Models\UserMailModel.cs" />
+    <Compile Include="Mailer\UserMailer.cs" />
     <Compile Include="Shared\Archetypes\UrlPicker.cs" />
     <Compile Include="Shared\Constants\Urls.cs" />
     <Compile Include="Shared\Controllers\AppController.cs" />
@@ -317,20 +325,11 @@
     <Compile Include="Service\DocTypes\Services.cs" />
     <Compile Include="Service\ViewModels\ServicesViewModel.cs" />
     <Compile Include="Shared\Constants\DataTypes.cs" />
-    <Compile Include="Shared\Ditto\TypeConverters\AssetConverter.cs" />
-    <Compile Include="Shared\Ditto\TypeConverters\HtmlStringConverter.cs" />
-    <Compile Include="Shared\Ditto\TypeConverters\ImageConverter.cs" />
-    <Compile Include="Shared\Ditto\TypeConverters\MultiImageConverter.cs" />
-    <Compile Include="Shared\Ditto\ValueResolvers\ChildContent\ChildContentResolverAttribute.cs" />
-    <Compile Include="Shared\Ditto\ValueResolvers\ChildContent\ChildContentValueResolver.cs" />
     <Compile Include="Shared\DocTypes\Page.cs" />
     <Compile Include="Shared\DocTypes\Settings.cs" />
-    <Compile Include="Shared\Enums\SiteTabs.cs" />
     <Compile Include="Shared\Extensions\HtmlExtensions.cs" />
     <Compile Include="Shared\Models\OgModel.cs" />
     <Compile Include="Shared\Search\SearchCriteria.cs" />
-    <Compile Include="Shared\Serializing\Converters\HtmlStringConverter.cs" />
-    <Compile Include="Shared\Serializing\ExcludeContractResolver.cs" />
     <Compile Include="Shared\Services\WebsiteService.cs" />
     <Compile Include="Shared\Views\WebsiteWebViewPage.cs" />
     <Compile Include="Sitemap\ActionResults\XmlSitemapResult.cs" />
@@ -353,9 +352,7 @@
       <DependentUpon>app.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Shared\Converters\Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Yomego.Umbraco\Yomego.Umbraco.csproj">
       <Project>{a10adbeb-dec2-4d15-87a6-846b2b012b1c}</Project>

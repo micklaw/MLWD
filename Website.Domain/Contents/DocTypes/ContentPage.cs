@@ -2,8 +2,8 @@
 using System.Web;
 using Yomego.Umbraco.Mvc.Attributes;
 using Umbraco.Core.Models;
-using Website.Domain.Shared.Ditto.TypeConverters;
 using Website.Domain.Shared.DocTypes;
+using Yomego.Umbraco.Umbraco.Ditto.TypeConverters;
 
 namespace Website.Domain.Contents.DocTypes
 {

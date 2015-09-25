@@ -17,7 +17,7 @@ namespace Yomego.Umbraco.Utils
                 return "about:blank";
             }
 
-            return image.Url.GetCrop(crops, width, height);
+            return GetCrop(image, crops, width, height);
         }
 
         public static string GetCrop(this Image image, int? width = null, int? height = null)

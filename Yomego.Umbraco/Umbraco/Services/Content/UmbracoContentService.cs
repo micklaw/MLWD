@@ -1,13 +1,18 @@
 ﻿using System.Globalization;
 using System.Linq;
+using System.Net.Configuration;
 using Our.Umbraco.Ditto;
+using StackExchange.Profiling;
 using umbraco;
 using umbraco.cms.businesslogic.web;
+using umbraco.MacroEngines;
+using umbraco.NodeFactory;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
-using umbraco.NodeFactory;
 using Umbraco.Web;
 using Yomego.Umbraco.Umbraco.Helpers;
+#pragma warning disable 618
 
 namespace Yomego.Umbraco.Umbraco.Services.Content
 {
@@ -52,7 +57,10 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
 
                 if (type != null)
                 {
-                    return model.As(type) as PublishedContentModel;
+                    using (ApplicationContext.Current.ProfilingLogger.DebugDuration<object>(string.Format("Getting node from IPublishedContent '{0}' of type '{1}", model.Id, type.Name)))
+                    {
+                        return model.As(type) as PublishedContentModel;
+                    }
                 }
             }
 
@@ -69,7 +77,10 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
 
                 if (type != null)
                 {
-                    return content.As(type) as Model.Content;
+                    using (ApplicationContext.Current.ProfilingLogger.DebugDuration<object>(string.Format("Getting node from id '{0}' of type '{1}", id, type.Name)))
+                    {
+                        return content.As(type) as Model.Content;
+                    }
                 }
             }
 
@@ -79,8 +90,29 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
         public override T Get<T>(int id)
         {
             var content = Umbraco.TypedContent(id);
-            
-            return content.As<T>();
+
+            ApplicationContext.Current.ProfilingLogger.DebugDuration<T>(string.Format("Getting node in generic '{0}' of type '{1}", id, typeof(T).Name));
+
+            var node = content.As<T>();
+
+            ApplicationContext.Current.ProfilingLogger.DebugDuration<T>(string.Format("Retieved node in generic '{0}' of type '{1}", id, typeof(T).Name));
+
+            return node;
+        }
+
+        private DynamicNode _rootNode { get; set; }
+
+        public override DynamicNode RootNode
+        {
+            get
+            {
+                if (_rootNode == null)
+                {
+                    _rootNode = new DynamicNode(-1);
+                }
+
+                return _rootNode;
+            }
         }
 
         public override T GetRoot<T>()

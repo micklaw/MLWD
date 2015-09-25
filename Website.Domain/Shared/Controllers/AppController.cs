@@ -6,10 +6,7 @@ using Website.Domain.Shared.DocTypes;
 using Website.Domain.Shared.Models;
 using Website.Domain.Sitemap.ActionResults;
 using Website.Domain.Sitemap.Models.Interfaces;
-using Yomego.Umbraco;
 using Yomego.Umbraco.Mvc.Controllers.App;
-using Yomego.Umbraco.Mvc.Model.Media;
-using Yomego.Umbraco.Utils;
 
 namespace Website.Domain.Shared.Controllers
 {

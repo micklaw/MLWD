@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Xml;
 using System.Xml.Linq;
-
-using System.IO; 
-
+using jumps.umbraco.usync.helpers;
+using umbraco.cms.businesslogic;
 using Umbraco.Core;
+using Umbraco.Core.Events;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
-
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
-
-using System.Diagnostics;
-
-using jumps.umbraco.usync.helpers;
-using jumps.umbraco.usync.Extensions;
+using DeleteEventArgs = umbraco.cms.businesslogic.DeleteEventArgs;
+using Template = umbraco.cms.businesslogic.template.Template;
+#pragma warning disable 618
 
 namespace jumps.umbraco.usync
 {
@@ -78,7 +72,7 @@ namespace jumps.umbraco.usync
 
             try
             {
-                foreach(Template item in fileService.GetTemplates() )
+                foreach(Umbraco.Core.Models.Template item in fileService.GetTemplates() )
                 { 
                     SaveToDisk(item);
                 }
@@ -92,7 +86,7 @@ namespace jumps.umbraco.usync
         private static int GetMasterId(ITemplate item)
         {
             // go old school to the get the master id.
-            global::umbraco.cms.businesslogic.template.Template t = new global::umbraco.cms.businesslogic.template.Template(item.Id);
+            Template t = new Template(item.Id);
 
             if (t.MasterTemplate > 0)
                 return t.MasterTemplate;
@@ -103,20 +97,20 @@ namespace jumps.umbraco.usync
         
         private static string GetTemplatePath(ITemplate item)
         {
-            return GetDocPath(new global::umbraco.cms.businesslogic.template.Template(item.Id));
+            return GetDocPath(new Template(item.Id));
         }
 
-        private static string GetDocPath(global::umbraco.cms.businesslogic.template.Template item)
+        private static string GetDocPath(Template item)
         {
             string path = "";
             if (item != null)
             {
                 if (item.MasterTemplate > 0)
                 {
-                    path = GetDocPath(new global::umbraco.cms.businesslogic.template.Template(item.MasterTemplate));
+                    path = GetDocPath(new Template(item.MasterTemplate));
                 }
 
-                path = string.Format("{0}//{1}", path, helpers.XmlDoc.ScrubFile(item.Alias));
+                path = string.Format("{0}//{1}", path, XmlDoc.ScrubFile(item.Alias));
             }
             return path;
         }
@@ -128,7 +122,7 @@ namespace jumps.umbraco.usync
             sw.Start();
 
             string path = IOHelper.MapPath(string.Format("{0}{1}",
-                helpers.uSyncIO.RootFolder,
+                uSyncIO.RootFolder,
                 "Template"));
 
             ReadFromDisk(path);
@@ -187,10 +181,10 @@ namespace jumps.umbraco.usync
 
         public static void AttachEvents()
         {
-            global::umbraco.cms.businesslogic.template.Template.AfterDelete += Template_AfterDelete;
-            global::umbraco.cms.businesslogic.template.Template.AfterSave += Template_AfterSave;
+            Template.AfterDelete += Template_AfterDelete;
+            Template.AfterSave += Template_AfterSave;
 
-            global::umbraco.cms.businesslogic.template.Template.New +=Template_New;;
+            Template.New +=Template_New;;
 
             /*
             FileService.SavedTemplate += FileService_SavedTemplate;
@@ -199,7 +193,7 @@ namespace jumps.umbraco.usync
 
         }
 
-        static void Template_New(global::umbraco.cms.businesslogic.template.Template sender, global::umbraco.cms.businesslogic.NewEventArgs e)
+        static void Template_New(Template sender, NewEventArgs e)
         {
             if ( !uSync.EventsPaused)
             {
@@ -208,7 +202,7 @@ namespace jumps.umbraco.usync
             }
         }
 
-        static void Template_AfterSave(global::umbraco.cms.businesslogic.template.Template sender, global::umbraco.cms.businesslogic.SaveEventArgs e)
+        static void Template_AfterSave(Template sender, SaveEventArgs e)
         {
             if (!uSync.EventsPaused)
             {
@@ -217,7 +211,7 @@ namespace jumps.umbraco.usync
             }
         }
 
-        static void Template_AfterDelete(global::umbraco.cms.businesslogic.template.Template sender, global::umbraco.cms.businesslogic.DeleteEventArgs e)
+        static void Template_AfterDelete(Template sender, DeleteEventArgs e)
         {
             if (!uSync.EventsPaused)
             {
@@ -226,7 +220,7 @@ namespace jumps.umbraco.usync
             }
         }
 
-        static void FileService_DeletedTemplate(IFileService sender, Umbraco.Core.Events.DeleteEventArgs<ITemplate> e)
+        static void FileService_DeletedTemplate(IFileService sender, DeleteEventArgs<ITemplate> e)
         {
             if (!uSync.EventsPaused)
             {
@@ -237,7 +231,7 @@ namespace jumps.umbraco.usync
             }
         }
 
-        static void FileService_SavedTemplate(IFileService sender, Umbraco.Core.Events.SaveEventArgs<ITemplate> e)
+        static void FileService_SavedTemplate(IFileService sender, SaveEventArgs<ITemplate> e)
         {
             if (!uSync.EventsPaused)
             {

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Configuration;
-
+using System.IO;
+using System.Linq;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
-
-using umbraco.BusinessLogic; 
 
 namespace jumps.umbraco.usync
 {
@@ -366,7 +360,7 @@ namespace jumps.umbraco.usync
                 ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
                 fileMap.ExeConfigFilename = IOHelper.MapPath(string.Format("~/config/{0}", _settingfile));
 
-                if (System.IO.File.Exists(fileMap.ExeConfigFilename))
+                if (File.Exists(fileMap.ExeConfigFilename))
                 {
                     // load the settings file
                     config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);

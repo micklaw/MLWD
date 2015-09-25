@@ -26,14 +26,9 @@ namespace Website.UI
 
             var js = new []
             {
-                "~/content/js/vendor/jquery.js",
+                "~/content/js/vendor/jquery*",
                 "~/content/js/vendor/bootstrap.js",
                 "~/content/js/vendor/bootstrap-hover-dropdown.js",
-                "~/content/js/vendor/jquery.easing.1.3.js",
-                "~/content/js/vendor/jquery.sticky.js",
-                "~/content/js/vendor/jquery.flexslider.js",
-                "~/content/js/vendor/jquery.stellar.js",
-                "~/content/js/vendor/jquery.mixitup.js",
                 "~/content/js/vendor/waypoints.js",
                 "~/content/js/vendor/wow.js",
                 "~/content/js/vendor/owl.carousel.js",

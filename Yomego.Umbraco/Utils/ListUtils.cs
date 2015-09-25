@@ -85,5 +85,10 @@ namespace Yomego.Umbraco.Utils
 
             items.Add(addItem);
         }
+
+        public static bool HasContent<T>(this IEnumerable<T> items)
+        {
+            return (items != null && items.Any());
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using jumps.umbraco.usync;
-using jumps.umbraco.usync.Interfaces;
+﻿using jumps.umbraco.usync.Interfaces;
 
 namespace jumps.umbraco.usync
 {

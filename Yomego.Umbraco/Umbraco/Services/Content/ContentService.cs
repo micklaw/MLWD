@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using BoboBrowse.Api;
@@ -9,6 +10,7 @@ using Examine.LuceneEngine.Config;
 using Examine.LuceneEngine.SearchCriteria;
 using Examine.Providers;
 using Examine.SearchCriteria;
+using umbraco.MacroEngines;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 using Yomego.Umbraco.Collections;
@@ -23,7 +25,7 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
 {
     public delegate void AfterModelBoundEventHandler(PublishedContentModel content);
 
-    public abstract class ContentService : BaseService
+    public abstract class ContentService : BaseService<App>
     {
         public event AfterModelBoundEventHandler AfterModelBound;
 
@@ -48,6 +50,8 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
         public abstract T GetRoot<T>() where T : PublishedContentModel;
 
         public abstract string GetCulture(int id);
+
+        public abstract DynamicNode RootNode { get; }
 
         #endregion
 
@@ -288,8 +292,8 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
         {
             IndexSetCollection sets = IndexSets.Instance.Sets;
             IndexSet set = sets[indexSetName];
-            System.IO.DirectoryInfo dir = set.IndexDirectory;
-            string path = System.IO.Path.Combine(dir.FullName, "Index");
+            DirectoryInfo dir = set.IndexDirectory;
+            string path = Path.Combine(dir.FullName, "Index");
             return path;
         }
 

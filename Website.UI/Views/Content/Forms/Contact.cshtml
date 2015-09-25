@@ -1,0 +1,50 @@
+﻿@model Website.Domain.Contents.Form.ContactForm
+    
+<div class="row">
+    <div class="col-md-6">
+        <div class="row control-group">
+            <div class="form-group col-xs-12 controls">
+                <label>Name<span>*</span></label>
+                @Html.TextBoxFor(i => i.Name, new { @class = "form-control", placeholder = "e.g. John Smith" })
+                <p class="help-block"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row control-group">
+            <div class="form-group col-xs-12 controls">
+                <label>Telephone</label>
+                @Html.TextBoxFor(i => i.Telephone, new { @class = "form-control", placeholder = "e.g. +44 1234567890 (optional)" })
+                <p class="help-block"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row control-group">
+    <div class="form-group col-xs-12 controls">
+        <label>Email Address<span>*</span></label>
+        @Html.TextBoxFor(i => i.Email, new { @class = "form-control", placeholder = "e.g. john@smith.com" })
+        <p class="help-block"></p>
+    </div>
+</div>
+<div class="row control-group">
+    <div class="form-group col-xs-12  controls">
+        <label>Company</label>
+        @Html.TextBoxFor(i => i.Company, new { @class = "form-control", placeholder = "e.g. Michael Law Web Development (optional)" })
+        <p class="help-block"></p>
+    </div>
+</div>
+<div class="row control-group">
+    <div class="form-group col-xs-12 controls">
+        <label>Message<span>*</span></label>
+        @Html.TextAreaFor(i => i.Message, new { @class = "form-control", placeholder = "e.g. Something good please!", rows = "5" })
+        <p class="help-block"></p>
+    </div>
+</div>
+<br>
+<div id="success"></div>
+<div class="row">
+    <div class="form-group col-xs-12">
+        <button type="submit" class="btn btn-theme-bg btn-lg">Send Message</button>
+    </div>
+</div>

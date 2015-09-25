@@ -1,25 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Umbraco.Core;
-using Umbraco.Core.Services;
-using Umbraco.Core.Models;
-
-using System.IO;
-
 using System.Xml;
 using System.Xml.Linq;
-
-using Umbraco.Core.Logging;
-using System.Security.Cryptography;
-
-using umbraco.cms.businesslogic.web;
-
 using jumps.umbraco.usync.Extensions;
-using System.Diagnostics;
+using umbraco.cms.businesslogic.web;
+using Umbraco.Core;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
+#pragma warning disable 618
 
 namespace jumps.umbraco.usync.helpers
 {
@@ -152,7 +140,7 @@ namespace jumps.umbraco.usync.helpers
             if (item == null)
                 return true;
 
-            XmlDocument xmlDoc = helpers.XmlDoc.CreateDoc();
+            XmlDocument xmlDoc = XmlDoc.CreateDoc();
             xmlDoc.AppendChild(item.ToXml(xmlDoc));
             string dbMD5 = XmlDoc.CalculateMD5Hash(xmlDoc);
 

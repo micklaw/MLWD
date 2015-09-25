@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Xml;
+using System.Collections;
+using System.Diagnostics;
 using System.IO;
-
-using umbraco.BusinessLogic;
+using System.Xml;
+using jumps.umbraco.usync.helpers;
 using umbraco.cms.businesslogic;
-
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
-
-using jumps.umbraco.usync.helpers;
-using System.Diagnostics;
+using Umbraco.Core.Strings;
+#pragma warning disable 618
 
 namespace jumps.umbraco.usync
 {
@@ -24,14 +18,14 @@ namespace jumps.umbraco.usync
         {
             if (item != null)
             {
-                Umbraco.Core.Strings.DefaultShortStringHelper _sh = new Umbraco.Core.Strings.DefaultShortStringHelper();
+                DefaultShortStringHelper _sh = new DefaultShortStringHelper();
 
-                XmlDocument xmlDoc = helpers.XmlDoc.CreateDoc();
+                XmlDocument xmlDoc = XmlDoc.CreateDoc();
                 xmlDoc.AppendChild(item.ToXml(xmlDoc));
                 xmlDoc.AddMD5Hash();
                 
-                helpers.XmlDoc.SaveXmlDoc("Dictionary", 
-                    _sh.CleanString( item.key, Umbraco.Core.Strings.CleanStringType.Ascii),
+                XmlDoc.SaveXmlDoc("Dictionary", 
+                    _sh.CleanString( item.key, CleanStringType.Ascii),
                     xmlDoc);
             }
         }
@@ -55,7 +49,7 @@ namespace jumps.umbraco.usync
             sw.Start();
 
             string path = IOHelper.MapPath(string.Format("{0}{1}",
-                helpers.uSyncIO.RootFolder,
+                uSyncIO.RootFolder,
                 "Dictionary"));
 
             ReadFromDisk(path);
@@ -107,7 +101,7 @@ namespace jumps.umbraco.usync
         }
 
         static object _deleteLock = new object();
-        static System.Collections.ArrayList _dChildren = new System.Collections.ArrayList(); 
+        static ArrayList _dChildren = new ArrayList(); 
 
 
         static void DictionaryItem_Deleting(Dictionary.DictionaryItem sender, EventArgs e)
@@ -152,7 +146,7 @@ namespace jumps.umbraco.usync
                         else
                         {
                             // it's top we need to delete
-                            helpers.XmlDoc.ArchiveFile("Dictionary", sender.key);
+                            XmlDoc.ArchiveFile("Dictionary", sender.key);
 
                         }
                     }
@@ -184,11 +178,11 @@ namespace jumps.umbraco.usync
                         return GetTop(item.Parent);
                     }
                 }
-                catch (ApplicationException ex)
+                catch (ApplicationException)
                 {
                     LogHelper.Debug<SyncDictionary>("Exception (just like null)");
                 }
-                catch (ArgumentException ex)
+                catch (ArgumentException)
                 {
                     LogHelper.Debug<SyncDictionary>("Exception (just like null)");
                 }

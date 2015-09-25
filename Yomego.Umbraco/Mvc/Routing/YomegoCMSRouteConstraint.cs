@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Routing;
 using Umbraco.Core.Models.PublishedContent;
@@ -15,10 +17,10 @@ namespace Yomego.Umbraco.Mvc.Routing
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            return IsRoutable(httpContext);
+            return IsRoutable(httpContext, values);
         }
 
-        private bool PopulateContext(CoreApp<CoreServiceContainer> app, HttpContextBase context, string url, UmbracoRouteAttribute contentType = null)
+        private bool PopulateContext(CoreApp<CoreServiceContainer> app, HttpContextBase context, string url, RouteValueDictionary values, UmbracoRouteAttribute contentType = null)
         {
             // [ML ] -If this request has previously been routed, do nothing and route as context is populated
 
@@ -65,8 +67,7 @@ namespace Yomego.Umbraco.Mvc.Routing
 
                         if (string.IsNullOrWhiteSpace(contentType.Controller))
                         {
-                            throw new ArgumentNullException(string.Format(
-                                "The controller must be defined for type ({0}) to route.", content.GetType().Name));
+                            throw new ArgumentNullException($"The controller must be defined for type ({content.GetType().Name}) to route.");
                         }
 
                         context.Items[Requests.Node] = content;
@@ -86,7 +87,7 @@ namespace Yomego.Umbraco.Mvc.Routing
             return true;
         }
 
-        public bool IsRoutable(HttpContextBase context)
+        public bool IsRoutable(HttpContextBase context, RouteValueDictionary values)
         {
             // [ML] - Try and get the content from the umbraco Api
             var app = new CoreApp<CoreServiceContainer>();
@@ -95,7 +96,7 @@ namespace Yomego.Umbraco.Mvc.Routing
 
             var contentType = YomegoRouteTable.GetFromUrl(url);
 
-            return PopulateContext(app, context, url, contentType);
+            return PopulateContext(app, context, url, values, contentType);
         }
     }
 }
