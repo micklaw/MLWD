@@ -51,6 +51,8 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
 
         public abstract string GetCulture(int id);
 
+        public abstract void Save(PublishedContentModel content, bool publish = true, int? parentId = null);
+
         public abstract DynamicNode RootNode { get; }
 
         #endregion

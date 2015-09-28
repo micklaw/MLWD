@@ -10,7 +10,7 @@ using Yomego.Umbraco.Mvc.Controllers.App;
 
 namespace Website.Domain.Shared.Controllers
 {
-    public class AppController : UmbracoController<WebsiteApp>
+    public class WebsiteController : UmbracoController<WebsiteApp>
     {
         protected XmlSitemapResult Sitemap(IList<ISitemapItem> sitemap)
         {

@@ -4,7 +4,7 @@ using Website.Domain.Shared.Controllers;
 
 namespace Website.Domain.Service.Controllers
 {
-    public class ServicesController : AppController
+    public class ServicesController : WebsiteController
     {
         public ActionResult Index()
         {

@@ -1,7 +1,12 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections;
+using System.Globalization;
 using System.Linq;
 using System.Net.Configuration;
+using System.Reflection;
 using Our.Umbraco.Ditto;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers;
 using StackExchange.Profiling;
 using umbraco;
 using umbraco.cms.businesslogic.web;
@@ -187,5 +192,123 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
 
             return culture;
         }
+
+        public override void Save(PublishedContentModel content, bool publish = true, int? parentId = null)
+        {
+            SaveContent(content, publish, parentId);
+        }
+
+        #region Save Implementation
+
+        private void SaveContent(PublishedContentModel content, bool publish, int? parentId = null)
+        {
+            // [ML] - Use the parentId passed or either fallback to the content.Parent.Id of node or default to -1
+
+            parentId = parentId ?? ((content.Parent != null && content.Parent.Id != 0) ? content.Parent.Id : -1);
+
+            IContent doc = null;
+
+            if (content.Id == 0) // content item is new so create Document
+            {
+                doc = ApplicationContext.Current.Services.ContentService.CreateContent(content.Name, parentId.Value, content.DocumentTypeAlias);
+            }
+            else // content item already exists, so load it
+            {
+                doc = ApplicationContext.Current.Services.ContentService.GetById(content.Id);
+            }
+
+            var entityType = content.GetType();
+
+            foreach (var p in doc.Properties)
+            {
+                var propertyInfo = entityType.GetProperty(p.Alias, System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                if (propertyInfo != null)
+                {
+                    var isArchetype = propertyInfo.GetCustomAttribute<ArchetypeValueResolverAttribute>() != null;
+
+                    if (!isArchetype)
+                    {
+                        if (propertyInfo.PropertyType.UnderlyingSystemType != typeof (string) &&
+                            IsIEnumerable(propertyInfo.PropertyType.UnderlyingSystemType))
+                        {
+                            string delimiter = ",";
+
+                            // first get the array
+                            var array = (IEnumerable) propertyInfo.GetValue(content, null);
+
+                            // then find the length
+
+                            if (array != null)
+                            {
+                                var value = string.Empty;
+
+                                foreach (var item in array)
+                                {
+                                    if (item != null)
+                                    {
+                                        if (item is string)
+                                        {
+                                            delimiter = Environment.NewLine;
+                                        }
+
+                                        var itemAsContent = item as PublishedContentModel;
+
+                                        if (itemAsContent != null)
+                                        {
+                                            value += itemAsContent.Id.ToString() + delimiter;
+                                        }
+                                        else
+                                        {
+                                            value += item.ToString() + delimiter;
+                                        }
+                                    }
+                                }
+
+                                if (value.EndsWith(delimiter))
+                                {
+                                    value = delimiter != Environment.NewLine
+                                        ? value.Substring(0, value.Length - 1)
+                                        : value.Substring(0, value.Length - 2);
+                                }
+
+                                p.Value = value;
+                            }
+                            else
+                            {
+                                p.Value = string.Empty;
+                            }
+                        }
+                        else
+                        {
+                            var s = propertyInfo.GetValue(content, null);
+
+                            // ML - For some mental reason bools are saved as 1 or 0 strings
+
+                            if (s is bool)
+                            {
+                                p.Value = (bool) s ? "1" : "0";
+                            }
+                            else
+                            {
+                                p.Value = s?.ToString();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // TODO: [ML] - Find a way to serialise this object to an Archetype fomat for the DB
+                    }
+                }
+            }
+
+            ApplicationContext.Current.Services.ContentService.SaveAndPublish(doc);
+
+            if (publish)
+            {
+                ApplicationContext.Current.Services.ContentService.Publish(doc);
+            }
+        }
+
+        #endregion
     }
 }

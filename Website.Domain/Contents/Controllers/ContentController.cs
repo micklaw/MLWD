@@ -8,7 +8,7 @@ using Website.Domain.Shared.Controllers;
 
 namespace Website.Domain.Contents.Controllers
 {
-    public class ContentController : AppController
+    public class ContentController : WebsiteController
     {
         private UserMailer _emailer;
 

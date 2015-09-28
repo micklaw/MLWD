@@ -7,7 +7,7 @@ using Yomego.Umbraco.Umbraco.Services.Search.Models;
 
 namespace Website.Domain.Blog.Controllers
 {
-    public class BaseBlogController : AppController
+    public class BaseBlogController : WebsiteController
     {
         private BlogListingViewModel GetBlogListingViewModel()
         {

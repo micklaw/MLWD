@@ -1294,6 +1294,25 @@ ul.post-desc li + li{
     font-weight: 400;
     font-style: normal;
 }
+
+
+/*tweets parallax*/
+.tweets{
+    background:#333;
+    padding: 50px 0;
+}
+.tweets h2{
+    color:#fff;
+}
+.tweets p{
+    color:#fff;
+    font-size: 20px;
+    font-style: normal;
+}
+.tweets a {
+    color: #3498db;
+}
+
 .customer-img{
     max-width:92px;
     margin: auto;
@@ -1340,6 +1359,11 @@ ul.post-desc li + li{
     padding: 50px 0 0;
     position: relative;
     clear: both;
+}
+
+/* #footer is by default*/
+#footer a {
+    color: #3498db;
 }
 
 .footer-col h3{

@@ -10,7 +10,7 @@ using Yomego.Umbraco.Umbraco.Services.Search.Enums;
 
 namespace Website.Domain.Home.Controllers
 {
-    public class HomeController : AppController
+    public class HomeController : WebsiteController
     {
         public ActionResult Index()
         {

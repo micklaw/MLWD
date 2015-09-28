@@ -6,6 +6,7 @@
     var url = Request.RawUrl.ToLower();
 
     var nav = (DomainApp.Settings.NavItems ?? new List<UrlPicker>()).Where(i => !i.Disabled).ToList();
+    var tweets = DomainApp.Settings.Tweets;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -95,9 +96,6 @@
                         var current = url.Split('?')[0].ToLower();
                         var isNotHomepage = (!current.Equals("/") && !current.StartsWith("/?"));
 
-                        <li @Html.Attr("class", !isNotHomepage, "active")>
-                            <a href="/">Home</a>
-                        </li>
                         foreach (var item in nav)
                         {
                             var linkUrl = Html.Url(item);
@@ -112,6 +110,29 @@
         </div>
     </div>
     @RenderBody()
+    @if (tweets.Any())
+    {
+        var random = tweets.AsRandom().First();
+        <!--tweets-->
+        <section class="tweets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="center-heading">
+                            <h2>Twitter</h2>
+                            <span class="center-line"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 text-center">
+                        <p>@Html.Raw(random.TextAsHtml)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--tweets-->
+    }
     <footer id="footer">
         <div class="container">
 
@@ -120,10 +141,6 @@
                     <div class="footer-col">
                         <h3>Social</h3>
                         <ul class="list-inline social-1">
-                            @if (!string.IsNullOrWhiteSpace(DomainApp.Settings.CompanyFacebook))
-                            {
-                                <li><a target="_blank" href="@DomainApp.Settings.CompanyFacebook"><i class="fa fa-facebook"></i></a></li>
-                            }
                             @if (!string.IsNullOrWhiteSpace(DomainApp.Settings.CompanyTwitter))
                             {
                                 <li><a target="_blank" href="@DomainApp.Settings.CompanyTwitter"><i class="fa fa-twitter"></i></a></li>
@@ -143,6 +160,10 @@
                             @if (!string.IsNullOrWhiteSpace(DomainApp.Settings.CompanySkype))
                             {
                                 <li><a href="skype:@DomainApp.Settings.CompanySkype"><i class="fa fa-skype"></i></a></li>
+                            }
+                            @if (DomainApp.Nodes.Contact != null)
+                            {
+                                <li>or <a href="@DomainApp.Nodes.Contact.Url">@DomainApp.Nodes.Contact.ContactTitle</a></li>
                             }
                         </ul>
                     </div>

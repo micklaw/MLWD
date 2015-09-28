@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using Website.Domain.Shared.DocTypes;
+using Website.Domain.Shared.Services;
 using Yomego.Umbraco;
 
 namespace Website.Domain
@@ -32,6 +33,21 @@ namespace Website.Domain
                 }
 
                 return _settings;
+            }
+        }
+
+        private NodesService _nodes { get; set; }
+
+        public NodesService Nodes
+        {
+            get
+            {
+                if (_nodes == null)
+                {
+                    _nodes = Services.Get<NodesService>();
+                }
+
+                return _nodes;
             }
         }
     }

@@ -10,6 +10,12 @@ namespace Website.UI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "tasks",
+                url: "task/scheduler",
+                defaults: new { controller = "Task", action = "Scheduler" }
+            );
+
+            routes.MapRoute(
                 name: "Robots",
                 url: "robots.txt",
                 defaults: new { controller = "Home", action = "Robots" }
