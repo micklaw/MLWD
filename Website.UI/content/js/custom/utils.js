@@ -287,11 +287,11 @@
             }
         };
 
-        var remoteImagePrefix = "/remote.axd?";
+        var remoteImagePrefix = "/remote.axd/";
 
         function updateQueryStringParameter(uri, key, value) {
             var isRemote = uri.indexOf(remoteImagePrefix) != -1;
-            var replacedUri = uri.replace("/remote.axd?", "");
+            var replacedUri = uri.replace(remoteImagePrefix, "");
 
             var prefix = isRemote ? remoteImagePrefix : "";
             var returnUrl = "";

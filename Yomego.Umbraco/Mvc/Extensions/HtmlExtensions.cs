@@ -287,6 +287,8 @@ namespace Yomego.Umbraco.Mvc.Extensions
             return new HtmlString(noscript.ToString());
         }
 
+        private const string RemoteUrlPrefix = "/remote.axd/";
+
         public static IHtmlString FluidImage(this HtmlHelper html, string imageUrl, int? width = null, int? height = null, string alt = "", object htmlAttributes = null, bool isRemote = true)
         {
             if (string.IsNullOrWhiteSpace(imageUrl))
@@ -294,7 +296,12 @@ namespace Yomego.Umbraco.Mvc.Extensions
                 return new HtmlString(string.Empty);
             }
 
-            return html.FluidImage((isRemote ? "/remote.axd?" : string.Empty) + HttpUtility.UrlEncode(imageUrl), null, width, height, alt, htmlAttributes);
+            if (isRemote)
+            {
+                imageUrl = imageUrl.Split(new[] {"//"}, StringSplitOptions.RemoveEmptyEntries)[1];
+            }
+
+            return html.FluidImage((isRemote ? RemoteUrlPrefix : string.Empty) + imageUrl, null, width, height, alt, htmlAttributes);
         }
 
         public static IHtmlString FluidImage(this HtmlHelper html, Image image, bool isRemote = true, int? width = null, int? height = null, string alt = "", object htmlAttributes = null)
@@ -304,7 +311,14 @@ namespace Yomego.Umbraco.Mvc.Extensions
                 return new HtmlString(string.Empty);
             }
 
-            return html.FluidImage((isRemote ? "/remote.axd?" : string.Empty) + HttpUtility.UrlEncode(image.Url), image.ImageCrops, width ?? image.Width, height ?? image.Height, alt ?? image.Alt, htmlAttributes);
+            var url = image.Url;
+
+            if (isRemote)
+            {
+                url = image.Url.Split(new[] { "//" }, StringSplitOptions.RemoveEmptyEntries)[1];
+            }
+
+            return html.FluidImage((isRemote ? RemoteUrlPrefix : string.Empty) + url, image.ImageCrops, width ?? image.Width, height ?? image.Height, alt ?? image.Alt, htmlAttributes);
         }
 
         public static IHtmlString FluidImage(this HtmlHelper html, Image image, int? width = null, int? height = null, string alt = "", object htmlAttributes = null)
