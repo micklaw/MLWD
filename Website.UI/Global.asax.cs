@@ -24,6 +24,8 @@ namespace Website.UI
 
             YomegoStartup.Register(config, RouteTable.Routes);
 
+            MvcHandler.DisableMvcResponseHeader = true;
+
             base.OnApplicationStarted(sender, e);
         }
     }
