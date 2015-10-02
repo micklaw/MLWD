@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Models;
+using Umbraco.Web;
 using Umbraco.Web.Routing;
 using Yomego.Umbraco.Constants;
 using Yomego.Umbraco.Context;
+using Yomego.Umbraco.Umbraco.Helpers;
 using Yomego.Umbraco.Umbraco.Services.Container;
 using Content = Yomego.Umbraco.Umbraco.Model.Content;
 
@@ -29,6 +31,17 @@ namespace Yomego.Umbraco.Umbraco.Routing
                 if (!string.IsNullOrWhiteSpace(path))
                 {
                     contentRequest.PublishedContent = FindContent(contentRequest, path);
+
+                    if (contentRequest.PublishedContent == null)
+                    {
+                        // [ML] - This might be a Preview
+
+                        int nodeId;
+                        if (int.TryParse(path.Replace("/", string.Empty), out nodeId))
+                        {
+                            contentRequest.PublishedContent = ConverterHelper.UmbracoHelper.TypedContent(nodeId);
+                        }
+                    }
 
                     if (contentRequest.PublishedContent != null)
                     {
