@@ -1,12 +1,11 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
-using Yomego.Umbraco.Mvc.Routing;
 
 namespace Yomego.Umbraco.Mvc.Startup
 {
     public class YomegoRouteConfig
     {
-        public static void RegisterRoutes(RouteCollection routes, bool withCatchAll)
+        public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("favicon.ico");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -24,13 +23,6 @@ namespace Yomego.Umbraco.Mvc.Startup
                 url: "admin/saveDataTypes",
                 defaults: new { controller = "YomegoAdminCMS", action = "SaveDataTypes" }
             );
-
-            if (withCatchAll)
-            {
-                var umbraco = new Route("{*url}", new RouteValueDictionary() {}, new RouteValueDictionary() {{"url", new YomegoCMSRouteConstraint()}}, new YomegoCMSRouteHandler());
-
-                routes.Add(umbraco);
-            }
         }
     }
 }

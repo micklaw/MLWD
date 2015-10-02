@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Web;
 using Yomego.Umbraco.Constants;
-using Yomego.Umbraco.Context;
 using Yomego.Umbraco.Mvc.Attributes;
-using Yomego.Umbraco.Mvc.Routing;
-using Yomego.Umbraco.Umbraco.Services.Container;
+using Yomego.Umbraco.Umbraco.Model;
 
 namespace Yomego.Umbraco.Umbraco.Routing
 {
@@ -21,35 +13,23 @@ namespace Yomego.Umbraco.Umbraco.Routing
     /// </summary>
     public class RouteToMvc
     {
-        public static void Route()
+        public static bool Route()
         {
-            // [ML - If this is an Umbraco request
+            var content = HttpContext.Current.Items[Requests.Node] as Content;
 
-            var publishedContent = UmbracoContext.Current.PublishedContentRequest?.PublishedContent;
+            // [ML] - Get th umbraco route attribute if it exists
 
-            if (publishedContent != null)
-            {
-                var context = HttpContext.Current;
-                var app = new CoreApp<CoreServiceContainer>();
+            var contentType = content?.GetType().GetCustomAttributes(typeof(UmbracoRouteAttribute), true).FirstOrDefault() as UmbracoRouteAttribute;
 
-                var content = app.Services.Content.Get(UmbracoContext.Current.PublishedContentRequest.PublishedContent) as PublishedContentModel;
-
-                // [ML] - Dont get the content type if we already have it
-
-                var contentType = content?.GetType().GetCustomAttributes(typeof (UmbracoRouteAttribute), true).FirstOrDefault() as UmbracoRouteAttribute;
-
-                /* [ML] - If the page is found in Umbraco then add the node to the request items
+            /* [ML] - If the page is found in Umbraco then add the node to the request items
                  *        and route the request to the action and controller set in umbraco */
 
-                context.Items[Requests.Node] = content;
-
-                if (contentType != null)
-                {
-                    context.Items[Requests.ContentType] = contentType;
-
-                    RouteRequest(contentType, context);
-                }
+            if (contentType != null)
+            {
+                return RouteRequest(contentType, HttpContext.Current, content);
             }
+
+            return false;
         }
 
         private static readonly DefaultControllerFactory _defaultControllerFactory = new DefaultControllerFactory();
@@ -68,7 +48,7 @@ namespace Yomego.Umbraco.Umbraco.Routing
             }
         }
 
-        public static void RouteRequest(UmbracoRouteAttribute contentType, HttpContext httpContext)
+        public static bool RouteRequest(UmbracoRouteAttribute contentType, HttpContext httpContext, Content content)
         {
             if (contentType != null)
             {
@@ -84,14 +64,18 @@ namespace Yomego.Umbraco.Umbraco.Routing
                 }
 
                 SetRouteData(routeData, "controller", contentType.Controller);
-                SetRouteData(routeData, "action", contentType.Action ?? "Index"); // [ML] - Default to Index if not populated
+                SetRouteData(routeData, "action", content.TemplateName ?? "Index"); // [ML] - Default to Index if not populated
 
                 var requestContext = new RequestContext(httpContextBase, routeData);
 
                 var controller = _defaultControllerFactory.CreateController(requestContext, contentType.Controller);
 
                 controller.Execute(requestContext);
+
+                return true;
             }
+
+            return false;
         }
     }
 }

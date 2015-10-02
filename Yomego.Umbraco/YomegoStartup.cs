@@ -15,13 +15,13 @@ namespace Yomego.Umbraco
 {
     public class YomegoStartup
     {
-        public static void Register(HttpConfiguration config, RouteCollection routes, bool withCatchAll = true)
+        public static void Register(HttpConfiguration config, RouteCollection routes)
         {
             // Hook up Umbraco plugin
             App.ResolveUsing<ContentService, UmbracoContentService>();
             App.ResolveUsing<DataTypeService, UmbracoDataTypeService>();
 
-            YomegoRouteConfig.RegisterRoutes(routes, withCatchAll);
+            YomegoRouteConfig.RegisterRoutes(routes);
             YomegoApiConfig.Register(config);
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new ExcludeContractResolver(new Dictionary<Type, IList<string>>
