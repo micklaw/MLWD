@@ -1,7 +1,11 @@
 ﻿using System;
 using Examine;
+using Lucene.Net.Documents;
 using umbraco.NodeFactory;
 using Umbraco.Core;
+using Umbraco.Core.Events;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 using Yomego.Umbraco.Context;
 using Yomego.Umbraco.Umbraco.Services.Container;
 
@@ -10,8 +14,20 @@ namespace Yomego.Umbraco.Umbraco.Events
     public class ExamineEvents : IApplicationEventHandler
     {
         private static object _lockObj = new object();
-        private static bool _ran = false; 
+        private static bool _ran = false;
 
+        private CoreApp<CoreServiceContainer> GetApp(bool flushCache = true)
+        {
+            var app = new CoreApp<CoreServiceContainer>();
+
+            if (flushCache)
+            {
+                app.Services.Content.ClearCache();
+            }
+
+            return app;
+        }
+            
         public void OnApplicationInitialized(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
            
@@ -19,7 +35,7 @@ namespace Yomego.Umbraco.Umbraco.Events
 
         void ExamineEventsGatheringNodeData(object sender, IndexingNodeDataEventArgs e)
         {
-            var app = new CoreApp<CoreServiceContainer>();
+            var app = GetApp();
 
             var node = new Node(e.NodeId);
 
@@ -76,11 +92,17 @@ namespace Yomego.Umbraco.Umbraco.Events
                 {
                     if (!_ran)
                     {
+                        ContentService.Trashed += ContentServiceOnTrashed;
                         ExamineManager.Instance.IndexProviderCollection[Constants.Examine.MainExamineIndexProvider].GatheringNodeData += ExamineEventsGatheringNodeData;
                         _ran = true;
                     }
                 }
             }
+        }
+
+        private void ContentServiceOnTrashed(IContentService sender, MoveEventArgs<IContent> moveEventArgs)
+        {
+            GetApp();
         }
 
         public void OnApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)

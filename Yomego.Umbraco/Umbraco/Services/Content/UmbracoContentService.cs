@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Globalization;
 using System.Linq;
-using System.Net.Configuration;
 using System.Reflection;
 using Our.Umbraco.Ditto;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
-using Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers;
-using StackExchange.Profiling;
 using umbraco;
 using umbraco.cms.businesslogic.web;
 using umbraco.MacroEngines;
@@ -25,6 +23,33 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
 
     internal class UmbracoContentService : ContentService
     {
+        private static ConcurrentDictionary<int, PublishedContentModel> _dittoCache = new ConcurrentDictionary<int, PublishedContentModel>();
+
+        private PublishedContentModel GetFromCache(int nodeId)
+        {
+            PublishedContentModel content;
+            _dittoCache.TryGetValue(nodeId, out content);
+
+            return content;
+        }
+
+        private object AddToCache(int nodeId, object content)
+        {
+            var node = content as PublishedContentModel;
+
+            if (nodeId > 0 && (node != null && node.Id > 0))
+            {
+                _dittoCache.TryAdd(nodeId, node);
+            }
+
+            return node;
+        }
+
+        public override void ClearCache()
+        {
+            _dittoCache = new ConcurrentDictionary<int, PublishedContentModel>();
+        }
+
         private UmbracoHelper _umbraco { get; set; }
         
         public UmbracoHelper Umbraco
@@ -44,65 +69,85 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
         {
             var nodeId = uQuery.GetNodeIdByUrl(url);
 
-            object content = null;
-
             if (nodeId > 0)
             {
-                content = Get(nodeId);
+                object content = GetFromCache(nodeId);
+
+                if (content == null)
+                {
+                    return AddToCache(nodeId, Get(nodeId));
+                }
+            }
+
+            return null;
+        }
+
+        public override object Get(IPublishedContent model)
+        {
+            if (model != null && model.Id > 0)
+            {
+                var content = GetFromCache(model.Id);
+
+                if (content == null)
+                {
+                    var type = ConverterHelper.FirstFromBaseType<PublishedContentModel>(model.DocumentTypeAlias);
+
+                    if (type != null)
+                    {
+                        using (ApplicationContext.Current.ProfilingLogger.DebugDuration<object>($"Getting node from IPublishedContent '{model.Id}' of type '{type.Name}"))
+                        {
+                            return AddToCache(model.Id, model.As(type));
+                        }
+                    }
+                }
+
+                return content;
+            }
+
+            return null;
+        }
+
+        public override object Get(int id)
+        {
+            var content = GetFromCache(id);
+
+            if (content == null)
+            {
+                var node = Umbraco.TypedContent(id);
+
+                if (node != null)
+                {
+                    var type = ConverterHelper.FirstFromBaseType<PublishedContentModel>(node.DocumentTypeAlias);
+
+                    if (type != null)
+                    {
+                        return AddToCache(id, node.As(type));
+                    }
+                }
+
+                return null;
             }
 
             return content;
         }
 
-        public override object Get(IPublishedContent model)
-        {
-            if (model != null)
-            {
-                var type = ConverterHelper.FirstFromBaseType<PublishedContentModel>(model.DocumentTypeAlias);
-
-                if (type != null)
-                {
-                    using (ApplicationContext.Current.ProfilingLogger.DebugDuration<object>(string.Format("Getting node from IPublishedContent '{0}' of type '{1}", model.Id, type.Name)))
-                    {
-                        return model.As(type) as PublishedContentModel;
-                    }
-                }
-            }
-
-            return model;
-        }
-
-        public override object Get(int id)
-        {
-            var content = Umbraco.TypedContent(id);
-
-            if (content != null)
-            {
-                var type = ConverterHelper.FirstFromBaseType<PublishedContentModel>(content.DocumentTypeAlias);
-
-                if (type != null)
-                {
-                    using (ApplicationContext.Current.ProfilingLogger.DebugDuration<object>(string.Format("Getting node from id '{0}' of type '{1}", id, type.Name)))
-                    {
-                        return content.As(type) as Model.Content;
-                    }
-                }
-            }
-
-            return content as Model.Content;
-        }
-
         public override T Get<T>(int id)
         {
-            var content = Umbraco.TypedContent(id);
+            var content = GetFromCache(id);
 
-            ApplicationContext.Current.ProfilingLogger.DebugDuration<T>(string.Format("Getting node in generic '{0}' of type '{1}", id, typeof(T).Name));
+            if (content == null)
+            {
+                var node = Umbraco.TypedContent(id);
 
-            var node = content.As<T>();
+                if (node != null)
+                {
+                    return (T)AddToCache(id, node.As<T>());
+                }
 
-            ApplicationContext.Current.ProfilingLogger.DebugDuration<T>(string.Format("Retieved node in generic '{0}' of type '{1}", id, typeof(T).Name));
+                return null;
+            }
 
-            return node;
+            return (T)content;
         }
 
         private DynamicNode _rootNode { get; set; }
@@ -124,17 +169,14 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
         {
             var current = uQuery.GetCurrentNode();
 
-            if (current == null)
-                return null;
-
-            var node = current.GetAncestorOrSelfNodes().FirstOrDefault(n => n.Level == 1);
+            var node = current?.GetAncestorOrSelfNodes().FirstOrDefault(n => n.Level == 1);
 
             if (node != null)
             {
-                return Umbraco.TypedContent(node.Id).As<T>();
+                return Get<T>(node.Id);
             }
 
-            return default(T);
+            return null;
         }
 
         public override string GetCurrentCulture()

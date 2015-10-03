@@ -39,6 +39,8 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
 
         #region Abstract Methods
 
+        public abstract void ClearCache();
+
         public abstract object Get(string url);
 
         public abstract object Get(int id);

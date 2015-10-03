@@ -34,7 +34,7 @@ namespace Yomego.Umbraco.Umbraco.Routing
 
                     if (contentRequest.PublishedContent == null)
                     {
-                        // [ML] - This might be a Preview
+                        // [ML] - This might be a Preview, so find the node with the preview url
 
                         int nodeId;
                         if (int.TryParse(path.Replace("/", string.Empty), out nodeId))
@@ -42,6 +42,8 @@ namespace Yomego.Umbraco.Umbraco.Routing
                             contentRequest.PublishedContent = ConverterHelper.UmbracoHelper.TypedContent(nodeId);
                         }
                     }
+
+                    // [ML] - If we have a pubished content request, then hook in routing to our controller with our populated POCO with Ditto
 
                     if (contentRequest.PublishedContent != null)
                     {
