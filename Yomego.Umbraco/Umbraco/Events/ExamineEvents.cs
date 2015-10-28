@@ -56,7 +56,12 @@ namespace Yomego.Umbraco.Umbraco.Events
                     e.Fields.Add("SystemPublishDate", publishDate.Value);
                 }
 
-                var datePublished = node.GetProperty("datePublished", out exists);
+                var datePublished = node.GetProperty("blogPublishDate", out exists); 
+
+                if (!exists)
+                {
+                    datePublished = node.GetProperty("datePublished", out exists);
+                }
 
                 if (!exists)
                 {

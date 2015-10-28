@@ -12,7 +12,7 @@ namespace Yomego.Umbraco.Umbraco.Model
             
         }
 
-        [DittoValueResolver(typeof(TemplateNameValueResolver))]
-        public string TemplateName { get; set; }
+        [DittoValueResolver(typeof(ViewNameValueResolver))]
+        public string ViewName { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using Yomego.Umbraco.Umbraco.Helpers;
 
 namespace Yomego.Umbraco.Umbraco.Ditto.Resolvers.TemplateName
 {
-    public class TemplateNameValueResolver : DittoValueResolver
+    public class ViewNameValueResolver : DittoValueResolver
     {
         public override object ResolveValue()
         {

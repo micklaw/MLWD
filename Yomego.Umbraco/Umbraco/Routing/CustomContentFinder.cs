@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Models;
-using Umbraco.Web;
 using Umbraco.Web.Routing;
 using Yomego.Umbraco.Constants;
 using Yomego.Umbraco.Context;
@@ -16,6 +12,9 @@ using Content = Yomego.Umbraco.Umbraco.Model.Content;
 
 namespace Yomego.Umbraco.Umbraco.Routing
 {
+    /// <summary>
+    /// Override <see cref="ContentFinderByNiceUrl"/> to get our Ditto model and setup our .Net Mvc route template
+    /// </summary>
     public class CustomContentFinder : ContentFinderByNiceUrl, IContentFinder
     {
         public new bool TryFindContent(PublishedContentRequest contentRequest)
@@ -49,31 +48,39 @@ namespace Yomego.Umbraco.Umbraco.Routing
                     {
                         var app = new CoreApp<CoreServiceContainer>();
 
+                        // [ML] - Get our content node using our lucene based Ditto cache
+
                         var poco = app.Services.Content.Get(contentRequest.PublishedContent) as Content;
 
                         if (poco != null)
                         {
+                            var templateName = ConfigurationManager.AppSettings["route:templateName"] ?? "Default";
+
+                            // [ML] - Store POCO in the request items
+
                             httpContext.Items[Requests.Node] = poco;
 
                             ITemplate template;
 
                             if (poco.TemplateId > 0)
                             {
-                                // [ML] - If the poco has an Umbraco template then use it, this could use an optional Action or just be used like umbraco
+                                // [ML] - If the poco has an Umbraco template selected then use it as per usual Umbraco implementation
 
                                 template = ApplicationContext.Current.Services.FileService.GetTemplate(poco.TemplateId);
                             }
                             else
                             {
-                                // [ML] - Or fallback to the Default RoutToMvc Template and use our Mvc jazz
+                                // [ML] - Or fallback to the Default RoutToMvc Template and use standard Mvc no render controllers required
 
-                                template = ApplicationContext.Current.Services.FileService.GetTemplate("Default");
+                                template = ApplicationContext.Current.Services.FileService.GetTemplate(templateName);
                             }
 
                             if (template == null)
                             {
-                                throw new InvalidOperationException("There doesn't appear to be a Default template with an alias of 'Default'");
+                                return false;
                             }
+
+                            // [ML] - Set the template to use in rendering the page
 
                             contentRequest.SetTemplate(template);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Xml;
@@ -206,9 +207,15 @@ namespace Yomego.Umbraco.Umbraco.Helpers
             }
         }
 
+        /// <summary>
+        /// Get the view name to render wth from the template if picked or from the document type
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="docTypeAlias"></param>
+        /// <returns></returns>
         public static string GetTemplateName(int templateId, string docTypeAlias)
         {
-            string action;
+            string action = null;
 
             if (templateId == 0)
             {
@@ -227,9 +234,7 @@ namespace Yomego.Umbraco.Umbraco.Helpers
                         action = routeAttribute.Action;
                     }
 
-                    // [ML] - If its not populated, default to Index like Mvc
-
-                    if (string.IsNullOrWhiteSpace(action) || action.ToLower().Equals("default"))
+                    if (string.IsNullOrWhiteSpace(action))
                     {
                         action = "Index";
                     }
@@ -240,22 +245,15 @@ namespace Yomego.Umbraco.Umbraco.Helpers
                 return action;
             }
 
-            // [ML] - If a custom template has been selected then get its name from the cache
+            // [ML] - If not found, grab the template name and update the cache template name cache
 
-            _templateNames.TryGetValue(templateId, out action);
+            var defaultViewName = ConfigurationManager.AppSettings["route:templateName"] ?? "Default";
 
-            if (string.IsNullOrWhiteSpace(action))
+            action = ApplicationContext.Current.Services.FileService.GetTemplate(templateId)?.Alias;
+
+            if (string.IsNullOrWhiteSpace(action) || action.ToLower().Equals(defaultViewName.ToLower()))
             {
-                // [ML] - If not found, grab the template name and update the cache template name cache
-
-                action = ApplicationContext.Current.Services.FileService.GetTemplate(templateId)?.Alias;
-
-                if (string.IsNullOrWhiteSpace(action))
-                {
-                    throw new NullReferenceException($"No action has been found for the template {templateId}.");
-                }
-
-                _templateNames.TryAdd(templateId, action);
+                action = "Index";
             }
 
             return action;

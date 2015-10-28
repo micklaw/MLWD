@@ -350,7 +350,7 @@
     <Compile Include="Mvc\Serializing\Converters\HtmlStringConverter.cs" />
     <Compile Include="Mvc\Serializing\ExcludeContractResolver.cs" />
     <Compile Include="Mvc\Settings\WebConfig.cs" />
-    <Compile Include="Umbraco\Ditto\Resolvers\TemplateName\TemplateNameValueResolver.cs" />
+    <Compile Include="Umbraco\Ditto\Resolvers\TemplateName\ViewNameValueResolver.cs" />
     <Compile Include="Umbraco\Ditto\TypeConverters\AssetConverter.cs" />
     <Compile Include="Umbraco\Ditto\TypeConverters\HtmlStringConverter.cs" />
     <Compile Include="Umbraco\Ditto\TypeConverters\ImageConverter.cs" />
