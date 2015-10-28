@@ -77,6 +77,8 @@ namespace Yomego.Umbraco.Umbraco.Services.Content
                 {
                     return AddToCache(nodeId, Get(nodeId));
                 }
+
+                return content;
             }
 
             return null;

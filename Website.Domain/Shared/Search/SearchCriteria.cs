@@ -1,4 +1,5 @@
-﻿using Yomego.Umbraco.Umbraco.Services.Search.Enums;
+﻿using Umbraco.Core;
+using Yomego.Umbraco.Umbraco.Services.Search.Enums;
 using Yomego.Umbraco.Umbraco.Services.Search.Models;
 
 namespace Website.Domain.Shared.Search
@@ -20,6 +21,21 @@ namespace Website.Domain.Shared.Search
             if (!string.IsNullOrWhiteSpace(category))
             {
                 AddSearchItem("blogCategory", category);
+            }
+
+            return this;
+        }
+
+        public static SearchCriteria WithBlogCategories(string [] categories)
+        {
+            return Init().AndBlogCategories(categories);
+        }
+
+        public SearchCriteria AndBlogCategories(string [] categories)
+        {
+            if (categories != null && categories.Length > 0)
+            {
+                AddSearchItem(new[] {"blogCategory"}, categories);
             }
 
             return this;

@@ -59,7 +59,7 @@ namespace Website.Domain.Shared.Controllers
 
                 if (node.OgImage != null)
                 {
-                    model.ImageUrl = App.Context.DomainUrl + HttpUtility.UrlDecode(node.OgImage.GetCrop(300, 300));
+                    model.ImageUrl = HttpUtility.UrlDecode(node.OgImage.Url);
                 }
 
                 ViewBag.OgModel = model;
