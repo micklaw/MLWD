@@ -17,10 +17,6 @@ namespace Yomego.Umbraco
     {
         public static void Register(HttpConfiguration config, RouteCollection routes)
         {
-            // Hook up Umbraco plugin
-            App.ResolveUsing<ContentService, UmbracoContentService>();
-            App.ResolveUsing<DataTypeService, UmbracoDataTypeService>();
-
             YomegoRouteConfig.RegisterRoutes(routes);
             YomegoApiConfig.Register(config);
 

@@ -34,9 +34,9 @@
     <OutputPath>bin\Release.AnsumOak\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Archetype, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Archetype.1.7.5\lib\net40\Archetype.dll</HintPath>
+    <Reference Include="Archetype, Version=1.12.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Archetype.Binaries.1.12.2\lib\net40\Archetype.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
@@ -169,14 +169,17 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Our.Umbraco.Ditto">
+    <Reference Include="Our.Umbraco.Ditto, Version=0.8.5738.28308, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Our.Umbraco.Ditto.0.8.2\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Our.Umbraco.Ditto.Resolvers">
-      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.2.0-alpha-000058\lib\net45\Our.Umbraco.Ditto.Resolvers.dll</HintPath>
+    <Reference Include="Our.Umbraco.Ditto.Resolvers, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ditto.Resolvers.Archetype.1.0.3\lib\net45\Our.Umbraco.Ditto.Resolvers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Our.Umbraco.Ditto.Resolvers.Archetype">
-      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.2.0-alpha-000058\lib\net45\Our.Umbraco.Ditto.Resolvers.Archetype.dll</HintPath>
+    <Reference Include="Our.Umbraco.Ditto.Resolvers.Archetype, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ditto.Resolvers.Archetype.1.0.3\lib\net45\Our.Umbraco.Ditto.Resolvers.Archetype.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>

@@ -16,9 +16,9 @@ namespace Yomego.Umbraco.Umbraco.Events
         private static object _lockObj = new object();
         private static bool _ran = false;
 
-        private CoreApp<CoreServiceContainer> GetApp(bool flushCache = true)
+        private App GetApp(bool flushCache = true)
         {
-            var app = new CoreApp<CoreServiceContainer>();
+            var app = new App();
 
             if (flushCache)
             {
