@@ -46,7 +46,7 @@ namespace Yomego.Umbraco.Umbraco.Routing
 
                     if (contentRequest.PublishedContent != null)
                     {
-                        var app = new CoreApp<CoreServiceContainer>();
+                        var app = new App();
 
                         // [ML] - Get our content node using our lucene based Ditto cache
 

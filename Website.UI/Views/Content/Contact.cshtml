@@ -4,11 +4,13 @@
     var form = Model.Form;
 }
 <div class="divide20"></div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="center-heading">
-            <h2>@content.ContactTitle</h2>
-            <span class="center-line"></span>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="center-heading">
+                <h2>@content.ContactTitle</h2>
+                <span class="center-line"></span>
+            </div>
         </div>
     </div>
 </div>
@@ -23,20 +25,20 @@
     }
 
     <div class="divide20"></div>
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-12">
-                @Html.RawUmbraco(content.ContactDescription)
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    @Html.RawUmbraco(content.ContactDescription)
+                </div>
             </div>
         </div>
-    </div>
 }
 
 <div class="divide20"></div>
 <div class="container">
     <div class="col-md-offset-3 col-md-6">
         @if (Model.Success)
-        {
+            {
             <div class="row text-center">
                 <h3>@content.ThanksTitle</h3>
                 @Html.RawUmbraco(content.ThanksDescription)
