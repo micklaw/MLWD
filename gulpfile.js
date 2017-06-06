@@ -143,7 +143,7 @@ gulp.task('run', function () {
 
     gulp.watch("src/scss/**/*.scss", ['scss']);
     gulp.watch("src/js/**/*.js", ['js']);
-    gulp.watch("src/data/**/*.json", ['html', 'sass']);
+    gulp.watch("src/data/**/*.json", ['html', 'scss']);
     gulp.watch("src/html/**/*.hbs", ['html']);
     gulp.watch(config.dist + "/**/*.html").on('change', browserSync.reload);
     gulp.watch(config.dist + "/js/*.js").on('change', browserSync.reload);
