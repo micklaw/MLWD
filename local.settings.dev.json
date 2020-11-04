@@ -1,9 +1,0 @@
-{
-  "Dotented": {
-    "BaseUri": "https://graphql.contentful.com/content/v1/spaces/{0}/environments/{1}",
-    "SpaceId": "woo8jwtvag0i",
-    "EnvironmentId": "master",
-    "ApiKey": "x9vbsMxTPBZWRcKnbluCAs_awW71waIt4BjDxWHPvJo",
-    "OutputFolder": "../../../../dist"
-  }
-}
