@@ -45,6 +45,7 @@ jobs:
     - name: Run dotnet core app
       run: dotnet run
     - name: Deploy gh-pages
+      if: github.event.action == 'mlwd_master_webhook'
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
