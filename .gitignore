@@ -351,4 +351,4 @@ MigrationBackup/
 
 dist
 
-Example/local.settings.*.json
+local.settings.*.json
