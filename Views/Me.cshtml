@@ -1,0 +1,254 @@
+@using MLWD.Pages
+@using Dotented
+@model Me
+@{
+    Layout = "~/Views/Layout.cshtml";
+}
+
+<section class="intro-section video-section" id="hello">
+    <div class="video-overlay">
+        <div class="container"> 
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    <div class="intro_text"> 
+                        <h1>@Model.AboutTitle</h1>
+                        @Model.BioBody.ToHtml()
+                        <div class="buttons scroll-to margin-top-50">
+                            <a  href="#me" class="btn btn-lg btn-light-dark ">A bit about me<i class="fa fa-angle-down"></i></a>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="me" class="team-section">
+    <div class="container">
+        <div class="section_heading">
+            <h3>@Model.AboutTitle</h3>
+            <hr class="separator">
+            <p>@Model.AboutLead</p>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="person-col">
+                    <img src="@Model.ProfileImage.Url" alt="@Model.ProfileImage.Title" class="img-responsive">
+                </div>
+                @Model.AboutBody.ToHtml()
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center margin-top-50">
+                <div class="buttons scroll-to">
+                    <a href="#work" class="btn btn-lg btn-light-dark ">Who I've worked for<i class="fa fa-angle-down"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="shots" id="work">
+    <div class="container">
+        <div class="section_heading">
+            <h3>I've written code for</h3>
+            <hr class="separator">
+            <p>The list below is a subset of companies across the financial, retail, power &amp; whisky industries who I have worked with.</p>
+        </div>
+        <div id="owl-work" class="owl-carousel owl-theme">
+            @foreach (var company in Model.Companies.Items)
+            {
+                <div class="item"><img src="@company.Url" alt="@company.Title" class="img-responsive"></div>
+            }
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="buttons scroll-to">
+                    <a href="#stuff" class="btn btn-lg btn-light-dark ">Why use me?<i class="fa fa-angle-down"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="stuff" class="features-section">
+    <div class="container">
+        <div class="section_heading">
+            <h3>Constantly evolving skillset</h3>
+            <hr class="separator">
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="feature-left">
+                    <div class="icon">
+                        <i class="fa fa-hashtag"></i>
+                    </div>
+                    <div class="text">
+                        <h3>.Net. dotnet? ...C#</h3>
+                        <p>I have been doing writing C# for upwards of ten years or so, I hope to keep writing it for another
+                            ten.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-left">
+                    <div class="icon">
+                        <i class="fa fa-fire-extinguisher"></i>
+                    </div>
+                    <div class="text">
+                        <h3>Java/TypeScript</h3>
+                        <p>I'm a big fan of JS &amp; even more so of TS, these hipsters keep finding new frameworks to ruin them, but I'm staying strong.</p>
+                    </div>
+                </div>
+                <div class="feature-left">
+                    <div class="icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <div class="text">
+                        <h3>Testing &amp; Quality</h3>
+                        <p>Acceptance test, unit tests, integration tests, load tests, performance tests, Benchmark.Net are my jam.</p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature-left">
+                    <div class="icon">
+                        <i class="fa fa-mobile-phone"></i>
+                    </div>
+                    <div class="text">
+                        <h3>Mobile & API</h3>
+                        <p>Currently using Xamarin, previously using Ionic. Web API all over the backend.</p>
+                    </div>
+                </div>
+                <div class="feature-left">
+                    <div class="icon">
+                        <i class="fa fa-cloud"></i>
+                    </div>
+                    <div class="text">
+                        <h3>Azure &amp; AWS</h3>
+                        <p>Harnessing the power of the cloud like Thor since Nov 2010. Having build server pain since Dec
+                            2010.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-left">
+                    <div class="icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+                    <div class="text">
+                        <h3>Front end & Node</h3>
+                        <p>With the adoption of SASS, Gulp, NPM, yada yada front end is a breeze, plus only mad people use iE anymore.</p>
+                    </div>
+                </div>
+                <div class="feature-left">
+                    <div class="icon">
+                        <span class="fa-umbraco">U</i>
+                    </div>
+                    <div class="text">
+                        <h3>Umbraco</h3>
+                        <p>Its orange, it easy, it's cheap, it's bendy, it's not a TOWIE character, it's our old friend the Umbraco CMS.</p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center margin-top-50">
+                <div class="buttons scroll-to">
+                    <a href="#tools" class="btn btn-lg btn-light-dark ">Tools for the job<i class="fa fa-angle-down"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="shots" id="tools">
+    <div class="container text-center">
+        <div class="section_heading">
+            <h3>A good tradesman never blames his tools</h3>
+            <hr class="separator">
+            <p>Finding &amp; using the right (or wrong) tool for the job can be a tough part of our job, here are some tools
+                I trust and use every day.</p>
+        </div>
+        <ul class="list-inline list-unstyled ">
+            <li><span class = "label label-success">dotnet</span></li>
+            <li><span class = "label label-success">Azure</span></li>
+            <li><span class = "label label-success">AWS</span></li>
+            <li><span class = "label label-success">SQL Server</span></li>
+            <li><span class = "label label-success">JavaScript</span></li>
+            <li><span class = "label label-success">Gulp</span></li>
+            <li><span class = "label label-success">HTML</span></li>
+            <li><span class = "label label-success">CSS</span></li>
+            <li><span class = "label label-success">SASS</span></li>
+            <li><span class = "label label-success">Nunit</span></li>
+            <li><span class = "label label-success">Moq</span></li>
+            <li><span class = "label label-success">LightInject</span></li>
+            <li><span class = "label label-success">Dapper</span></li>
+            <li><span class = "label label-success">Xamarin</span></li>
+            <li><span class = "label label-success">Ionic</span></li>
+            <li><span class = "label label-success">Angular 4</span></li>
+            <li><span class = "label label-success">dotnet core</span></li>
+            <li><span class = "label label-success">Umbraco</span></li>
+            <li><span class = "label label-success">Typescript</span></li>
+            <li><span class = "label label-success">Parallel Programming</span></li>
+            <li><span class = "label label-success">Node</span></li>
+            <li><span class = "label label-success">plus lots more</span></li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12 text-center margin-top-50">
+                <div class="buttons scroll-to">
+                    <a href="#contact" class="btn btn-lg btn-light-dark ">Get in touch<i class="fa fa-angle-down"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="newsletter-form" id="contact">
+    <div class="container">
+        <div class="section_heading">
+            <h3>Talk to me</h3>
+            <hr class="separator">
+            <p>If you want to get in touch or have a chat, I'm up for it, just ping me below and I'll get back to you.</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 text-center">
+                <div class="buttons scroll-to">
+                    <a href="mailto:michael@michaellaw.me" class="btn btn-lg btn-light-dark ">Email me<i class="fa fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials" id="faq">
+    <div class="container">
+        <div class="section_heading wow animated bounceIn" data-wow-delay="0.1s">
+            <h3>Non-biased testimonials</h3>
+            <hr class="separator">
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <div id="owl-testimonials" class="owl-carousel owl-theme">
+                    @foreach (var testimonial in Model.Testimonials?.Items)
+                    {
+                        <div class="item">
+                            <p>
+                                " @testimonial.Quote "
+                            </p>
+                            <img src="@testimonial.Image.Url" alt="@testimonial.Image.Title" class="img-circle">
+                            <h4>@testimonial.Name</h4>
+                            <em>@testimonial.Company</em>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

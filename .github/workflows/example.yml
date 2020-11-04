@@ -1,0 +1,43 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Example site
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - run: npm ci
+    - run: npm run build
+    - name: Substitute String
+      uses: bluwy/substitute-string-action@v1
+      with:
+        _input-file: 'local.settings.json'
+        _output-file: 'local.settings.json'
+        _format-key: '%%key%%'
+        CONTENTFULURL: ${{ secrets.CONTENTFULURL }}
+        SPACEID: ${{ secrets.SPACEID }}
+        ENVIRONMENTID: ${{ secrets.ENVIRONMENTID }}
+        APIKEY: ${{ secrets.APIKEY }}
+    - name: Setup dotnet core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install Packages
+      run: dotnet restore
+    - name: Build dotnet core app
+      run: dotnet build --configuration Release --no-restore
+    - name: Run dotnet core app
+      run: dotnet run

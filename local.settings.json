@@ -1,0 +1,9 @@
+{
+  "Dotented": {
+    "BaseUri": "%%CONTENTFULURL%%",
+    "SpaceId": "%%SPACEID%%",
+    "EnvironmentId": "%%ENVIRONMENTID%%",
+    "ApiKey": "%%APIKEY%%",
+    "OutputFolder": "../../../../dist"
+  }
+}
